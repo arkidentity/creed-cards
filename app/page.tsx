@@ -16,8 +16,10 @@ import {
 } from "../lib/progress";
 import { BottomNav } from "../components/ui/BottomNav";
 import { CardIcon } from "../lib/cardIcons";
+import { useBasePath } from "../lib/basePathContext";
 
 export default function HomePage() {
+  const base = useBasePath();
   const [learnedIds, setLearnedIds] = useState<number[]>([]);
   const [lastStudied, setLastStudied] = useState<number | null>(null);
   const [todayCount, setTodayCount] = useState(0);
@@ -36,10 +38,10 @@ export default function HomePage() {
   const lastCard = lastStudied ? CARD_DATA.find((c) => c.id === lastStudied) : null;
 
   const STUDY_MODES = [
-    { label: "Sequential", icon: "→", href: "/study?mode=sequential", desc: "Card 1 to 50" },
-    { label: "Random", icon: "⚡", href: "/study?mode=random", desc: "Shuffled deck" },
-    { label: "Daily Card", icon: "☀", href: "/study?mode=daily", desc: "One card a day" },
-    { label: "Unlearned", icon: "○", href: "/study?mode=sequential&filter=unlearned", desc: `${totalCount - learnedCount} remaining` },
+    { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: "Card 1 to 50" },
+    { label: "Random", icon: "⚡", href: `${base}/study?mode=random`, desc: "Shuffled deck" },
+    { label: "Daily Card", icon: "☀", href: `${base}/study?mode=daily`, desc: "One card a day" },
+    { label: "Unlearned", icon: "○", href: `${base}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
   ];
 
   return (
@@ -77,7 +79,7 @@ export default function HomePage() {
           </p>
         </div>
         <Link
-          href="/progress"
+          href={`${base}/progress`}
           style={{
             display: "flex",
             alignItems: "center",
@@ -103,7 +105,7 @@ export default function HomePage() {
 
         {/* Card of the Day */}
         <Link
-          href="/study?mode=daily"
+          href={`${base}/study?mode=daily`}
           style={{
             display: "block",
             borderRadius: 18,
@@ -195,7 +197,7 @@ export default function HomePage() {
         {/* Continue where you left off */}
         {lastCard && (
           <Link
-            href={`/study?mode=sequential&start=${lastCard.id}`}
+            href={`${base}/study?mode=sequential&start=${lastCard.id}`}
             style={{
               display: "flex",
               alignItems: "center",
@@ -270,7 +272,7 @@ export default function HomePage() {
                 return (
                   <Link
                     key={slug}
-                    href={`/study?mode=sequential&category=${slug}`}
+                    href={`${base}/study?mode=sequential&category=${slug}`}
                     style={{
                       display: "flex",
                       alignItems: "center",

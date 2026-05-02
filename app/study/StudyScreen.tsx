@@ -21,6 +21,7 @@ import {
 } from "../../lib/progress";
 import { CardDeck } from "../../components/cards/CardDeck";
 import { Toast } from "../../components/ui/Toast";
+import { useBasePath } from "../../lib/basePathContext";
 
 type FilterMode = "all" | "unlearned" | "learned";
 type StudyMode = "sequential" | "random" | "category" | "daily";
@@ -70,6 +71,7 @@ function buildCardList(
 export function StudyScreen() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const base = useBasePath();
 
   const mode = (searchParams.get("mode") ?? "sequential") as StudyMode;
   const startParam = searchParams.get("start");
@@ -202,7 +204,7 @@ export function StudyScreen() {
           No cards match this filter.
         </p>
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.push(base || "/")}
           style={{
             padding: "10px 24px",
             background: "var(--accent)",
@@ -243,7 +245,7 @@ export function StudyScreen() {
         }}
       >
         <Link
-          href="/"
+          href={base || "/"}
           style={{
             display: "flex",
             alignItems: "center",

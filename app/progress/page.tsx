@@ -16,8 +16,10 @@ import {
   resetAllProgress,
 } from "../../lib/progress";
 import { BottomNav } from "../../components/ui/BottomNav";
+import { useBasePath } from "../../lib/basePathContext";
 
 export default function ProgressPage() {
+  const base = useBasePath();
   const [learnedIds, setLearnedIds] = useState<number[]>([]);
   const [todayCount, setTodayCount] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -68,7 +70,7 @@ export default function ProgressPage() {
         }}
       >
         <Link
-          href="/"
+          href={base || "/"}
           style={{
             display: "flex",
             alignItems: "center",
@@ -170,7 +172,7 @@ export default function ProgressPage() {
                 return (
                   <Link
                     key={slug}
-                    href={`/study?mode=sequential&category=${slug}`}
+                    href={`${base}/study?mode=sequential&category=${slug}`}
                     style={{
                       display: "block",
                       background: "var(--surface)",
