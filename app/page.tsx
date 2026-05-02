@@ -14,7 +14,6 @@ import {
   getLastStudiedCard,
   getTodaySessionCount,
 } from "../lib/progress";
-import { BottomNav } from "../components/ui/BottomNav";
 import { CardIcon } from "../lib/cardIcons";
 import { useBasePath } from "../lib/basePathContext";
 
@@ -321,7 +320,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      <BottomNav />
     </div>
   );
 }

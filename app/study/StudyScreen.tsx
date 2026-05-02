@@ -229,6 +229,7 @@ export function StudyScreen() {
         display: "flex",
         flexDirection: "column",
         height: "100dvh",
+        paddingBottom: "calc(var(--pwa-nav-height, 80px) + env(safe-area-inset-bottom, 0px))",
         background: "var(--background)",
         overflow: "hidden",
       }}

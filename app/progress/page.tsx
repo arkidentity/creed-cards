@@ -15,7 +15,6 @@ import {
   toggleSound,
   resetAllProgress,
 } from "../../lib/progress";
-import { BottomNav } from "../../components/ui/BottomNav";
 import { useBasePath } from "../../lib/basePathContext";
 
 export default function ProgressPage() {
@@ -296,7 +295,6 @@ export default function ProgressPage() {
         </div>
       </div>
 
-      <BottomNav />
     </div>
   );
 }
