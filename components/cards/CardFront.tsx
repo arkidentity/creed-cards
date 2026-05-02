@@ -72,11 +72,12 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
         {/* Short description */}
         <p
           style={{
-            fontSize: 15,
-            color: "rgba(255,255,255,0.6)",
+            fontSize: 17,
+            color: "rgba(255,255,255,0.65)",
             textAlign: "center",
-            letterSpacing: "0.03em",
-            marginBottom: card.term ? 20 : 0,
+            letterSpacing: "0.02em",
+            lineHeight: 1.5,
+            marginBottom: card.term ? 28 : 0,
           }}
         >
           {card.shortDesc}
