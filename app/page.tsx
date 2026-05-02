@@ -8,14 +8,14 @@ import {
   getCardOfTheDay,
   getCardsByCategory,
   type CategorySlug,
-} from "@/lib/cardData";
+} from "../lib/cardData";
 import {
   getLearnedCards,
   getLastStudiedCard,
   getTodaySessionCount,
-} from "@/lib/progress";
-import { BottomNav } from "@/components/ui/BottomNav";
-import { CardIcon } from "@/lib/cardIcons";
+} from "../lib/progress";
+import { BottomNav } from "../components/ui/BottomNav";
+import { CardIcon } from "../lib/cardIcons";
 
 export default function HomePage() {
   const [learnedIds, setLearnedIds] = useState<number[]>([]);

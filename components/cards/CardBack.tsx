@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
-import type { CreedCard } from "@/lib/cardData";
+import type { CreedCard } from "../../lib/cardData";
 
 interface CardBackProps {
   card: CreedCard;

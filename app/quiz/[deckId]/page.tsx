@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DECK_QUIZZES } from "@/lib/quizData";
+import { DECK_QUIZZES } from "../../../lib/quizData";
 
 export default async function QuizPage({ params }: { params: Promise<{ deckId: string }> }) {
   const { deckId } = await params;

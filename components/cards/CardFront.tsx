@@ -1,7 +1,7 @@
 "use client";
 
-import { CardIcon } from "@/lib/cardIcons";
-import type { CreedCard } from "@/lib/cardData";
+import { CardIcon } from "../../lib/cardIcons";
+import type { CreedCard } from "../../lib/cardData";
 
 interface CardFrontProps {
   card: CreedCard;

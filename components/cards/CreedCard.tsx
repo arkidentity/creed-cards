@@ -2,10 +2,10 @@
 
 import { useRef, type RefObject } from "react";
 import { motion } from "framer-motion";
-import type { CreedCard as CreedCardType } from "@/lib/cardData";
+import type { CreedCard as CreedCardType } from "../../lib/cardData";
 import { CardFront } from "./CardFront";
 import { CardBack } from "./CardBack";
-import { playFlipSound } from "@/lib/progress";
+import { playFlipSound } from "../../lib/progress";
 
 interface CreedCardProps {
   card: CreedCardType;

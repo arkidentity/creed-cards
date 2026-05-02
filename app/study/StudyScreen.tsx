@@ -9,7 +9,7 @@ import {
   getCardOfTheDay,
   type CreedCard,
   type CategorySlug,
-} from "@/lib/cardData";
+} from "../../lib/cardData";
 import {
   getLearnedCards,
   isCardLearned,
@@ -18,9 +18,9 @@ import {
   setLastStudiedCard,
   incrementTapHintCount,
   getTapHintCount,
-} from "@/lib/progress";
-import { CardDeck } from "@/components/cards/CardDeck";
-import { Toast } from "@/components/ui/Toast";
+} from "../../lib/progress";
+import { CardDeck } from "../../components/cards/CardDeck";
+import { Toast } from "../../components/ui/Toast";
 
 type FilterMode = "all" | "unlearned" | "learned";
 type StudyMode = "sequential" | "random" | "category" | "daily";

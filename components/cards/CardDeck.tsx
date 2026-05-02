@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { CreedCard } from "@/lib/cardData";
-import { CATEGORY_INFO } from "@/lib/cardData";
+import type { CreedCard } from "../../lib/cardData";
+import { CATEGORY_INFO } from "../../lib/cardData";
 import { CreedCard as CreedCardComponent } from "./CreedCard";
 
 interface CardDeckProps {

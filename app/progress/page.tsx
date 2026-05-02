@@ -7,15 +7,15 @@ import {
   CATEGORY_INFO,
   getCardsByCategory,
   type CategorySlug,
-} from "@/lib/cardData";
+} from "../../lib/cardData";
 import {
   getLearnedCards,
   getTodaySessionCount,
   getSoundEnabled,
   toggleSound,
   resetAllProgress,
-} from "@/lib/progress";
-import { BottomNav } from "@/components/ui/BottomNav";
+} from "../../lib/progress";
+import { BottomNav } from "../../components/ui/BottomNav";
 
 export default function ProgressPage() {
   const [learnedIds, setLearnedIds] = useState<number[]>([]);
