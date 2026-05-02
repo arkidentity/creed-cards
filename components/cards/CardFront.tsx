@@ -49,14 +49,14 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
       {/* Middle zone: fills remaining space and vertically centers the content block */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         {/* Icon */}
-        <div style={{ width: 108, height: 108, marginBottom: 18, flexShrink: 0 }}>
+        <div style={{ width: 136, height: 136, marginBottom: 18, flexShrink: 0 }}>
           <CardIcon cardId={card.id} accentColor={card.colors.accent} stroke="rgba(255,255,255,0.9)" />
         </div>
 
         {/* Title */}
         <h2
           style={{
-            fontSize: 26,
+            fontSize: 30,
             fontWeight: 800,
             letterSpacing: "0.04em",
             color: "#ffffff",
@@ -72,7 +72,7 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
         {/* Short description */}
         <p
           style={{
-            fontSize: 13,
+            fontSize: 15,
             color: "rgba(255,255,255,0.6)",
             textAlign: "center",
             letterSpacing: "0.03em",
@@ -86,18 +86,18 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
         {card.term && (
           <div
             style={{
-              width: "100%",
-              padding: "12px 16px",
+              padding: "10px 20px",
               background: "rgba(0,0,0,0.25)",
               borderRadius: 12,
               border: `1px solid rgba(255,255,255,0.08)`,
               textAlign: "center",
+              alignSelf: "center",
             }}
           >
             <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: 10 }}>
               <span
                 style={{
-                  fontSize: 20,
+                  fontSize: 23,
                   fontWeight: 300,
                   color: card.colors.accent,
                   letterSpacing: "0.02em",
@@ -114,11 +114,11 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
             </div>
             {card.translation && (
               <div style={{ marginTop: 4, display: "flex", justifyContent: "center", gap: 8, alignItems: "center" }}>
-                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>{card.translation}</span>
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)" }}>{card.translation}</span>
                 {card.englishMeaning && (
                   <>
-                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)" }}>·</span>
-                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{card.englishMeaning}</span>
+                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>·</span>
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{card.englishMeaning}</span>
                   </>
                 )}
               </div>

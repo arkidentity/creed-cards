@@ -22,6 +22,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           overflowY: "auto",
           WebkitOverflowScrolling: "touch",
           scrollbarWidth: "thin",
+          touchAction: "pan-y",
         }}
       >
         {/* Header strip matching category color */}
@@ -36,7 +37,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           <div style={{ fontSize: 11, color: card.colors.accent, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>
             {card.category}
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", letterSpacing: "0.03em" }}>
+          <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", letterSpacing: "0.03em" }}>
             {card.title}
           </div>
         </div>
@@ -45,7 +46,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
         <div style={{ padding: "18px 20px 24px", display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
           {/* Definition */}
           <Section label="Definition">
-            <p style={{ fontSize: 14, lineHeight: 1.65, color: "var(--foreground)" }}>
+            <p style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--foreground)" }}>
               {card.definition}
             </p>
           </Section>
@@ -59,17 +60,17 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
               borderLeft: `3px solid ${card.colors.accent}`,
             }}
           >
-            <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "#fff", fontStyle: "italic", marginBottom: 8 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.6, color: "#fff", fontStyle: "italic", marginBottom: 8 }}>
               &ldquo;{card.scripture}&rdquo;
             </p>
-            <p style={{ fontSize: 11, fontWeight: 700, color: card.colors.accent, letterSpacing: "0.05em" }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: card.colors.accent, letterSpacing: "0.05em" }}>
               {card.reference}
             </p>
           </div>
 
           {/* Historical Context */}
           <Section label="Historical Context">
-            <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--muted)" }}>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--muted)" }}>
               {card.historicalContext}
             </p>
           </Section>
@@ -78,7 +79,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           <Section label="Reflection">
             <p
               style={{
-                fontSize: 14,
+                fontSize: 15.5,
                 lineHeight: 1.6,
                 color: card.colors.accent,
                 fontStyle: "italic",

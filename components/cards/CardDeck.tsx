@@ -130,6 +130,7 @@ export function CardDeck({
             inset: 0,
             borderRadius: 20,
             overflow: "hidden",
+            touchAction: "pan-y",
           }}
         >
           <CreedCardComponent

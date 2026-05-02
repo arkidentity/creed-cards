@@ -42,7 +42,8 @@ function buildCardList(
 
   if (mode === "daily") {
     const today = getCardOfTheDay();
-    return { cards: [today], startIndex: 0 };
+    const startIndex = cards.findIndex((c) => c.id === today.id);
+    return { cards, startIndex: startIndex > -1 ? startIndex : 0 };
   }
 
   if (category) {
