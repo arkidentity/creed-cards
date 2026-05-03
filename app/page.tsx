@@ -39,7 +39,6 @@ export default function HomePage() {
   const STUDY_MODES = [
     { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: "Card 1 to 50" },
     { label: "Random", icon: "⚡", href: `${base}/study?mode=random`, desc: "Shuffled deck" },
-    { label: "Daily Card", icon: "☀", href: `${base}/study?mode=daily`, desc: "One card a day" },
     { label: "Unlearned", icon: "○", href: `${base}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
   ];
 
@@ -106,57 +105,40 @@ export default function HomePage() {
         <Link
           href={`${base}/study?mode=daily`}
           style={{
-            display: "block",
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
             borderRadius: 18,
             overflow: "hidden",
             textDecoration: "none",
             background: `linear-gradient(145deg, ${todayCard.colors.dark}, ${todayCard.colors.dark}cc)`,
             border: "1px solid rgba(255,255,255,0.07)",
-            position: "relative",
+            padding: "16px 16px",
           }}
         >
-          {/* Ghost cards fan */}
-          <div style={{ position: "absolute", top: 12, right: 16, width: 56, height: 76 }}>
-            <div style={{
-              position: "absolute", inset: 0, background: todayCard.colors.dark,
-              borderRadius: 8, transform: "rotate(8deg)", opacity: 0.4,
-              border: "1px solid rgba(255,255,255,0.1)",
-            }} />
-            <div style={{
-              position: "absolute", inset: 0, background: todayCard.colors.dark,
-              borderRadius: 8, transform: "rotate(4deg)", opacity: 0.6,
-              border: "1px solid rgba(255,255,255,0.1)",
-            }} />
-            <div style={{
-              position: "absolute", inset: 0, background: todayCard.colors.dark,
-              borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <CardIcon cardId={todayCard.id} accentColor={todayCard.colors.accent} stroke="rgba(255,255,255,0.8)" />
-            </div>
-          </div>
-
-          <div style={{ padding: "20px 20px 20px" }}>
-            <div style={{ fontSize: 10, color: todayCard.colors.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 10, color: todayCard.colors.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
               Card of the Day
             </div>
-            <div style={{ fontSize: 17, fontWeight: 800, color: "#fff", letterSpacing: "0.04em", marginBottom: 4, paddingRight: 80 }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.03em", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {todayCard.title}
             </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 14 }}>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {todayCard.shortDesc}
             </div>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 6,
-              background: todayCard.colors.accent,
-              color: "#000",
-              padding: "7px 14px",
-              borderRadius: 8,
-              fontSize: 12,
-              fontWeight: 700,
-            }}>
-              Study Now →
-            </div>
+          </div>
+          <div style={{
+            flexShrink: 0,
+            display: "flex", alignItems: "center", gap: 5,
+            background: todayCard.colors.accent,
+            color: "#000",
+            padding: "8px 13px",
+            borderRadius: 10,
+            fontSize: 12,
+            fontWeight: 700,
+            whiteSpace: "nowrap",
+          }}>
+            Study Now →
           </div>
         </Link>
 
@@ -232,7 +214,7 @@ export default function HomePage() {
           <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
             Study Modes
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
             {STUDY_MODES.map((m) => (
               <Link
                 key={m.href}
