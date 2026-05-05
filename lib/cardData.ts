@@ -1134,12 +1134,25 @@ export const CARD_DATA: CreedCard[] = [
   },
 ];
 
+function seededShuffle<T>(arr: T[], seed: number): T[] {
+  const a = [...arr];
+  let s = seed;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = Math.imul(s * 1664525 + 1013904223, 1) | 0;
+    const j = Math.abs(s) % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export function getCardOfTheDay(): CreedCard {
   const today = new Date();
-  const start = new Date(today.getFullYear(), 0, 0);
+  const year = today.getFullYear();
+  const start = new Date(year, 0, 0);
   const diff = today.getTime() - start.getTime();
   const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return CARD_DATA[dayOfYear % CARD_DATA.length];
+  const shuffled = seededShuffle(CARD_DATA, year);
+  return shuffled[dayOfYear % shuffled.length];
 }
 
 export function getCardsByCategory(slug: CategorySlug): CreedCard[] {
