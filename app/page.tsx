@@ -14,6 +14,7 @@ import {
   getLastStudiedCard,
   getTodaySessionCount,
 } from "../lib/progress";
+import { getQuizResult } from "../lib/quizProgress";
 import { CardIcon } from "../lib/cardIcons";
 import { useBasePath } from "../lib/basePathContext";
 
@@ -22,11 +23,17 @@ export default function HomePage() {
   const [learnedIds, setLearnedIds] = useState<number[]>([]);
   const [lastStudied, setLastStudied] = useState<number | null>(null);
   const [todayCount, setTodayCount] = useState(0);
+  const [quizBestPct, setQuizBestPct] = useState<number | null>(null);
 
   useEffect(() => {
     setLearnedIds(getLearnedCards());
     setLastStudied(getLastStudiedCard());
     setTodayCount(getTodaySessionCount());
+    // Show the best score across all 3 levels for the quiz tile
+    const best = [1, 2, 3]
+      .map((l) => getQuizResult(1, l)?.bestPct ?? null)
+      .filter((p): p is number => p !== null);
+    if (best.length > 0) setQuizBestPct(Math.max(...best));
   }, []);
 
   const todayCard = getCardOfTheDay();
@@ -37,9 +44,15 @@ export default function HomePage() {
   const lastCard = lastStudied ? CARD_DATA.find((c) => c.id === lastStudied) : null;
 
   const STUDY_MODES = [
-    { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: "Card 1 to 50" },
+    { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: "Card 1 to 51" },
     { label: "Random", icon: "⚡", href: `${base}/study?mode=random`, desc: "Shuffled deck" },
     { label: "Unlearned", icon: "○", href: `${base}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
+    {
+      label: "Quiz",
+      icon: "✦",
+      href: `${base}/quiz/1`,
+      desc: quizBestPct !== null ? `Best: ${quizBestPct}%` : "3 levels",
+    },
   ];
 
   return (
@@ -214,7 +227,7 @@ export default function HomePage() {
           <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
             Study Modes
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {STUDY_MODES.map((m) => (
               <Link
                 key={m.href}

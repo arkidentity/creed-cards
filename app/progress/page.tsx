@@ -15,6 +15,7 @@ import {
   toggleSound,
   resetAllProgress,
 } from "../../lib/progress";
+import { getQuizResult, type QuizResult } from "../../lib/quizProgress";
 import { useBasePath } from "../../lib/basePathContext";
 
 export default function ProgressPage() {
@@ -23,11 +24,17 @@ export default function ProgressPage() {
   const [todayCount, setTodayCount] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [quizResults, setQuizResults] = useState<(QuizResult | null)[]>([null, null, null]);
 
   useEffect(() => {
     setLearnedIds(getLearnedCards());
     setTodayCount(getTodaySessionCount());
     setSoundEnabled(getSoundEnabled());
+    setQuizResults([
+      getQuizResult(1, 1),
+      getQuizResult(1, 2),
+      getQuizResult(1, 3),
+    ]);
   }, []);
 
   const learnedCount = learnedIds.length;
@@ -213,6 +220,55 @@ export default function ProgressPage() {
                 );
               }
             )}
+          </div>
+        </div>
+
+        {/* Test Your Knowledge */}
+        <div>
+          <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
+            Test Your Knowledge
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {[
+              { level: 1, name: "Level 1", subtitle: "Surface Recognition" },
+              { level: 2, name: "Level 2", subtitle: "Content Mastery" },
+              { level: 3, name: "Level 3", subtitle: "Deep Understanding" },
+            ].map(({ level, name, subtitle }, i) => {
+              const result = quizResults[i];
+              return (
+                <Link
+                  key={level}
+                  href={`${base}/quiz/1/${level}`}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "var(--surface)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 12,
+                    padding: "12px 14px",
+                    textDecoration: "none",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)" }}>
+                      {name} — {subtitle}
+                    </div>
+                    {result ? (
+                      <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>
+                        Best: <span style={{ color: result.bestPct >= 75 ? "var(--success)" : "var(--accent)", fontWeight: 700 }}>{result.bestPct}%</span>
+                        {" "}· {result.attempts} {result.attempts === 1 ? "attempt" : "attempts"}
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: 11, color: "var(--accent)", marginTop: 2, fontWeight: 600 }}>
+                        Not attempted
+                      </div>
+                    )}
+                  </div>
+                  <span style={{ fontSize: 14, color: "var(--muted)" }}>›</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
