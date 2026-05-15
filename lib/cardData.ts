@@ -81,28 +81,7 @@ export const CATEGORY_INFO: Record<
 };
 
 export const CARD_DATA: CreedCard[] = [
-  // TRINITY CATEGORY (1-8)
-  {
-    id: 1,
-    category: "Trinity & Nature of God",
-    categorySlug: "trinity",
-    title: "THE TRIUNE GOD",
-    shortDesc: "Three Persons, One God",
-    term: "Τριάς",
-    termLabel: "Greek",
-    translation: "Trias",
-    englishMeaning: "Trinity",
-    definition:
-      "God exists eternally as three distinct Persons—Father, Son, and Holy Spirit—who are one in being, equal in power and glory. This is the eternal communion of holy love. God has always been, and will always be, the perfect unity of Three in One.",
-    scripture:
-      "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit.",
-    reference: "Matthew 28:19",
-    historicalContext:
-      "The doctrine of the Trinity was formally articulated at the Council of Nicaea (325 AD) and Constantinople (381 AD) in response to heresies that denied either Christ's divinity or the distinct personhood of the Holy Spirit.",
-    reflection:
-      "How does understanding God as an eternal family of Three Persons change the way you view relationships and community?",
-    colors: { dark: "#0f172a", accent: "#3b82f6" },
-  },
+  // TRINITY CATEGORY (2-8)
   {
     id: 2,
     category: "Trinity & Nature of God",
@@ -186,26 +165,6 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
-    id: 6,
-    category: "Trinity & Nature of God",
-    categorySlug: "trinity",
-    title: "THE DIVINE DANCE",
-    shortDesc: "Eternal Communion",
-    term: "Περιχώρησις",
-    termLabel: "Greek",
-    translation: "Perichoresis",
-    englishMeaning: "Mutual Indwelling",
-    definition:
-      "Perichoresis describes the mutual indwelling and interpenetration of the three Persons of the Trinity. They exist in an eternal dance of love, each giving to and receiving from the others. This divine fellowship is the pattern for all relationships.",
-    scripture: "I am in the Father, and the Father is in Me.",
-    reference: "John 14:11",
-    historicalContext:
-      'Early church fathers used perichoresis to explain how the three Persons are distinct yet inseparable, existing in eternal communion. This term comes from Greek words meaning "to dance around."',
-    reflection:
-      'How might viewing the Trinity as a "dance" of love shape how you relate to others in community?',
-    colors: { dark: "#0f172a", accent: "#3b82f6" },
-  },
-  {
     id: 7,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
@@ -245,7 +204,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
 
-  // CHRIST CATEGORY (9-16)
+  // CHRIST CATEGORY (9-16, excl. 15)
   {
     id: 9,
     category: "Jesus Christ",
@@ -369,27 +328,6 @@ export const CARD_DATA: CreedCard[] = [
       'The Nicene Creed affirms Christ "ascended into heaven and is seated at the right hand of the Father." This position of authority demonstrates Christ\'s ongoing rule and His role as our advocate before God.',
     reflection:
       "What does it mean that Jesus, in His human body, now rules all creation?",
-    colors: { dark: "#7f1d1d", accent: "#fca5a5" },
-  },
-  {
-    id: 15,
-    category: "Jesus Christ",
-    categorySlug: "christ",
-    title: "CHRIST OUR HIGH PRIEST",
-    shortDesc: "Our Mediator and Advocate",
-    term: "Ἀρχιερεύς",
-    termLabel: "Greek",
-    translation: "Archiereus",
-    englishMeaning: "Chief Priest",
-    definition:
-      "Jesus is our eternal High Priest who represents us before God. He offered Himself as the perfect sacrifice and now intercedes for us continually. Because He understands our weaknesses, having been tempted as we are, He sympathizes with us and helps us.",
-    scripture:
-      "Therefore, since we have a great high priest who has passed through the heavens, Jesus the Son of God, let us hold fast our confession.",
-    reference: "Hebrews 4:14",
-    historicalContext:
-      "The book of Hebrews develops the theme of Christ as High Priest, showing how He fulfills and surpasses the Old Testament priesthood. Unlike earthly priests, Christ's priesthood is eternal and His sacrifice is once-for-all.",
-    reflection:
-      "How does knowing Christ is praying for you right now affect your approach to God?",
     colors: { dark: "#7f1d1d", accent: "#fca5a5" },
   },
   {
@@ -592,7 +530,7 @@ export const CARD_DATA: CreedCard[] = [
     translation: "Pistis",
     englishMeaning: "Faith",
     definition:
-      "Faith is trusting in Jesus Christ for salvation. It's not mere intellectual agreement but wholehearted reliance on Christ and His finished work. Faith looks away from ourselves to Christ, resting in His righteousness rather than our own. Even faith itself is God's gift.",
+      "Faith — or belief — is wholehearted trust in Jesus Christ for salvation. The Greek word pistis covers both: it goes beyond intellectual agreement to complete reliance on Christ and His finished work. It looks away from ourselves and rests in His righteousness alone. Faith is the empty hand that receives what God freely gives — and even faith itself is His gift.",
     scripture:
       "Therefore, having been justified by faith, we have peace with God through our Lord Jesus Christ.",
     reference: "Romans 5:1",
@@ -729,28 +667,6 @@ export const CARD_DATA: CreedCard[] = [
       "As you read Scripture, do you look for how it reveals Christ and His gospel?",
     colors: { dark: "#4c1d95", accent: "#c084fc" },
   },
-  {
-    id: 32,
-    category: "Holy Scripture",
-    categorySlug: "scripture",
-    title: "THE LIVING WORD",
-    shortDesc: "Active and Powerful",
-    term: "דְּבַר חַי",
-    termLabel: "Hebrew",
-    translation: "Davar Chai",
-    englishMeaning: "Living Word",
-    definition:
-      "Scripture is not a dead letter but a living and active Word. The same Spirit who inspired Scripture illuminates it, making God's ancient words fresh and powerful today. Through Scripture, God speaks directly to our hearts, bringing conviction, comfort, and transformation.",
-    scripture:
-      "For the word of God is living and active and sharper than any two-edged sword, and piercing as far as the division of soul and spirit, of both joints and marrow, and able to judge the thoughts and intentions of the heart.",
-    reference: "Hebrews 4:12",
-    historicalContext:
-      "Unlike dead religious texts, Scripture has power because the Holy Spirit works through it. Throughout church history, believers have encountered God personally through the Bible, experiencing its life-giving power.",
-    reflection:
-      "When has Scripture felt \"living and active\" in your own experience?",
-    colors: { dark: "#4c1d95", accent: "#c084fc" },
-  },
-
   // CHURCH & SACRAMENTS CATEGORY (33-38)
   {
     id: 33,
@@ -819,20 +735,20 @@ export const CARD_DATA: CreedCard[] = [
     category: "Church & Sacraments",
     categorySlug: "church",
     title: "THE LORD'S SUPPER",
-    shortDesc: "Communion with Christ",
-    term: "Κυριακὸν Δεῖπνον",
+    shortDesc: "Sharing in Christ Together",
+    term: "Κοινωνία",
     termLabel: "Greek",
-    translation: "Kyriakon Deipnon",
-    englishMeaning: "Lord's Supper",
+    translation: "Koinōnia",
+    englishMeaning: "Communion / Sharing",
     definition:
-      "The Lord's Supper (Communion, Eucharist) is the sacrament where we remember Christ's sacrifice and experience His presence. Through bread and wine, we proclaim His death until He returns. In this meal, we commune with Christ and with one another as His body.",
+      "The Lord's Supper is the sacred meal where the Church remembers Christ's sacrifice and experiences real communion with Him and with one another. The cup and bread are a koinōnia — a sharing — in Christ's body and blood. We eat together as His family, proclaiming His death until He returns.",
     scripture:
-      "For as often as you eat this bread and drink the cup, you proclaim the Lord's death until He comes.",
-    reference: "1 Corinthians 11:26",
+      "Is not the cup of blessing which we bless a sharing in the blood of Christ? Is not the bread which we break a sharing in the body of Christ?",
+    reference: "1 Corinthians 10:16",
     historicalContext:
-      "Jesus instituted this meal at the Last Supper, commanding His followers to \"do this in remembrance of Me\" (Luke 22:19). The early church gathered regularly to break bread together.",
+      "Jesus instituted this meal at the Last Supper, commanding His followers to 'do this in remembrance of Me' (Luke 22:19). Paul uses koinōnia — meaning fellowship, participation, and sharing — to describe what happens at the table: genuine union with Christ and with one another.",
     reflection:
-      "When you take Communion, do you recognize Christ's presence and remember His sacrifice?",
+      "When you take Communion, do you experience it as a real sharing in Christ and His people — or has it become routine?",
     colors: { dark: "#7c2d12", accent: "#fdba74" },
   },
   {
@@ -1130,6 +1046,109 @@ export const CARD_DATA: CreedCard[] = [
       "God's ultimate plan is not to evacuate earth for heaven but to renew all creation. The biblical vision is of a restored earth where heaven and earth merge, and God's kingdom comes in fullness.",
     reflection:
       "How does the promise of a renewed creation shape your hope and purpose now?",
+    colors: { dark: "#1e293b", accent: "#94a3b8" },
+  },
+  // NEW FOUNDATIONAL CARDS (51-55)
+  {
+    id: 51,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "SIN AND THE FALL",
+    shortDesc: "Missing the Mark",
+    term: "Ἁμαρτία",
+    termLabel: "Greek",
+    translation: "Hamartia",
+    englishMeaning: "Missing the Mark",
+    definition:
+      "Sin is any thought, word, or action that falls short of God's holy standard — and the Fall is where it began. When Adam and Eve chose their own way over God's, sin and death entered the world. Every person since is born with a broken nature. We don't just commit sins; we are sinners who need rescue.",
+    scripture: "For all have sinned and fall short of the glory of God.",
+    reference: "Romans 3:23",
+    historicalContext:
+      "Augustine's doctrine of original sin — that Adam's rebellion brought spiritual death to all humanity — was upheld against Pelagius, who taught that humans could choose good without divine help. Understanding the depth of the Fall is what makes the grace of the gospel so remarkable.",
+    reflection:
+      "How does seeing sin as a fundamental broken condition — not just bad choices — change how you understand your need for God?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 52,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "SALVATION",
+    shortDesc: "Rescued and Restored",
+    term: "Σωτηρία",
+    termLabel: "Greek",
+    translation: "Sōtēria",
+    englishMeaning: "Deliverance",
+    definition:
+      "Salvation is God's complete rescue of humanity from sin, death, and judgment through Jesus Christ. It is past (saved from sin's penalty), present (being saved from sin's power), and future (will be saved from sin's presence). Salvation is entirely God's gift — received by faith, never earned.",
+    scripture:
+      "For the Son of Man has come to seek and to save that which was lost.",
+    reference: "Luke 19:10",
+    historicalContext:
+      "The Greek word 'sōtēria' was used in the ancient world for deliverance from enemies, disease, or danger. The New Testament applies it to God's total rescue of humanity — body, soul, and spirit — through Christ's life, death, and resurrection.",
+    reflection: "What does it mean to you personally that God came to seek and save you?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 53,
+    category: "Jesus Christ",
+    categorySlug: "christ",
+    title: "ATONEMENT",
+    shortDesc: "At One with God",
+    term: "כִּפֻּר",
+    termLabel: "Hebrew",
+    translation: "Kippur",
+    englishMeaning: "Covering",
+    definition:
+      "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, God's justice is satisfied, our sins are forgiven, and we are fully reconciled to God.",
+    scripture:
+      "God was in Christ reconciling the world to Himself, not counting their trespasses against them.",
+    reference: "2 Corinthians 5:19",
+    historicalContext:
+      "The Day of Atonement (Yom Kippur) was Israel's most sacred annual ritual — the high priest entered the Holy of Holies to make atonement for the nation's sins. Jesus fulfilled this as the final and complete sacrifice, entering the true holy place once for all with His own blood (Hebrews 9:12).",
+    reflection:
+      "What does it mean that God did not just forgive your debt but paid it Himself?",
+    colors: { dark: "#7f1d1d", accent: "#fca5a5" },
+  },
+  {
+    id: 54,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "THE KINGDOM OF GOD",
+    shortDesc: "Here and Coming",
+    term: "Βασιλεία τοῦ Θεοῦ",
+    termLabel: "Greek",
+    translation: "Basileia tou Theou",
+    englishMeaning: "Reign of God",
+    definition:
+      "The Kingdom of God is God's reign breaking into human history through Jesus Christ. Jesus' first words in ministry were 'The Kingdom of God is at hand.' The Kingdom is both present — Christ reigns now in the hearts of His people — and coming — fully established when He returns. To follow Jesus is to live as a citizen of this Kingdom today.",
+    scripture: "Repent, for the kingdom of heaven is at hand.",
+    reference: "Matthew 4:17",
+    historicalContext:
+      "The Kingdom of God was Jesus' primary and most repeated message. The Jewish people expected a political kingdom; Jesus revealed a reign that transforms from the inside out. The early church understood themselves as living between two ages — the Kingdom inaugurated at Christ's first coming and consummated at His return.",
+    reflection:
+      "What would change in your daily life if you took seriously that you are a citizen of God's Kingdom, not this world's?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 55,
+    category: "Last Things",
+    categorySlug: "eschatology",
+    title: "ETERNAL LIFE",
+    shortDesc: "Knowing God Forever",
+    term: "Ζωὴ Αἰώνιος",
+    termLabel: "Greek",
+    translation: "Zōē Aiōnios",
+    englishMeaning: "Eternal Life",
+    definition:
+      "Eternal life is not simply living forever — it is a new quality of life in relationship with God that begins the moment we trust Christ. Jesus defined it as knowing the Father and the Son. It cannot be ended by death; Christ's resurrection is its guarantee. The life that starts now continues into the new creation without end.",
+    scripture:
+      "And this is eternal life, that they may know You, the only true God, and Jesus Christ whom You have sent.",
+    reference: "John 17:3",
+    historicalContext:
+      "Greek philosophy promised immortality of the soul — escape from the physical body. The Bible promises something far greater: resurrection of the body into eternal life in a renewed creation. This distinction shaped early Christian hope and changed how believers faced death throughout history.",
+    reflection:
+      "If your eternal life has already begun, how should that change the way you face fear, failure, or loss today?",
     colors: { dark: "#1e293b", accent: "#94a3b8" },
   },
 ];
