@@ -19,10 +19,6 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           background: "var(--surface)",
           display: "flex",
           flexDirection: "column",
-          overflowY: "auto",
-          WebkitOverflowScrolling: "touch",
-          scrollbarWidth: "thin",
-          touchAction: "pan-y",
         }}
       >
         {/* Header strip matching category color */}
@@ -42,8 +38,8 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           </div>
         </div>
 
-        {/* Scrollable content */}
-        <div style={{ padding: "18px 20px 24px", display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
+        {/* Scrollable content — minHeight:0 lets this flex child shrink so overflow-y kicks in */}
+        <div style={{ padding: "18px 20px 24px", display: "flex", flexDirection: "column", gap: 16, flex: 1, minHeight: 0, overflowY: "auto", WebkitOverflowScrolling: "touch", overscrollBehavior: "contain", touchAction: "pan-y" }}>
           {/* Definition */}
           <Section label="Definition">
             <p style={{ fontSize: 15.5, lineHeight: 1.65, color: "var(--foreground)" }}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type RefObject } from "react";
+import { useRef, type RefObject } from "react";
 import { motion } from "framer-motion";
 import type { CreedCard as CreedCardType } from "../../lib/cardData";
 import { CardFront } from "./CardFront";
@@ -28,13 +28,7 @@ export function CreedCard({
   onToggleLearned,
   backRef,
 }: CreedCardProps) {
-  const [flipSettled, setFlipSettled] = useState(false);
-  // iOS WebKit bug: overflow:auto stops working inside transform-style:preserve-3d.
-  // Once the flip animation fully settles, switch to flat so the card back can scroll.
-  const showingBack = flipSettled && isFlipped;
-
   const handleClick = () => {
-    setFlipSettled(false);
     playFlipSound();
     if (typeof navigator !== "undefined" && navigator.vibrate) {
       navigator.vibrate(8);
@@ -49,13 +43,9 @@ export function CreedCard({
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         onClick={handleClick}
-        onAnimationComplete={() => setFlipSettled(true)}
-        style={{ cursor: "pointer", ...(showingBack ? { transformStyle: "flat" } : {}) }}
+        style={{ cursor: "pointer" }}
       >
-        {/* Hidden via wrapper so backface-visibility:hidden isn't relied on in flat mode */}
-        <div style={showingBack ? { display: "none" } : undefined}>
-          <CardFront card={card} cardNumber={cardNumber} totalCards={totalCards} />
-        </div>
+        <CardFront card={card} cardNumber={cardNumber} totalCards={totalCards} />
         <CardBack ref={backRef} card={card} isLearned={isLearned} onToggleLearned={onToggleLearned} />
       </motion.div>
     </div>
