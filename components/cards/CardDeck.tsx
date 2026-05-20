@@ -58,8 +58,6 @@ export function CardDeck({
   const directionRef = useRef<"next" | "prev">("next");
   const backRef = useRef<HTMLDivElement | null>(null);
   const card = cards[currentIndex];
-  const nextCard = cards[(currentIndex + 1) % cards.length];
-  const prevCard = cards[(currentIndex - 1 + cards.length) % cards.length];
 
   const getCategoryBg = (c: CreedCard) =>
     CATEGORY_INFO[c.categorySlug]?.color ?? "#0f172a";
@@ -93,7 +91,7 @@ export function CardDeck({
         style={{
           position: "absolute",
           inset: 0,
-          background: getCategoryBg(prevCard),
+          background: getCategoryBg(card),
           borderRadius: 20,
         }}
       />
@@ -103,7 +101,7 @@ export function CardDeck({
         style={{
           position: "absolute",
           inset: 0,
-          background: getCategoryBg(nextCard),
+          background: getCategoryBg(card),
           borderRadius: 20,
         }}
       />
