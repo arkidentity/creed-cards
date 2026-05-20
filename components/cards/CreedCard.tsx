@@ -52,7 +52,10 @@ export function CreedCard({
         onAnimationComplete={() => setFlipSettled(true)}
         style={{ cursor: "pointer", ...(showingBack ? { transformStyle: "flat" } : {}) }}
       >
-        <CardFront card={card} cardNumber={cardNumber} totalCards={totalCards} />
+        {/* Hidden via wrapper so backface-visibility:hidden isn't relied on in flat mode */}
+        <div style={showingBack ? { display: "none" } : undefined}>
+          <CardFront card={card} cardNumber={cardNumber} totalCards={totalCards} />
+        </div>
         <CardBack ref={backRef} card={card} isLearned={isLearned} onToggleLearned={onToggleLearned} />
       </motion.div>
     </div>
