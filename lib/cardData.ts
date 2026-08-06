@@ -276,16 +276,16 @@ export const CARD_DATA: CreedCard[] = [
     term: "Ἱλασμός",
     termLabel: "Greek",
     translation: "Hilasmos",
-    englishMeaning: "Propitiation",
+    englishMeaning: "Atoning sacrifice — the mercy seat",
     definition:
-      "Jesus' death on the cross was the perfect sacrifice for sin. He died in our place, bearing the punishment we deserve. His blood satisfies God's justice and demonstrates God's love. Through His sacrifice, we are forgiven and reconciled to God.",
+      "Jesus' death on the cross was the perfect sacrifice for sin. He took our place and carried what sin does to us — the guilt, the death, the separation — all the way through to the other side. His blood was not paid to an angry Father to change His mind toward us; the Father gave the Son because He already loved the world. At the cross Jesus disarmed sin, death, and the powers that held us, and in His own body He healed and remade what humanity had broken. Through His sacrifice we are forgiven, reconciled, and made new.",
     scripture:
-      "He Himself is the propitiation for our sins; and not for ours only, but also for those of the whole world.",
+      "He is the atoning sacrifice for our sins, and not only for ours but also for the sins of the whole world.",
     reference: "1 John 2:2",
     historicalContext:
-      "The cross has been the center of Christian faith from the beginning. Early Christians understood Jesus' death as the fulfillment of Old Testament sacrifices, the final and complete offering for sin.",
+      "The cross has been the center of Christian faith from the beginning. Early Christians read Jesus' death as the fulfillment of the Old Testament sacrifices — hilasmos points to the mercy seat, the place where God met His people — and just as strongly as His victory over sin, death, and the devil, and as the moment God took on our humanity to heal it from the inside.",
     reflection:
-      "How does Christ's sacrifice on your behalf change your relationship with God?",
+      "If the cross is the Father giving His Son rather than punishing a stranger in your place, how does that change how you approach God?",
     colors: { dark: "#7f1d1d", accent: "#fca5a5" },
   },
   {
