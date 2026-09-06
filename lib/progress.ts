@@ -1,15 +1,22 @@
 import { getSupabase } from "./supabase";
 
 export const STORAGE_KEYS = {
-  LEARNED: "creedcards_learned",
-  LAST_STUDIED: "creedcards_last_studied",
+  LEARNED: "creedcards_learned", // legacy flat number[] — kept mirrored to Deck 1
+  LEARNED_V2: "creedcards_learned_v2", // Record<deckId, number[]>
+  LAST_STUDIED: "creedcards_last_studied", // legacy flat number — kept mirrored to Deck 1
+  LAST_STUDIED_V2: "creedcards_last_studied_v2", // Record<deckId, number>
+  FOCUS_DECK: "creedcards_focus_deck", // "" | numeric string — mirrors focus_deck_id
   SESSION_DATE: "creedcards_session_date",
   SESSION_COUNT: "creedcards_session_count",
   TAP_HINT_COUNT: "creedcards_tap_hint_count",
   SOUND_ENABLED: "creedcards_sound_enabled",
   LAST_UNDO: "creedcards_last_undo",
   ID_MIGRATION: "creedcards_idmap_v2",
+  DECKS_MIGRATION: "creedcards_decks_v2",
 } as const;
+
+/** Default deck for the deck-less legacy call sites (Essentials). */
+export const DEFAULT_DECK_ID = 1;
 
 /**
  * 2026-09-06 — Deck 1 (Essentials) was frozen at 50 cards and renumbered 1–50.
@@ -31,17 +38,29 @@ const ID_REMAP_V2: Record<number, number> = {
 
 function safeGet(key: string): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem(key);
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 }
 
 function safeSet(key: string, value: string) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(key, value);
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* private mode / quota — ignore */
+  }
 }
 
 function safeRemove(key: string) {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(key);
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    /* ignore */
+  }
 }
 
 function runIdMigrationOnce(): void {
@@ -71,62 +90,191 @@ function runIdMigrationOnce(): void {
   safeSet(STORAGE_KEYS.ID_MIGRATION, "1");
 }
 
-export function getLearnedCards(): number[] {
+/**
+ * 2026-09-06 — Phase B: mastery goes per-deck. Seeds the v2 maps from the legacy
+ * flat keys under deck 1. Runs once per device, gated by DECKS_MIGRATION, and
+ * always after runIdMigrationOnce() so the seeded ids are already the new 1–50.
+ */
+function runDeckMigrationOnce(): void {
+  if (typeof window === "undefined") return;
   runIdMigrationOnce();
-  const raw = safeGet(STORAGE_KEYS.LEARNED);
-  return raw ? (JSON.parse(raw) as number[]) : [];
+  if (safeGet(STORAGE_KEYS.DECKS_MIGRATION)) return;
+
+  if (!safeGet(STORAGE_KEYS.LEARNED_V2)) {
+    let flat: number[] = [];
+    const raw = safeGet(STORAGE_KEYS.LEARNED);
+    if (raw) {
+      try {
+        flat = [...new Set(JSON.parse(raw) as number[])];
+      } catch {
+        flat = [];
+      }
+    }
+    safeSet(STORAGE_KEYS.LEARNED_V2, JSON.stringify({ [DEFAULT_DECK_ID]: flat }));
+  }
+
+  if (!safeGet(STORAGE_KEYS.LAST_STUDIED_V2)) {
+    const rawLast = safeGet(STORAGE_KEYS.LAST_STUDIED);
+    if (rawLast) {
+      const n = parseInt(rawLast);
+      if (!Number.isNaN(n)) {
+        safeSet(STORAGE_KEYS.LAST_STUDIED_V2, JSON.stringify({ [DEFAULT_DECK_ID]: n }));
+      }
+    }
+  }
+
+  safeSet(STORAGE_KEYS.DECKS_MIGRATION, "1");
 }
 
-export function isCardLearned(cardId: number): boolean {
-  return getLearnedCards().includes(cardId);
+// ─── per-deck learned map ──────────────────────────────────────────────────
+
+function readLearnedMap(): Record<string, number[]> {
+  const raw = safeGet(STORAGE_KEYS.LEARNED_V2);
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw) as Record<string, number[]>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
 }
 
-export function toggleCardLearned(cardId: number): boolean {
-  const learned = getLearnedCards();
+function writeLearnedMap(map: Record<string, number[]>) {
+  safeSet(STORAGE_KEYS.LEARNED_V2, JSON.stringify(map));
+  // Mirror Deck 1 to the legacy flat key for one release (rollback + any
+  // consumer still reading `creedcards_learned` directly).
+  safeSet(
+    STORAGE_KEYS.LEARNED,
+    JSON.stringify(map[String(DEFAULT_DECK_ID)] ?? [])
+  );
+}
+
+export function getLearnedCards(deckId: number = DEFAULT_DECK_ID): number[] {
+  runDeckMigrationOnce();
+  return readLearnedMap()[String(deckId)] ?? [];
+}
+
+/** All decks' learned ids, keyed by numeric deckId. */
+export function getAllLearned(): Record<number, number[]> {
+  runDeckMigrationOnce();
+  const out: Record<number, number[]> = {};
+  for (const [k, v] of Object.entries(readLearnedMap())) {
+    const n = Number(k);
+    if (!Number.isNaN(n) && Array.isArray(v)) out[n] = v;
+  }
+  return out;
+}
+
+/** Total mastered cards across every deck. */
+export function getTotalLearnedCount(): number {
+  return Object.values(getAllLearned()).reduce((sum, arr) => sum + arr.length, 0);
+}
+
+export function isCardLearned(
+  cardId: number,
+  deckId: number = DEFAULT_DECK_ID
+): boolean {
+  return getLearnedCards(deckId).includes(cardId);
+}
+
+export function toggleCardLearned(
+  cardId: number,
+  deckId: number = DEFAULT_DECK_ID
+): boolean {
+  runDeckMigrationOnce();
+  const map = readLearnedMap();
+  const key = String(deckId);
+  const learned = map[key] ?? [];
   const idx = learned.indexOf(cardId);
   const wasLearned = idx > -1;
 
-  if (wasLearned) {
-    learned.splice(idx, 1);
-  } else {
-    learned.push(cardId);
-  }
+  if (wasLearned) learned.splice(idx, 1);
+  else learned.push(cardId);
 
-  safeSet(STORAGE_KEYS.LEARNED, JSON.stringify(learned));
+  map[key] = learned;
+  writeLearnedMap(map);
   safeSet(
     STORAGE_KEYS.LAST_UNDO,
-    JSON.stringify({ cardId, action: wasLearned ? "unmarked" : "marked", timestamp: Date.now() })
+    JSON.stringify({
+      cardId,
+      deckId,
+      action: wasLearned ? "unmarked" : "marked",
+      timestamp: Date.now(),
+    })
   );
 
-  void syncToSupabase(learned);
+  void syncToSupabase();
   return !wasLearned;
 }
 
-export function undoLastToggle(): { cardId: number; action: string } | null {
+export function undoLastToggle():
+  | { cardId: number; deckId: number; action: string }
+  | null {
   const raw = safeGet(STORAGE_KEYS.LAST_UNDO);
   if (!raw) return null;
-  const { cardId, action, timestamp } = JSON.parse(raw) as {
+  const { cardId, deckId, action, timestamp } = JSON.parse(raw) as {
     cardId: number;
+    deckId?: number;
     action: string;
     timestamp: number;
   };
   if (Date.now() - timestamp > 10000) return null;
 
-  toggleCardLearned(cardId);
+  const dk = deckId ?? DEFAULT_DECK_ID;
+  toggleCardLearned(cardId, dk);
   safeRemove(STORAGE_KEYS.LAST_UNDO);
-  return { cardId, action };
+  return { cardId, deckId: dk, action };
 }
 
-export function getLastStudiedCard(): number | null {
-  runIdMigrationOnce();
-  const val = safeGet(STORAGE_KEYS.LAST_STUDIED);
-  return val ? parseInt(val) : null;
+// ─── last studied (per deck) ──────────────────────────────────────────────
+
+function readLastStudiedMap(): Record<string, number> {
+  const raw = safeGet(STORAGE_KEYS.LAST_STUDIED_V2);
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw) as Record<string, number>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
 }
 
-export function setLastStudiedCard(cardId: number) {
-  safeSet(STORAGE_KEYS.LAST_STUDIED, String(cardId));
+export function getLastStudiedCard(
+  deckId: number = DEFAULT_DECK_ID
+): number | null {
+  runDeckMigrationOnce();
+  const val = readLastStudiedMap()[String(deckId)];
+  return typeof val === "number" && !Number.isNaN(val) ? val : null;
+}
+
+export function setLastStudiedCard(
+  cardId: number,
+  deckId: number = DEFAULT_DECK_ID
+) {
+  runDeckMigrationOnce();
+  const map = readLastStudiedMap();
+  map[String(deckId)] = cardId;
+  safeSet(STORAGE_KEYS.LAST_STUDIED_V2, JSON.stringify(map));
+  if (deckId === DEFAULT_DECK_ID) safeSet(STORAGE_KEYS.LAST_STUDIED, String(cardId));
   incrementSessionCount();
 }
+
+// ─── focus deck ───────────────────────────────────────────────────────────
+
+export function getFocusDeck(): number | null {
+  const raw = safeGet(STORAGE_KEYS.FOCUS_DECK);
+  if (!raw) return null;
+  const n = parseInt(raw);
+  return Number.isNaN(n) ? null : n;
+}
+
+export function setFocusDeck(deckId: number | null) {
+  if (deckId == null) safeRemove(STORAGE_KEYS.FOCUS_DECK);
+  else safeSet(STORAGE_KEYS.FOCUS_DECK, String(deckId));
+  void syncToSupabase();
+}
+
+// ─── sessions / misc (unchanged) ─────────────────────────────────────────
 
 function getTodayString(): string {
   return new Date().toISOString().split("T")[0];
@@ -169,6 +317,20 @@ export function toggleSound(): boolean {
   return next;
 }
 
+/** Wipe one deck's mastery + "continue" pointer; leaves other decks intact. */
+export function resetDeckProgress(deckId: number): void {
+  runDeckMigrationOnce();
+  const learned = readLearnedMap();
+  delete learned[String(deckId)];
+  writeLearnedMap(learned);
+
+  const last = readLastStudiedMap();
+  delete last[String(deckId)];
+  safeSet(STORAGE_KEYS.LAST_STUDIED_V2, JSON.stringify(last));
+
+  void syncToSupabase();
+}
+
 export function resetAllProgress(): void {
   Object.values(STORAGE_KEYS).forEach(safeRemove);
 }
@@ -205,7 +367,14 @@ export function playFlipSound() {
   }
 }
 
-async function syncToSupabase(learnedIds: number[]) {
+// ─── Supabase push (standalone builds only) ──────────────────────────────
+//
+// The embedded builds (daily-dna) push through daily-dna/lib/creedSync.ts, which
+// is passed the disciple's account id. This path is for the standalone
+// creed-cards deployment (creed-cards.html, embedded by ark-identity), where the
+// signed-in Supabase user id IS the account id (RLS: account_id = auth.uid()).
+
+async function syncToSupabase() {
   const client = getSupabase();
   if (!client) return;
 
@@ -214,13 +383,19 @@ async function syncToSupabase(learnedIds: number[]) {
   } = await client.auth.getSession();
   if (!session?.user) return;
 
+  const decksProgress = readLearnedMap();
+  const focusDeck = getFocusDeck();
+
   await client.from("disciple_creed_progress").upsert(
     {
-      disciple_id: session.user.id,
-      cards_mastered: learnedIds,
+      account_id: session.user.id,
+      decks_progress: decksProgress,
+      // Mirror Deck 1 to the legacy column until Hub reads cut over.
+      cards_mastered: decksProgress[String(DEFAULT_DECK_ID)] ?? [],
       total_study_sessions: getTodaySessionCount(),
       updated_at: new Date().toISOString(),
+      ...(focusDeck != null && { focus_deck_id: focusDeck }),
     },
-    { onConflict: "disciple_id" }
+    { onConflict: "account_id" }
   );
 }
