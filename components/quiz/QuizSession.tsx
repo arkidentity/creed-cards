@@ -2,10 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { generateQuestions } from "../../../../lib/quizEngine";
-import { saveQuizResult, getScoreBadge } from "../../../../lib/quizProgress";
-import { type QuizQuestion } from "../../../../lib/quizData";
-import { useBasePath } from "../../../../lib/basePathContext";
+import { generateQuestions } from "../../lib/quizEngine";
+import { saveQuizResult, getScoreBadge } from "../../lib/quizProgress";
+import { type QuizQuestion } from "../../lib/quizData";
+import { useBasePath } from "../../lib/basePathContext";
+import { getDeck } from "../../lib/decks";
+
+const deckSlug = (deckId: number) => getDeck(deckId)?.slug ?? "essentials";
 
 const LEVEL_LABELS = {
   1: "Surface Recognition",
@@ -163,7 +166,7 @@ function ResultsScreen({
 
         {level < 3 && (
           <Link
-            href={`${base}/quiz/${deckId}/${level + 1}`}
+            href={`${base}/deck/${deckSlug(deckId)}/quiz/${level + 1}`}
             style={{
               display: "block",
               padding: "14px",
@@ -182,7 +185,7 @@ function ResultsScreen({
         )}
 
         <Link
-          href={`${base}/quiz/${deckId}`}
+          href={`${base}/deck/${deckSlug(deckId)}/quiz`}
           style={{
             display: "block",
             padding: "14px",
@@ -297,7 +300,7 @@ export function QuizSession({ deckId, level }: QuizSessionProps) {
         }}
       >
         <Link
-          href={`${base}/quiz/${deckId}`}
+          href={`${base}/deck/${deckSlug(deckId)}/quiz`}
           style={{
             display: "flex",
             alignItems: "center",

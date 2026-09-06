@@ -3,24 +3,19 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  CARD_DATA,
-  CATEGORY_INFO,
-  getCardOfTheDay,
-  type CreedCard,
-  type CategorySlug,
-} from "../../lib/cardData";
+import { type CreedCard } from "../../lib/cardData";
+import { getDeck, deckCardOfTheDay } from "../../lib/decks";
+import { useActiveDeckId } from "../../lib/deckContext";
 import {
   getLearnedCards,
-  isCardLearned,
   toggleCardLearned,
   undoLastToggle,
   setLastStudiedCard,
   incrementTapHintCount,
   getTapHintCount,
 } from "../../lib/progress";
-import { CardDeck } from "../../components/cards/CardDeck";
-import { Toast } from "../../components/ui/Toast";
+import { CardDeck } from "../cards/CardDeck";
+import { Toast } from "../ui/Toast";
 import { useBasePath } from "../../lib/basePathContext";
 
 type FilterMode = "all" | "unlearned" | "learned";
@@ -32,17 +27,18 @@ interface UndoToast {
 }
 
 function buildCardList(
+  allCards: CreedCard[],
   mode: StudyMode,
   filter: FilterMode,
   startId: number | null,
   category: string | null,
-  learnedIds: number[]
+  learnedIds: number[],
+  todayId: number | null
 ): { cards: CreedCard[]; startIndex: number } {
-  let cards: CreedCard[] = [...CARD_DATA];
+  let cards: CreedCard[] = [...allCards];
 
   if (mode === "daily") {
-    const today = getCardOfTheDay();
-    const startIndex = cards.findIndex((c) => c.id === today.id);
+    const startIndex = todayId != null ? cards.findIndex((c) => c.id === todayId) : -1;
     return { cards, startIndex: startIndex > -1 ? startIndex : 0 };
   }
 
@@ -74,6 +70,11 @@ export function StudyScreen() {
   const router = useRouter();
   const base = useBasePath();
 
+  const deckId = useActiveDeckId() ?? 1;
+  const deck = getDeck(deckId);
+  const deckSlug = deck?.slug ?? "essentials";
+  const deckCards = (deck?.cards ?? []) as CreedCard[];
+
   const mode = (searchParams.get("mode") ?? "sequential") as StudyMode;
   const startParam = searchParams.get("start");
   const filterParam = (searchParams.get("filter") ?? "all") as FilterMode;
@@ -88,28 +89,30 @@ export function StudyScreen() {
   const [showHint, setShowHint] = useState(true);
 
   useEffect(() => {
-    const learned = getLearnedCards();
+    const learned = getLearnedCards(deckId);
     setLearnedIds(learned);
     const startId = startParam ? parseInt(startParam) : null;
     const { cards: builtCards, startIndex } = buildCardList(
+      deckCards,
       mode,
       filterParam,
       startId,
       categoryParam,
-      learned
+      learned,
+      deckCardOfTheDay(deckId)?.id ?? null
     );
     setCards(builtCards);
     setCurrentIndex(startIndex);
     setShowHint(getTapHintCount() < 3);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [deckId]);
 
   useEffect(() => {
     setIsFlipped(false);
     if (cards[currentIndex]) {
-      setLastStudiedCard(cards[currentIndex].id);
+      setLastStudiedCard(cards[currentIndex].id, deckId);
     }
-  }, [currentIndex, cards]);
+  }, [currentIndex, cards, deckId]);
 
   const handleNavigate = useCallback((direction: "next" | "prev") => {
     setCurrentIndex((prev) => {
@@ -127,31 +130,39 @@ export function StudyScreen() {
   }, [isFlipped]);
 
   const handleToggleLearned = useCallback((cardId: number) => {
-    const nowLearned = toggleCardLearned(cardId);
-    setLearnedIds(getLearnedCards());
-    const card = CARD_DATA.find((c) => c.id === cardId);
+    const nowLearned = toggleCardLearned(cardId, deckId);
+    setLearnedIds(getLearnedCards(deckId));
+    const card = deckCards.find((c) => c.id === cardId);
     if (card) {
       setUndoToast({
         cardId,
         message: nowLearned ? `"${card.title}" marked as learned` : `"${card.title}" unmarked`,
       });
     }
-  }, []);
+  }, [deckId, deckCards]);
 
   const handleUndo = useCallback(() => {
     const result = undoLastToggle();
     if (result) {
-      setLearnedIds(getLearnedCards());
+      setLearnedIds(getLearnedCards(deckId));
     }
     setUndoToast(null);
-  }, []);
+  }, [deckId]);
 
   const toggleFilter = () => {
     const next: FilterMode = filter === "all" ? "unlearned" : filter === "unlearned" ? "learned" : "all";
     setFilter(next);
-    const learned = getLearnedCards();
+    const learned = getLearnedCards(deckId);
     const startId = cards[currentIndex]?.id ?? null;
-    const { cards: builtCards, startIndex } = buildCardList(mode, next, startId, categoryParam, learned);
+    const { cards: builtCards, startIndex } = buildCardList(
+      deckCards,
+      mode,
+      next,
+      startId,
+      categoryParam,
+      learned,
+      deckCardOfTheDay(deckId)?.id ?? null
+    );
     setCards(builtCards);
     setCurrentIndex(startIndex);
     setIsFlipped(false);
@@ -160,7 +171,7 @@ export function StudyScreen() {
   const handleShare = async () => {
     const card = cards[currentIndex];
     if (!card) return;
-    const url = `${window.location.origin}/study?mode=sequential&start=${card.id}`;
+    const url = `${window.location.origin}${base}/deck/${deckSlug}/study?mode=sequential&start=${card.id}`;
     const shareData = {
       title: `Creed Cards — ${card.title}`,
       text: card.shortDesc,
@@ -178,7 +189,7 @@ export function StudyScreen() {
   };
 
   const categoryName = categoryParam
-    ? (CATEGORY_INFO[categoryParam as CategorySlug]?.name ?? categoryParam)
+    ? (deck?.categories.find((c) => c.slug === categoryParam)?.name ?? categoryParam)
     : null;
 
   const filterLabel: Record<FilterMode, string> = {
@@ -205,7 +216,7 @@ export function StudyScreen() {
           No cards match this filter.
         </p>
         <button
-          onClick={() => router.push(base || "/")}
+          onClick={() => router.push(`${base}/deck/${deckSlug}`)}
           style={{
             padding: "10px 24px",
             background: "var(--accent)",
@@ -247,7 +258,7 @@ export function StudyScreen() {
         }}
       >
         <Link
-          href={base || "/"}
+          href={`${base}/deck/${deckSlug}`}
           style={{
             display: "flex",
             alignItems: "center",
