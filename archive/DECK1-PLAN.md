@@ -1,3 +1,8 @@
+> **SUPERSEDED (2026-09-06).** The Deck 1 roster is now frozen by
+> `DECK1-FINALIZE.md` (50 cards; 5 removed, 4 added) and written into
+> `lib/cardData.ts`. The quiz plan here is superseded by `QUIZ-REDESIGN.md`.
+> Kept for history.
+
 # Deck 1 Revision + Quiz System Plan
 
 ## Summary of Changes

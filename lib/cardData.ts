@@ -81,9 +81,9 @@ export const CATEGORY_INFO: Record<
 };
 
 export const CARD_DATA: CreedCard[] = [
-  // TRINITY CATEGORY (2-8)
+  // TRINITY & NATURE OF GOD (1–8)
   {
-    id: 2,
+    id: 1,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
     title: "ONE GOD IN THREE PERSONS",
@@ -93,17 +93,18 @@ export const CARD_DATA: CreedCard[] = [
     translation: "Homoousios",
     englishMeaning: "Same Being",
     definition:
-      'The Father, Son, and Holy Spirit are not three gods but one God in three Persons. Each Person is fully God, sharing the same divine essence. They are eternally distinct yet completely united—three "whos" in one "what."',
-    scripture: "Hear, O Israel! The Lord is our God, the Lord is one!",
+      "The Father, Son, and Holy Spirit are not three gods but one God in three Persons. Each Person is fully God, sharing the same divine essence. They are eternally distinct yet completely united—three \"whos\" in one \"what.\"",
+    scripture:
+      "Hear, O Israel! The Lord is our God, the Lord is one!",
     reference: "Deuteronomy 6:4",
     historicalContext:
-      'The term "homoousios" (same being) was affirmed at Nicaea to counter Arianism, which taught that Jesus was a created being rather than eternally God.',
+      "The term \"homoousios\" (same being) was affirmed at Nicaea to counter Arianism, which taught that Jesus was a created being rather than eternally God.",
     reflection:
       "Why is it important that God is both one and three, rather than just one or just three?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
-    id: 3,
+    id: 2,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
     title: "GOD THE FATHER",
@@ -118,13 +119,13 @@ export const CARD_DATA: CreedCard[] = [
       "Blessed be the God and Father of our Lord Jesus Christ, who has blessed us with every spiritual blessing in the heavenly places in Christ.",
     reference: "Ephesians 1:3",
     historicalContext:
-      'Jesus revealed God as "Father" in a unique and intimate way, teaching us to pray "Our Father" and showing that God\'s fatherhood is grounded in the eternal relationship within the Trinity.',
+      "Jesus revealed God as \"Father\" in a unique and intimate way, teaching us to pray \"Our Father\" and showing that God's fatherhood is grounded in the eternal relationship within the Trinity.",
     reflection:
       "How does knowing God as Father through Jesus Christ change your understanding of your identity?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
-    id: 4,
+    id: 3,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
     title: "GOD THE SON",
@@ -139,13 +140,13 @@ export const CARD_DATA: CreedCard[] = [
       "He is the image of the invisible God, the firstborn of all creation. For by Him all things were created, both in the heavens and on earth.",
     reference: "Colossians 1:15-16",
     historicalContext:
-      'The Council of Nicaea (325 AD) affirmed that the Son is "begotten, not made, being of one substance with the Father," refuting the claim that Jesus was a created being.',
+      "The Council of Nicaea (325 AD) affirmed that the Son is \"begotten, not made, being of one substance with the Father,\" refuting the claim that Jesus was a created being.",
     reflection:
       "What does it mean for your life that Jesus is both fully God and fully human?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
-    id: 5,
+    id: 4,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
     title: "GOD THE HOLY SPIRIT",
@@ -160,12 +161,34 @@ export const CARD_DATA: CreedCard[] = [
       "The Helper, the Holy Spirit, whom the Father will send in My name, He will teach you all things, and bring to your remembrance all that I said to you.",
     reference: "John 14:26",
     historicalContext:
-      'The Council of Constantinople (381 AD) affirmed the full deity of the Holy Spirit against those who denied the Spirit\'s personhood, declaring the Spirit is "worshiped and glorified together with the Father and the Son."',
-    reflection: "How is the Holy Spirit active in your life today?",
+      "The Council of Constantinople (381 AD) affirmed the full deity of the Holy Spirit against those who denied the Spirit's personhood, declaring the Spirit is \"worshiped and glorified together with the Father and the Son.\"",
+    reflection:
+      "How is the Holy Spirit active in your life today?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
-    id: 7,
+    id: 5,
+    category: "Trinity & Nature of God",
+    categorySlug: "trinity",
+    title: "THE DIVINE DANCE",
+    shortDesc: "The Mutual Indwelling",
+    term: "περιχώρησις",
+    termLabel: "Greek",
+    translation: "Perichōrēsis",
+    englishMeaning: "Mutual Indwelling",
+    definition:
+      "The three Persons of the Trinity live in one another — the Father in the Son, the Son in the Father, the Spirit in both. This is not three gods cooperating and not one God playing three parts, but a communion of self-giving love with no beginning and no end. The early church called it the divine dance. In Christ, we are drawn into it.",
+    scripture:
+      "That they may all be one; even as You, Father, are in Me and I in You, that they also may be in Us.",
+    reference: "John 17:21",
+    historicalContext:
+      "John of Damascus (8th century) used perichōrēsis to describe how the divine Persons contain one another without blurring together. It guards the Trinity from two errors at once: dividing God into three, or collapsing Him into one.",
+    reflection:
+      "If God's own life is a communion of love, what does that tell you about why you were made?",
+    colors: { dark: "#0f172a", accent: "#3b82f6" },
+  },
+  {
+    id: 6,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
     title: "THE CREATOR GOD",
@@ -176,12 +199,34 @@ export const CARD_DATA: CreedCard[] = [
     englishMeaning: "God Created",
     definition:
       "The Triune God created all things, visible and invisible, by His word and for His glory. Creation reveals God's power, wisdom, and goodness. All creation exists in and through and for Jesus Christ, who sustains all things by His powerful word.",
-    scripture: "In the beginning God created the heavens and the earth.",
+    scripture:
+      "In the beginning God created the heavens and the earth.",
     reference: "Genesis 1:1",
     historicalContext:
-      'Against Gnosticism\'s claim that matter is evil and created by a lesser god, the church affirmed that the one true God created all things good. The Nicene Creed states God is "maker of heaven and earth, of all things visible and invisible."',
+      "Against Gnosticism's claim that matter is evil and created by a lesser god, the church affirmed that the one true God created all things good. The Nicene Creed states God is \"maker of heaven and earth, of all things visible and invisible.\"",
     reflection:
       "How does knowing that God created you on purpose and for a purpose affect your daily life?",
+    colors: { dark: "#0f172a", accent: "#3b82f6" },
+  },
+  {
+    id: 7,
+    category: "Trinity & Nature of God",
+    categorySlug: "trinity",
+    title: "IMAGO DEI",
+    shortDesc: "Made in His Image",
+    term: "imago Dei",
+    termLabel: "Latin",
+    translation: "Imago Dei",
+    englishMeaning: "Image of God",
+    definition:
+      "Every human being is made in the image of God — able to know Him, reflect His character, and represent His rule in the world. Sin defaces the image but never erases it. It is being restored in those who are being formed into the likeness of Christ, who is Himself the perfect image of God.",
+    scripture:
+      "God created man in His own image, in the image of God He created him; male and female He created them.",
+    reference: "Genesis 1:27",
+    historicalContext:
+      "Early theologians such as Irenaeus distinguished the image (retained after the Fall) from the likeness (lost, and restored in Christ). The doctrine grounds human dignity, the sanctity of life, and the call to see Christ in the least of these.",
+    reflection:
+      "How would you treat the next person you meet if you truly believed they carry the image of God?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
   {
@@ -196,15 +241,17 @@ export const CARD_DATA: CreedCard[] = [
     englishMeaning: "Almighty",
     definition:
       "God is sovereign over all creation, ruling with perfect wisdom, power, and love. Nothing happens outside His knowledge or control. His sovereignty gives us confidence that His good purposes will prevail, even when we don't understand His ways.",
-    scripture: "Our God is in the heavens; He does whatever He pleases.",
+    scripture:
+      "Our God is in the heavens; He does whatever He pleases.",
     reference: "Psalm 115:3",
     historicalContext:
-      'The Nicene Creed calls God "Pantokratōr" (Almighty), affirming God\'s absolute authority over all things. This gives believers confidence even in times of persecution or suffering.',
-    reflection: "How does God's sovereignty give you peace in uncertain times?",
+      "The Nicene Creed calls God \"Pantokratōr\" (Almighty), affirming God's absolute authority over all things. This gives believers confidence even in times of persecution or suffering.",
+    reflection:
+      "How does God's sovereignty give you peace in uncertain times?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
   },
 
-  // CHRIST CATEGORY (9-16, excl. 15)
+  // JESUS CHRIST (9–15)
   {
     id: 9,
     category: "Jesus Christ",
@@ -221,7 +268,7 @@ export const CARD_DATA: CreedCard[] = [
       "The Word became flesh, and dwelt among us, and we saw His glory, glory as of the only Son from the Father, full of grace and truth.",
     reference: "John 1:14",
     historicalContext:
-      'The Council of Chalcedon (451 AD) defined the Incarnation, teaching that Christ is "truly God and truly man," with two complete natures in one person, "without confusion, without change, without division, without separation."',
+      "The Council of Chalcedon (451 AD) defined the Incarnation, teaching that Christ is \"truly God and truly man,\" with two complete natures in one person, \"without confusion, without change, without division, without separation.\"",
     reflection:
       "What difference does it make that God didn't just send a message but came Himself?",
     colors: { dark: "#7f1d1d", accent: "#fca5a5" },
@@ -239,7 +286,7 @@ export const CARD_DATA: CreedCard[] = [
     definition:
       "Jesus was conceived by the Holy Spirit in the virgin Mary. He had no human father. This miraculous conception shows that Jesus' origin is divine, while being born of Mary shows His genuine humanity. He is God's Son entering our world.",
     scripture:
-      'The angel said to her, "The Holy Spirit will come upon you, and the power of the Most High will overshadow you; and for that reason the holy Child shall be called the Son of God."',
+      "The angel said to her, \"The Holy Spirit will come upon you, and the power of the Most High will overshadow you; and for that reason the holy Child shall be called the Son of God.\"",
     reference: "Luke 1:35",
     historicalContext:
       "The virgin birth has been affirmed from the earliest creeds (Apostles' Creed, Nicene Creed) as essential to Christ's identity. It demonstrates that Jesus' coming was God's sovereign act, not human achievement.",
@@ -259,7 +306,8 @@ export const CARD_DATA: CreedCard[] = [
     englishMeaning: "Hypostatic Union",
     definition:
       "Jesus Christ is completely God and completely human in one Person. He is not half-God and half-human, nor does He alternate between being God and being human. Both natures exist fully and permanently united in one Person.",
-    scripture: "For in Him all the fullness of Deity dwells in bodily form.",
+    scripture:
+      "For in Him all the fullness of Deity dwells in bodily form.",
     reference: "Colossians 2:9",
     historicalContext:
       "Chalcedon (451 AD) condemned both Nestorianism (which divided Christ into two persons) and Eutychianism (which mixed the natures into one confused nature), affirming the perfect union of two distinct natures in one Person.",
@@ -292,6 +340,27 @@ export const CARD_DATA: CreedCard[] = [
     id: 13,
     category: "Jesus Christ",
     categorySlug: "christ",
+    title: "ATONEMENT",
+    shortDesc: "At One with God",
+    term: "כִּפֻּר",
+    termLabel: "Hebrew",
+    translation: "Kippur",
+    englishMeaning: "Covering",
+    definition:
+      "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, God's justice is satisfied, our sins are forgiven, and we are fully reconciled to God.",
+    scripture:
+      "God was in Christ reconciling the world to Himself, not counting their trespasses against them.",
+    reference: "2 Corinthians 5:19",
+    historicalContext:
+      "The Day of Atonement (Yom Kippur) was Israel's most sacred annual ritual — the high priest entered the Holy of Holies to make atonement for the nation's sins. Jesus fulfilled this as the final and complete sacrifice, entering the true holy place once for all with His own blood (Hebrews 9:12).",
+    reflection:
+      "What does it mean that God did not just forgive your debt but paid it Himself?",
+    colors: { dark: "#7f1d1d", accent: "#fca5a5" },
+  },
+  {
+    id: 14,
+    category: "Jesus Christ",
+    categorySlug: "christ",
     title: "THE RESURRECTION",
     shortDesc: "Victory Over Death",
     term: "Ἀνάστασις",
@@ -304,13 +373,13 @@ export const CARD_DATA: CreedCard[] = [
       "But now Christ has been raised from the dead, the first fruits of those who are asleep. For since by a man came death, by a man also came the resurrection of the dead.",
     reference: "1 Corinthians 15:20-21",
     historicalContext:
-      'The resurrection was the core apostolic proclamation from the beginning. Paul states that without Christ\'s resurrection, Christian faith is futile. Every Sunday is a "little Easter," celebrating Jesus\' victory over death.',
+      "The resurrection was the core apostolic proclamation from the beginning. Paul states that without Christ's resurrection, Christian faith is futile. Every Sunday is a \"little Easter,\" celebrating Jesus' victory over death.",
     reflection:
       "How does the reality of Christ's resurrection give you hope today?",
     colors: { dark: "#7f1d1d", accent: "#fca5a5" },
   },
   {
-    id: 14,
+    id: 15,
     category: "Jesus Christ",
     categorySlug: "christ",
     title: "THE ASCENSION",
@@ -325,35 +394,15 @@ export const CARD_DATA: CreedCard[] = [
       "He who descended is Himself also He who ascended far above all the heavens, so that He might fill all things.",
     reference: "Ephesians 4:10",
     historicalContext:
-      'The Nicene Creed affirms Christ "ascended into heaven and is seated at the right hand of the Father." This position of authority demonstrates Christ\'s ongoing rule and His role as our advocate before God.',
+      "The Nicene Creed affirms Christ \"ascended into heaven and is seated at the right hand of the Father.\" This position of authority demonstrates Christ's ongoing rule and His role as our advocate before God.",
     reflection:
       "What does it mean that Jesus, in His human body, now rules all creation?",
     colors: { dark: "#7f1d1d", accent: "#fca5a5" },
   },
+
+  // HOLY SPIRIT (16–21)
   {
     id: 16,
-    category: "Jesus Christ",
-    categorySlug: "christ",
-    title: "CHRIST THE HEAD",
-    shortDesc: "Lord of the Church",
-    term: "Κεφαλή",
-    termLabel: "Greek",
-    translation: "Kephalē",
-    englishMeaning: "Head",
-    definition:
-      "Christ is the head of the Church, His body. He directs, nourishes, and protects the Church. Every believer is united to Christ and to one another in Him. He is our supreme authority and the source of all our spiritual life and growth.",
-    scripture:
-      "He is also head of the body, the church; and He is the beginning, the firstborn from the dead, so that He Himself will come to have first place in everything.",
-    reference: "Colossians 1:18",
-    historicalContext:
-      "Paul's letters emphasize Christ's headship over the Church, countering any attempt to give another human leader Christ's unique authority. The Church exists in complete dependence on and submission to Christ.",
-    reflection: "In what practical ways can you submit to Christ's headship today?",
-    colors: { dark: "#7f1d1d", accent: "#fca5a5" },
-  },
-
-  // HOLY SPIRIT CATEGORY (17-22)
-  {
-    id: 17,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "THE COMFORTER",
@@ -368,12 +417,13 @@ export const CARD_DATA: CreedCard[] = [
       "I will ask the Father, and He will give you another Helper, that He may be with you forever; that is the Spirit of truth.",
     reference: "John 14:16-17",
     historicalContext:
-      'Jesus used the term "Paraklētos," which means one called alongside to help. Unlike Jesus\' physical presence which was limited to one location, the Spirit dwells in all believers everywhere simultaneously.',
-    reflection: "How have you experienced the Holy Spirit's comfort or guidance?",
+      "Jesus used the term \"Paraklētos,\" which means one called alongside to help. Unlike Jesus' physical presence which was limited to one location, the Spirit dwells in all believers everywhere simultaneously.",
+    reflection:
+      "How have you experienced the Holy Spirit's comfort or guidance?",
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
   {
-    id: 18,
+    id: 17,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "REGENERATION",
@@ -389,11 +439,12 @@ export const CARD_DATA: CreedCard[] = [
     reference: "Titus 3:5",
     historicalContext:
       "Jesus taught Nicodemus that entrance into God's kingdom requires being \"born again\" by the Spirit (John 3). This spiritual rebirth is the beginning of new life in Christ.",
-    reflection: "What evidence of spiritual rebirth do you see in your own life?",
+    reflection:
+      "What evidence of spiritual rebirth do you see in your own life?",
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
   {
-    id: 19,
+    id: 18,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "SANCTIFICATION",
@@ -409,11 +460,12 @@ export const CARD_DATA: CreedCard[] = [
     reference: "2 Corinthians 3:18",
     historicalContext:
       "Protestant Reformers distinguished between justification (being declared righteous) and sanctification (becoming righteous in practice). Both are gifts of grace, but sanctification is the Spirit's ongoing work in believers.",
-    reflection: "What area of your life is the Spirit currently transforming?",
+    reflection:
+      "What area of your life is the Spirit currently transforming?",
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
   {
-    id: 20,
+    id: 19,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "THE FRUIT OF THE SPIRIT",
@@ -434,7 +486,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
   {
-    id: 21,
+    id: 20,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "GIFTS OF THE SPIRIT",
@@ -455,7 +507,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
   {
-    id: 22,
+    id: 21,
     category: "Holy Spirit",
     categorySlug: "spirit",
     title: "THE SPIRIT'S INDWELLING",
@@ -476,7 +528,28 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#713f12", accent: "#fbbf24" },
   },
 
-  // SALVATION & GOSPEL CATEGORY (23-28)
+  // SALVATION & GOSPEL (22–32)
+  {
+    id: 22,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "SIN AND THE FALL",
+    shortDesc: "Missing the Mark",
+    term: "Ἁμαρτία",
+    termLabel: "Greek",
+    translation: "Hamartia",
+    englishMeaning: "Missing the Mark",
+    definition:
+      "Sin is any thought, word, or action that falls short of God's holy standard — and the Fall is where it began. When Adam and Eve chose their own way over God's, sin and death entered the world. Every person since is born with a broken nature. We don't just commit sins; we are sinners who need rescue.",
+    scripture:
+      "For all have sinned and fall short of the glory of God.",
+    reference: "Romans 3:23",
+    historicalContext:
+      "Augustine's doctrine of original sin — that Adam's rebellion brought spiritual death to all humanity — was upheld against Pelagius, who taught that humans could choose good without divine help. Understanding the depth of the Fall is what makes the grace of the gospel so remarkable.",
+    reflection:
+      "How does seeing sin as a fundamental broken condition — not just bad choices — change how you understand your need for God?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
   {
     id: 23,
     category: "Salvation & Gospel",
@@ -493,7 +566,7 @@ export const CARD_DATA: CreedCard[] = [
       "For I delivered to you as of first importance what I also received, that Christ died for our sins according to the Scriptures, and that He was buried, and that He was raised on the third day.",
     reference: "1 Corinthians 15:3-4",
     historicalContext:
-      'Paul presents the gospel as the message he "received" and passed on, showing it\'s not human invention but divine revelation. This is the same gospel the apostles preached from the beginning.',
+      "Paul presents the gospel as the message he \"received\" and passed on, showing it's not human invention but divine revelation. This is the same gospel the apostles preached from the beginning.",
     reflection:
       "How would you explain the gospel to someone who has never heard it?",
     colors: { dark: "#14532d", accent: "#86efac" },
@@ -544,6 +617,27 @@ export const CARD_DATA: CreedCard[] = [
     id: 26,
     category: "Salvation & Gospel",
     categorySlug: "salvation",
+    title: "REPENTANCE",
+    shortDesc: "Turning from Sin to God",
+    term: "Μετάνοια",
+    termLabel: "Greek",
+    translation: "Metanoia",
+    englishMeaning: "Change of Mind",
+    definition:
+      "Repentance is a change of mind and heart that turns from sin and turns to God. It's not just feeling sorry but a radical reorientation of life. True repentance is a gift from God that leads to life. It accompanies genuine faith and continues throughout the Christian life.",
+    scripture:
+      "Repent and return, so that your sins may be wiped away, in order that times of refreshing may come from the presence of the Lord.",
+    reference: "Acts 3:19",
+    historicalContext:
+      "John the Baptist, Jesus, and the apostles all preached repentance. Luther's first of 95 Theses stated that the entire Christian life should be one of repentance—continual turning from sin to Christ.",
+    reflection:
+      "What sin is God calling you to turn away from right now?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 27,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
     title: "JUSTIFICATION",
     shortDesc: "Declared Righteous",
     term: "Δικαίωσις",
@@ -562,27 +656,28 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#14532d", accent: "#86efac" },
   },
   {
-    id: 27,
+    id: 28,
     category: "Salvation & Gospel",
     categorySlug: "salvation",
-    title: "REPENTANCE",
-    shortDesc: "Turning from Sin to God",
-    term: "Μετάνοια",
+    title: "UNION WITH CHRIST",
+    shortDesc: "Joined to the Lord",
+    term: "ἐν Χριστῷ",
     termLabel: "Greek",
-    translation: "Metanoia",
-    englishMeaning: "Change of Mind",
+    translation: "En Christō",
+    englishMeaning: "In Christ",
     definition:
-      "Repentance is a change of mind and heart that turns from sin and turns to God. It's not just feeling sorry but a radical reorientation of life. True repentance is a gift from God that leads to life. It accompanies genuine faith and continues throughout the Christian life.",
+      "Every blessing of salvation comes to us because we are joined to Jesus Himself. By the Spirit we share His death, His resurrection, and His life; what is true of Him becomes true of us. We died, we were raised, we are seated with Him. \"In Christ\" is Paul's most repeated phrase — the ground of the whole Christian life.",
     scripture:
-      "Repent and return, so that your sins may be wiped away, in order that times of refreshing may come from the presence of the Lord.",
-    reference: "Acts 3:19",
+      "I have been crucified with Christ; and it is no longer I who live, but Christ lives in me.",
+    reference: "Galatians 2:20",
     historicalContext:
-      "John the Baptist, Jesus, and the apostles all preached repentance. Luther's first of 95 Theses stated that the entire Christian life should be one of repentance—continual turning from sin to Christ.",
-    reflection: "What sin is God calling you to turn away from right now?",
+      "Paul writes \"in Christ\" or \"in Him\" more than 160 times. John Calvin called union with Christ the hinge of salvation: apart from it, everything Christ accomplished \"remains useless\" to us.",
+    reflection:
+      "What changes when you stop striving to become someone and start living from who you already are in Christ?",
     colors: { dark: "#14532d", accent: "#86efac" },
   },
   {
-    id: 28,
+    id: 29,
     category: "Salvation & Gospel",
     categorySlug: "salvation",
     title: "ADOPTION",
@@ -602,10 +697,73 @@ export const CARD_DATA: CreedCard[] = [
       "How does knowing you are God's adopted child change your sense of identity and security?",
     colors: { dark: "#14532d", accent: "#86efac" },
   },
-
-  // HOLY SCRIPTURE CATEGORY (29-32)
   {
-    id: 29,
+    id: 30,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "THE NEW COVENANT",
+    shortDesc: "Written on the Heart",
+    term: "καινὴ διαθήκη",
+    termLabel: "Greek",
+    translation: "Kainē Diathēkē",
+    englishMeaning: "New Covenant",
+    definition:
+      "God promised through Jeremiah a new covenant — not carved in stone but written on the heart. In it, sins are remembered no more, everyone knows the Lord, and the Spirit supplies the power the law never could. Jesus sealed this covenant in His blood. We do not live under the old terms; we live as heirs of the new.",
+    scripture:
+      "This cup is the new covenant in My blood; do this, as often as you drink it, in remembrance of Me.",
+    reference: "1 Corinthians 11:25",
+    historicalContext:
+      "Jeremiah 31:31–34 is quoted in full in Hebrews 8 — the longest Old Testament quotation in the New. The Reformers recovered the covenant framework to show that grace, not law-keeping, defines life with God.",
+    reflection:
+      "Where are you still relating to God on old-covenant terms — earning, proving, fearing — when He has offered you new ones?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 31,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "SALVATION",
+    shortDesc: "Rescued and Restored",
+    term: "Σωτηρία",
+    termLabel: "Greek",
+    translation: "Sōtēria",
+    englishMeaning: "Deliverance",
+    definition:
+      "Salvation is God's complete rescue of humanity from sin, death, and judgment through Jesus Christ. It is past (saved from sin's penalty), present (being saved from sin's power), and future (will be saved from sin's presence). Salvation is entirely God's gift — received by faith, never earned.",
+    scripture:
+      "For the Son of Man has come to seek and to save that which was lost.",
+    reference: "Luke 19:10",
+    historicalContext:
+      "The Greek word 'sōtēria' was used in the ancient world for deliverance from enemies, disease, or danger. The New Testament applies it to God's total rescue of humanity — body, soul, and spirit — through Christ's life, death, and resurrection.",
+    reflection:
+      "What does it mean to you personally that God came to seek and save you?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+  {
+    id: 32,
+    category: "Salvation & Gospel",
+    categorySlug: "salvation",
+    title: "THE KINGDOM OF GOD",
+    shortDesc: "Here and Coming",
+    term: "Βασιλεία τοῦ Θεοῦ",
+    termLabel: "Greek",
+    translation: "Basileia tou Theou",
+    englishMeaning: "Reign of God",
+    definition:
+      "The Kingdom of God is God's reign breaking into human history through Jesus Christ. Jesus' first words in ministry were 'The Kingdom of God is at hand.' The Kingdom is both present — Christ reigns now in the hearts of His people — and coming — fully established when He returns. To follow Jesus is to live as a citizen of this Kingdom today.",
+    scripture:
+      "Repent, for the kingdom of heaven is at hand.",
+    reference: "Matthew 4:17",
+    historicalContext:
+      "The Kingdom of God was Jesus' primary and most repeated message. The Jewish people expected a political kingdom; Jesus revealed a reign that transforms from the inside out. The early church understood themselves as living between two ages — the Kingdom inaugurated at Christ's first coming and consummated at His return.",
+    reflection:
+      "What would change in your daily life if you took seriously that you are a citizen of God's Kingdom, not this world's?",
+    colors: { dark: "#14532d", accent: "#86efac" },
+  },
+
+  // HOLY SCRIPTURE (33–35)
+  {
+    id: 33,
     category: "Holy Scripture",
     categorySlug: "scripture",
     title: "INSPIRATION OF SCRIPTURE",
@@ -626,7 +784,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#4c1d95", accent: "#c084fc" },
   },
   {
-    id: 30,
+    id: 34,
     category: "Holy Scripture",
     categorySlug: "scripture",
     title: "AUTHORITY OF SCRIPTURE",
@@ -647,7 +805,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#4c1d95", accent: "#c084fc" },
   },
   {
-    id: 31,
+    id: 35,
     category: "Holy Scripture",
     categorySlug: "scripture",
     title: "CHRIST IN SCRIPTURE",
@@ -662,14 +820,15 @@ export const CARD_DATA: CreedCard[] = [
       "You search the Scriptures because you think that in them you have eternal life; it is these that testify about Me.",
     reference: "John 5:39",
     historicalContext:
-      'After His resurrection, Jesus explained to His disciples "beginning with Moses and with all the prophets" how all Scripture spoke of Him (Luke 24:27). The early church read the Old Testament as a Christian book, pointing to Christ.',
+      "After His resurrection, Jesus explained to His disciples \"beginning with Moses and with all the prophets\" how all Scripture spoke of Him (Luke 24:27). The early church read the Old Testament as a Christian book, pointing to Christ.",
     reflection:
       "As you read Scripture, do you look for how it reveals Christ and His gospel?",
     colors: { dark: "#4c1d95", accent: "#c084fc" },
   },
-  // CHURCH & SACRAMENTS CATEGORY (33-38)
+
+  // CHURCH & SACRAMENTS (36–39)
   {
-    id: 33,
+    id: 36,
     category: "Church & Sacraments",
     categorySlug: "church",
     title: "THE CHURCH",
@@ -684,13 +843,13 @@ export const CARD_DATA: CreedCard[] = [
       "For even as the body is one and yet has many members, and all the members of the body, though they are many, are one body, so also is Christ.",
     reference: "1 Corinthians 12:12",
     historicalContext:
-      'The Nicene Creed describes the Church as "one, holy, catholic, and apostolic." These four marks identify the true Church: unified in Christ, set apart for God, universal in scope, and built on apostolic teaching.',
+      "The Nicene Creed describes the Church as \"one, holy, catholic, and apostolic.\" These four marks identify the true Church: unified in Christ, set apart for God, universal in scope, and built on apostolic teaching.",
     reflection:
       "How does your local church reflect the universal Church of all believers?",
     colors: { dark: "#7c2d12", accent: "#fdba74" },
   },
   {
-    id: 34,
+    id: 37,
     category: "Church & Sacraments",
     categorySlug: "church",
     title: "THE BODY OF CHRIST",
@@ -701,7 +860,8 @@ export const CARD_DATA: CreedCard[] = [
     englishMeaning: "Body of Christ",
     definition:
       "The Church is Christ's body on earth—He is the Head, and believers are the members. Each person has a unique role, gifted by the Spirit for the common good. We are interdependent; what affects one member affects all. Together we make Christ's presence visible in the world.",
-    scripture: "Now you are Christ's body, and individually members of it.",
+    scripture:
+      "Now you are Christ's body, and individually members of it.",
     reference: "1 Corinthians 12:27",
     historicalContext:
       "Paul's body metaphor shows that the Church is not an organization but an organism—a living body animated by Christ and empowered by the Spirit. Every member is essential and valuable.",
@@ -710,7 +870,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#7c2d12", accent: "#fdba74" },
   },
   {
-    id: 35,
+    id: 38,
     category: "Church & Sacraments",
     categorySlug: "church",
     title: "BAPTISM",
@@ -731,7 +891,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#7c2d12", accent: "#fdba74" },
   },
   {
-    id: 36,
+    id: 39,
     category: "Church & Sacraments",
     categorySlug: "church",
     title: "THE LORD'S SUPPER",
@@ -751,51 +911,10 @@ export const CARD_DATA: CreedCard[] = [
       "When you take Communion, do you experience it as a real sharing in Christ and His people — or has it become routine?",
     colors: { dark: "#7c2d12", accent: "#fdba74" },
   },
-  {
-    id: 37,
-    category: "Church & Sacraments",
-    categorySlug: "church",
-    title: "COMMUNION OF SAINTS",
-    shortDesc: "Fellowship in Christ",
-    term: "Communio Sanctorum",
-    termLabel: "Latin",
-    translation: "Communio Sanctorum",
-    englishMeaning: "Fellowship of Saints",
-    definition:
-      "All believers are united in Christ, forming one holy fellowship that transcends time and space. We are connected not only to other Christians alive today but also to all who have gone before us. This communion means we share in one another's joys, sorrows, and prayers.",
-    scripture:
-      "If one member suffers, all the members suffer with it; if one member is honored, all the members rejoice with it.",
-    reference: "1 Corinthians 12:26",
-    historicalContext:
-      "The Apostles' Creed confesses belief in \"the communion of saints,\" affirming our spiritual unity with all believers. The early church practiced radical sharing and mutual care as a visible sign of this communion.",
-    reflection:
-      "How do you experience fellowship with believers beyond your local congregation?",
-    colors: { dark: "#7c2d12", accent: "#fdba74" },
-  },
-  {
-    id: 38,
-    category: "Church & Sacraments",
-    categorySlug: "church",
-    title: "ONE, HOLY, CATHOLIC, APOSTOLIC",
-    shortDesc: "Marks of the Church",
-    term: "Μία, Ἁγία, Καθολική, Ἀποστολική",
-    termLabel: "Greek",
-    translation: "Mia, Hagia, Katholikē, Apostolikē",
-    englishMeaning: "One, Holy, Universal, Apostolic",
-    definition:
-      "The Nicene Creed identifies four essential marks of the Church: One (united in Christ), Holy (set apart for God), Catholic/Universal (for all people everywhere), and Apostolic (built on the apostles' teaching). These marks help us recognize the true Church.",
-    scripture:
-      "There is one body and one Spirit, just as also you were called in one hope of your calling; one Lord, one faith, one baptism, one God and Father of all.",
-    reference: "Ephesians 4:4-6",
-    historicalContext:
-      "The Council of Constantinople (381 AD) added these four marks to the Nicene Creed to combat heresies and define the true Church against false teachers and schismatic groups.",
-    reflection: "How does your church embody these four marks?",
-    colors: { dark: "#7c2d12", accent: "#fdba74" },
-  },
 
-  // CHRISTIAN LIFE CATEGORY (39-46)
+  // CHRISTIAN LIFE (40–45)
   {
-    id: 39,
+    id: 40,
     category: "Christian Life",
     categorySlug: "life",
     title: "DISCIPLESHIP",
@@ -816,7 +935,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#134e4a", accent: "#5eead4" },
   },
   {
-    id: 40,
+    id: 41,
     category: "Christian Life",
     categorySlug: "life",
     title: "LOVE",
@@ -837,7 +956,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#134e4a", accent: "#5eead4" },
   },
   {
-    id: 41,
+    id: 42,
     category: "Christian Life",
     categorySlug: "life",
     title: "PRAYER",
@@ -855,27 +974,6 @@ export const CARD_DATA: CreedCard[] = [
       "The Lord's Prayer (Matthew 6:9-13) has served as the model prayer for Christians throughout history. The early church practiced set hours of prayer, following Jewish traditions but now directed to God through Christ.",
     reflection:
       "Is prayer more like a duty or a delight in your life? Why?",
-    colors: { dark: "#134e4a", accent: "#5eead4" },
-  },
-  {
-    id: 42,
-    category: "Christian Life",
-    categorySlug: "life",
-    title: "SPIRITUAL WARFARE",
-    shortDesc: "Standing Firm",
-    term: "Πάλη",
-    termLabel: "Greek",
-    translation: "Palē",
-    englishMeaning: "Wrestling",
-    definition:
-      "Believers face real spiritual opposition from Satan and demonic forces. Our struggle is not against flesh and blood but against spiritual powers. Yet we are not defenseless—God provides spiritual armor, and Christ has already won the victory. We stand firm in His strength, not our own.",
-    scripture:
-      "For our struggle is not against flesh and blood, but against the rulers, against the powers, against the world forces of this darkness, against the spiritual forces of wickedness in the heavenly places.",
-    reference: "Ephesians 6:12",
-    historicalContext:
-      "The Desert Fathers wrote extensively about spiritual warfare, recognizing that the Christian life involves real battle against temptation and evil. The armor of God (Ephesians 6:10-18) equips us for this fight.",
-    reflection:
-      "What spiritual battles are you currently facing, and are you relying on God's armor?",
     colors: { dark: "#134e4a", accent: "#5eead4" },
   },
   {
@@ -903,27 +1001,6 @@ export const CARD_DATA: CreedCard[] = [
     id: 44,
     category: "Christian Life",
     categorySlug: "life",
-    title: "GOOD WORKS",
-    shortDesc: "Faith in Action",
-    term: "Ἔργα Ἀγαθά",
-    termLabel: "Greek",
-    translation: "Erga Agatha",
-    englishMeaning: "Good Works",
-    definition:
-      "We are saved by grace through faith, not by works—but we are saved for good works. Faith without works is dead. True faith inevitably produces obedience and love in action. Good works don't earn salvation but demonstrate its reality and bring glory to God.",
-    scripture:
-      "For we are His workmanship, created in Christ Jesus for good works, which God prepared beforehand so that we would walk in them.",
-    reference: "Ephesians 2:10",
-    historicalContext:
-      "The Reformation clarified that works are the fruit, not the root, of salvation. James and Paul, when read together, show that genuine faith necessarily produces good works as evidence of new life in Christ.",
-    reflection:
-      "What good works is God preparing you to do in response to His grace?",
-    colors: { dark: "#134e4a", accent: "#5eead4" },
-  },
-  {
-    id: 45,
-    category: "Christian Life",
-    categorySlug: "life",
     title: "SUFFERING",
     shortDesc: "Sharing Christ's Afflictions",
     term: "Πάθημα",
@@ -942,7 +1019,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#134e4a", accent: "#5eead4" },
   },
   {
-    id: 46,
+    id: 45,
     category: "Christian Life",
     categorySlug: "life",
     title: "WITNESS",
@@ -963,9 +1040,9 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#134e4a", accent: "#5eead4" },
   },
 
-  // LAST THINGS CATEGORY (47-50)
+  // LAST THINGS (46–50)
   {
-    id: 47,
+    id: 46,
     category: "Last Things",
     categorySlug: "eschatology",
     title: "THE SECOND COMING",
@@ -986,7 +1063,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#1e293b", accent: "#94a3b8" },
   },
   {
-    id: 48,
+    id: 47,
     category: "Last Things",
     categorySlug: "eschatology",
     title: "RESURRECTION OF THE DEAD",
@@ -1007,7 +1084,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#1e293b", accent: "#94a3b8" },
   },
   {
-    id: 49,
+    id: 48,
     category: "Last Things",
     categorySlug: "eschatology",
     title: "FINAL JUDGMENT",
@@ -1028,7 +1105,7 @@ export const CARD_DATA: CreedCard[] = [
     colors: { dark: "#1e293b", accent: "#94a3b8" },
   },
   {
-    id: 50,
+    id: 49,
     category: "Last Things",
     categorySlug: "eschatology",
     title: "NEW HEAVEN AND NEW EARTH",
@@ -1048,90 +1125,8 @@ export const CARD_DATA: CreedCard[] = [
       "How does the promise of a renewed creation shape your hope and purpose now?",
     colors: { dark: "#1e293b", accent: "#94a3b8" },
   },
-  // NEW FOUNDATIONAL CARDS (51-55)
   {
-    id: 51,
-    category: "Salvation & Gospel",
-    categorySlug: "salvation",
-    title: "SIN AND THE FALL",
-    shortDesc: "Missing the Mark",
-    term: "Ἁμαρτία",
-    termLabel: "Greek",
-    translation: "Hamartia",
-    englishMeaning: "Missing the Mark",
-    definition:
-      "Sin is any thought, word, or action that falls short of God's holy standard — and the Fall is where it began. When Adam and Eve chose their own way over God's, sin and death entered the world. Every person since is born with a broken nature. We don't just commit sins; we are sinners who need rescue.",
-    scripture: "For all have sinned and fall short of the glory of God.",
-    reference: "Romans 3:23",
-    historicalContext:
-      "Augustine's doctrine of original sin — that Adam's rebellion brought spiritual death to all humanity — was upheld against Pelagius, who taught that humans could choose good without divine help. Understanding the depth of the Fall is what makes the grace of the gospel so remarkable.",
-    reflection:
-      "How does seeing sin as a fundamental broken condition — not just bad choices — change how you understand your need for God?",
-    colors: { dark: "#14532d", accent: "#86efac" },
-  },
-  {
-    id: 52,
-    category: "Salvation & Gospel",
-    categorySlug: "salvation",
-    title: "SALVATION",
-    shortDesc: "Rescued and Restored",
-    term: "Σωτηρία",
-    termLabel: "Greek",
-    translation: "Sōtēria",
-    englishMeaning: "Deliverance",
-    definition:
-      "Salvation is God's complete rescue of humanity from sin, death, and judgment through Jesus Christ. It is past (saved from sin's penalty), present (being saved from sin's power), and future (will be saved from sin's presence). Salvation is entirely God's gift — received by faith, never earned.",
-    scripture:
-      "For the Son of Man has come to seek and to save that which was lost.",
-    reference: "Luke 19:10",
-    historicalContext:
-      "The Greek word 'sōtēria' was used in the ancient world for deliverance from enemies, disease, or danger. The New Testament applies it to God's total rescue of humanity — body, soul, and spirit — through Christ's life, death, and resurrection.",
-    reflection: "What does it mean to you personally that God came to seek and save you?",
-    colors: { dark: "#14532d", accent: "#86efac" },
-  },
-  {
-    id: 53,
-    category: "Jesus Christ",
-    categorySlug: "christ",
-    title: "ATONEMENT",
-    shortDesc: "At One with God",
-    term: "כִּפֻּר",
-    termLabel: "Hebrew",
-    translation: "Kippur",
-    englishMeaning: "Covering",
-    definition:
-      "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, God's justice is satisfied, our sins are forgiven, and we are fully reconciled to God.",
-    scripture:
-      "God was in Christ reconciling the world to Himself, not counting their trespasses against them.",
-    reference: "2 Corinthians 5:19",
-    historicalContext:
-      "The Day of Atonement (Yom Kippur) was Israel's most sacred annual ritual — the high priest entered the Holy of Holies to make atonement for the nation's sins. Jesus fulfilled this as the final and complete sacrifice, entering the true holy place once for all with His own blood (Hebrews 9:12).",
-    reflection:
-      "What does it mean that God did not just forgive your debt but paid it Himself?",
-    colors: { dark: "#7f1d1d", accent: "#fca5a5" },
-  },
-  {
-    id: 54,
-    category: "Salvation & Gospel",
-    categorySlug: "salvation",
-    title: "THE KINGDOM OF GOD",
-    shortDesc: "Here and Coming",
-    term: "Βασιλεία τοῦ Θεοῦ",
-    termLabel: "Greek",
-    translation: "Basileia tou Theou",
-    englishMeaning: "Reign of God",
-    definition:
-      "The Kingdom of God is God's reign breaking into human history through Jesus Christ. Jesus' first words in ministry were 'The Kingdom of God is at hand.' The Kingdom is both present — Christ reigns now in the hearts of His people — and coming — fully established when He returns. To follow Jesus is to live as a citizen of this Kingdom today.",
-    scripture: "Repent, for the kingdom of heaven is at hand.",
-    reference: "Matthew 4:17",
-    historicalContext:
-      "The Kingdom of God was Jesus' primary and most repeated message. The Jewish people expected a political kingdom; Jesus revealed a reign that transforms from the inside out. The early church understood themselves as living between two ages — the Kingdom inaugurated at Christ's first coming and consummated at His return.",
-    reflection:
-      "What would change in your daily life if you took seriously that you are a citizen of God's Kingdom, not this world's?",
-    colors: { dark: "#14532d", accent: "#86efac" },
-  },
-  {
-    id: 55,
+    id: 50,
     category: "Last Things",
     categorySlug: "eschatology",
     title: "ETERNAL LIFE",

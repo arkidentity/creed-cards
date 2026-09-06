@@ -208,7 +208,7 @@ export default function HomePage() {
               background: lastCard.colors.dark,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <CardIcon cardId={lastCard.id} accentColor={lastCard.colors.accent} stroke="rgba(255,255,255,0.85)" />
+              <CardIcon categorySlug={lastCard.categorySlug} accentColor={lastCard.colors.accent} stroke="rgba(255,255,255,0.85)" />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 10, color: "var(--accent)", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>

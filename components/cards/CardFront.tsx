@@ -50,7 +50,7 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         {/* Icon */}
         <div style={{ width: 136, height: 136, marginBottom: 18, flexShrink: 0 }}>
-          <CardIcon cardId={card.id} accentColor={card.colors.accent} stroke="rgba(255,255,255,0.9)" />
+          <CardIcon categorySlug={card.categorySlug} accentColor={card.colors.accent} stroke="rgba(255,255,255,0.9)" />
         </div>
 
         {/* Title */}
