@@ -1,60 +1,79 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { DECKS, getDeck, deckCategoryCards } from "../../lib/decks";
 import {
-  CARD_DATA,
-  CATEGORY_INFO,
-  getCardsByCategory,
-  type CategorySlug,
-} from "../../lib/cardData";
-import {
-  getLearnedCards,
+  getAllLearned,
+  getTotalLearnedCount,
   getTodaySessionCount,
   getSoundEnabled,
   toggleSound,
+  resetDeckProgress,
   resetAllProgress,
 } from "../../lib/progress";
 import { getQuizResult, type QuizResult } from "../../lib/quizProgress";
 import { useBasePath } from "../../lib/basePathContext";
 
+const QUIZ_LEVELS = [
+  { level: 1, name: "Level 1", subtitle: "Surface Recognition" },
+  { level: 2, name: "Level 2", subtitle: "Content Mastery" },
+  { level: 3, name: "Level 3", subtitle: "Deep Understanding" },
+] as const;
+
 export default function ProgressPage() {
   const base = useBasePath();
-  const [learnedIds, setLearnedIds] = useState<number[]>([]);
+
+  const firstLive = DECKS.find((d) => d.status === "live") ?? DECKS[0];
+  const [selectedDeckId, setSelectedDeckId] = useState(firstLive.id);
+  const [learnedByDeck, setLearnedByDeck] = useState<Record<number, number[]>>({});
+  const [totalLearned, setTotalLearned] = useState(0);
   const [todayCount, setTodayCount] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [confirmReset, setConfirmReset] = useState(false);
   const [quizResults, setQuizResults] = useState<(QuizResult | null)[]>([null, null, null]);
+  const [confirmReset, setConfirmReset] = useState<"deck" | "all" | null>(null);
 
-  useEffect(() => {
-    setLearnedIds(getLearnedCards());
+  const refresh = () => {
+    setLearnedByDeck(getAllLearned());
+    setTotalLearned(getTotalLearnedCount());
     setTodayCount(getTodaySessionCount());
-    setSoundEnabled(getSoundEnabled());
-    setQuizResults([
-      getQuizResult(1, 1),
-      getQuizResult(1, 2),
-      getQuizResult(1, 3),
-    ]);
-  }, []);
-
-  const learnedCount = learnedIds.length;
-  const totalCount = CARD_DATA.length;
-  const learnedPct = Math.round((learnedCount / totalCount) * 100);
-
-  const handleToggleSound = () => {
-    const next = toggleSound();
-    setSoundEnabled(next);
   };
 
-  const handleReset = () => {
-    if (!confirmReset) {
-      setConfirmReset(true);
+  useEffect(() => {
+    refresh();
+    setSoundEnabled(getSoundEnabled());
+  }, []);
+
+  useEffect(() => {
+    setQuizResults([
+      getQuizResult(selectedDeckId, 1),
+      getQuizResult(selectedDeckId, 2),
+      getQuizResult(selectedDeckId, 3),
+    ]);
+  }, [selectedDeckId]);
+
+  const deck = getDeck(selectedDeckId)!;
+  const learnedIds = learnedByDeck[selectedDeckId] ?? [];
+  const totalCount = deck.cards.length;
+  const learnedCount = learnedIds.length;
+  const learnedPct = totalCount > 0 ? Math.round((learnedCount / totalCount) * 100) : 0;
+
+  const decksInProgress = useMemo(
+    () => Object.values(learnedByDeck).filter((arr) => arr.length > 0).length,
+    [learnedByDeck]
+  );
+
+  const handleToggleSound = () => setSoundEnabled(toggleSound());
+
+  const handleReset = (scope: "deck" | "all") => {
+    if (confirmReset !== scope) {
+      setConfirmReset(scope);
       return;
     }
-    resetAllProgress();
-    setLearnedIds([]);
-    setTodayCount(0);
-    setConfirmReset(false);
+    if (scope === "deck") resetDeckProgress(selectedDeckId);
+    else resetAllProgress();
+    setConfirmReset(null);
+    refresh();
   };
 
   return (
@@ -100,31 +119,70 @@ export default function ProgressPage() {
 
       <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-        {/* Overall stats */}
+        {/* Cross-deck summary */}
         <div
           style={{
             background: "var(--surface)",
             border: "1px solid var(--border)",
-            borderRadius: 18,
-            padding: "20px",
+            borderRadius: 14,
+            padding: "14px 16px",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: 8,
           }}
         >
-          <div
-            style={{
-              fontSize: 56,
-              fontWeight: 800,
-              color: "var(--accent)",
-              lineHeight: 1,
-              marginBottom: 4,
-            }}
-          >
+          {[
+            { label: "Mastered", value: totalLearned },
+            { label: "Decks Started", value: decksInProgress },
+            { label: "Today", value: todayCount },
+          ].map((s) => (
+            <div key={s.label} style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "var(--foreground)" }}>{s.value}</div>
+              <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2, letterSpacing: "0.04em" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Deck switcher */}
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {DECKS.map((d) => {
+            const isLive = d.status === "live";
+            const active = d.id === selectedDeckId;
+            return (
+              <button
+                key={d.id}
+                onClick={() => isLive && setSelectedDeckId(d.id)}
+                disabled={!isLive}
+                style={{
+                  flexShrink: 0,
+                  padding: "8px 14px",
+                  borderRadius: 999,
+                  border: `1px solid ${active ? "var(--accent)" : "var(--border-strong)"}`,
+                  background: active ? "var(--accent)" : "var(--surface-2)",
+                  color: active ? "#000" : isLive ? "var(--foreground)" : "var(--muted)",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: "0.03em",
+                  cursor: isLive ? "pointer" : "default",
+                  opacity: isLive ? 1 : 0.5,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {d.shortName}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Selected-deck hero */}
+        <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 18, padding: "20px" }}>
+          <div style={{ fontSize: 56, fontWeight: 800, color: "var(--accent)", lineHeight: 1, marginBottom: 4 }}>
             {learnedPct}%
           </div>
           <div style={{ fontSize: 13, color: "var(--muted)", marginBottom: 16 }}>
-            Overall completion
+            {deck.shortName} · {learnedCount} / {totalCount} learned
           </div>
-
-          <div style={{ background: "var(--border)", borderRadius: 99, height: 8, overflow: "hidden", marginBottom: 16 }}>
+          <div style={{ background: "var(--border)", borderRadius: 99, height: 8, overflow: "hidden" }}>
             <div
               style={{
                 height: "100%",
@@ -135,50 +193,24 @@ export default function ProgressPage() {
               }}
             />
           </div>
-
-          {/* Stats row */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-            {[
-              { label: "Total Cards", value: totalCount },
-              { label: "Learned", value: learnedCount },
-              { label: "Today", value: todayCount },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                style={{
-                  background: "var(--surface-2)",
-                  borderRadius: 10,
-                  padding: "10px 8px",
-                  textAlign: "center",
-                }}
-              >
-                <div style={{ fontSize: 20, fontWeight: 800, color: "var(--foreground)" }}>
-                  {stat.value}
-                </div>
-                <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2, letterSpacing: "0.04em" }}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Category breakdown */}
-        <div>
-          <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-            By Category
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            {(Object.entries(CATEGORY_INFO) as [CategorySlug, typeof CATEGORY_INFO[CategorySlug]][]).map(
-              ([slug, info]) => {
-                const categoryCards = getCardsByCategory(slug);
+        {deck.categories.length > 0 && (
+          <div>
+            <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
+              By Category
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {deck.categories.map((cat) => {
+                const categoryCards = deckCategoryCards(deck.id, cat.slug);
                 const catLearned = categoryCards.filter((c) => learnedIds.includes(c.id)).length;
                 const pct = categoryCards.length > 0 ? (catLearned / categoryCards.length) * 100 : 0;
 
                 return (
                   <Link
-                    key={slug}
-                    href={`${base}/study?mode=sequential&category=${slug}`}
+                    key={cat.slug}
+                    href={`${base}/deck/${deck.slug}/study?mode=sequential&category=${cat.slug}`}
                     style={{
                       display: "block",
                       background: "var(--surface)",
@@ -190,38 +222,22 @@ export default function ProgressPage() {
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div
-                          style={{
-                            width: 10, height: 10, borderRadius: 99,
-                            background: info.accent,
-                            flexShrink: 0,
-                          }}
-                        />
-                        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)" }}>
-                          {info.name}
-                        </span>
+                        <div style={{ width: 10, height: 10, borderRadius: 99, background: cat.accent, flexShrink: 0 }} />
+                        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)" }}>{cat.name}</span>
                       </div>
                       <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>
                         {catLearned} / {categoryCards.length}
                       </span>
                     </div>
                     <div style={{ background: "var(--border)", borderRadius: 99, height: 4, overflow: "hidden" }}>
-                      <div
-                        style={{
-                          height: "100%",
-                          width: `${pct}%`,
-                          background: info.accent,
-                          borderRadius: 99,
-                          transition: "width 0.4s ease",
-                        }}
-                      />
+                      <div style={{ height: "100%", width: `${pct}%`, background: cat.accent, borderRadius: 99, transition: "width 0.4s ease" }} />
                     </div>
                   </Link>
                 );
-              }
-            )}
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Test Your Knowledge */}
         <div>
@@ -229,16 +245,12 @@ export default function ProgressPage() {
             Test Your Knowledge
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            {[
-              { level: 1, name: "Level 1", subtitle: "Surface Recognition" },
-              { level: 2, name: "Level 2", subtitle: "Content Mastery" },
-              { level: 3, name: "Level 3", subtitle: "Deep Understanding" },
-            ].map(({ level, name, subtitle }, i) => {
+            {QUIZ_LEVELS.map(({ level, name, subtitle }, i) => {
               const result = quizResults[i];
               return (
                 <Link
                   key={level}
-                  href={`${base}/quiz/1/${level}`}
+                  href={`${base}/deck/${deck.slug}/quiz/${level}`}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -321,36 +333,50 @@ export default function ProgressPage() {
               </button>
             </div>
 
-            {/* Reset Progress */}
-            <div style={{ padding: "14px 16px" }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "var(--foreground)", marginBottom: 2 }}>
-                Reset All Progress
+            {/* Reset */}
+            <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "var(--foreground)", marginBottom: 2 }}>
+                  Reset Progress
+                </div>
+                <div style={{ fontSize: 11, color: "var(--muted)" }}>
+                  Clears learned cards. Session data is cleared only by &ldquo;all decks&rdquo;.
+                </div>
               </div>
-              <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 10 }}>
-                Clears all learned cards and session data
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <button
+                  onClick={() => handleReset("deck")}
+                  onBlur={() => setConfirmReset(null)}
+                  style={resetBtnStyle(confirmReset === "deck")}
+                >
+                  {confirmReset === "deck" ? "Tap to confirm" : `Reset ${deck.shortName}`}
+                </button>
+                <button
+                  onClick={() => handleReset("all")}
+                  onBlur={() => setConfirmReset(null)}
+                  style={resetBtnStyle(confirmReset === "all")}
+                >
+                  {confirmReset === "all" ? "Tap to confirm" : "Reset all decks"}
+                </button>
               </div>
-              <button
-                onClick={handleReset}
-                onBlur={() => setConfirmReset(false)}
-                style={{
-                  padding: "9px 18px",
-                  borderRadius: 9,
-                  border: "1px solid var(--error, #ef4444)",
-                  background: confirmReset ? "var(--error, #ef4444)" : "transparent",
-                  color: confirmReset ? "#fff" : "var(--error, #ef4444)",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  transition: "all 0.15s ease",
-                }}
-              >
-                {confirmReset ? "Tap again to confirm" : "Reset Progress"}
-              </button>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   );
+}
+
+function resetBtnStyle(confirming: boolean): React.CSSProperties {
+  return {
+    padding: "9px 16px",
+    borderRadius: 9,
+    border: "1px solid var(--error, #ef4444)",
+    background: confirming ? "var(--error, #ef4444)" : "transparent",
+    color: confirming ? "#fff" : "var(--error, #ef4444)",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    transition: "all 0.15s ease",
+  };
 }
