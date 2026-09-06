@@ -149,11 +149,14 @@ function DeckTile({ deck, base, learned }: { deck: Deck; base: string; learned: 
         borderRadius: 16,
         textDecoration: "none",
         background: isLive
-          ? `linear-gradient(145deg, ${deck.cover.dark}, ${deck.cover.dark}cc)`
+          ? `linear-gradient(145deg, ${deck.cover.accent}22, ${deck.cover.dark} 60%)`
           : "var(--surface)",
-        border: isLive ? "1px solid rgba(255,255,255,0.08)" : "1px solid var(--border)",
-        padding: "16px 16px",
-        opacity: isLive ? 1 : 0.75,
+        border: isLive
+          ? `1px solid ${deck.cover.accent}66`
+          : "1px solid var(--border)",
+        boxShadow: isLive ? `inset 4px 0 0 ${deck.cover.accent}` : undefined,
+        padding: "16px 16px 16px 20px",
+        opacity: isLive ? 1 : 0.7,
       }}
     >
       {/* Progress ring */}
