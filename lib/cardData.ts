@@ -1,7 +1,10 @@
 export interface CreedCard {
   id: number;
+  deckId?: number; // denormalized; set by the deck registry (lib/decks.ts). Absent = Essentials (1).
   category: string;
-  categorySlug: CategorySlug;
+  // Resolves against the owning deck's `categories`, not a global enum.
+  // Essentials' slugs are the CategorySlug union; other doctrine decks add their own.
+  categorySlug: CategorySlug | string;
   title: string;
   shortDesc: string;
   term?: string;

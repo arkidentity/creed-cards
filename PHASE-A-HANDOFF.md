@@ -34,6 +34,12 @@ Travis still owes feedback on 3 marks (church / persons / events).
 
 ## THE TASK: Phase A — `lib/decks.ts` registry
 
+> **✅ DONE 2026-09-06.** `lib/decks.ts` + `lib/decks/foundationsCards.ts` +
+> `lib/decks/fulfilledCards.ts` created; `FOUNDATIONS_CARDS` / `FULFILLED_CARDS`
+> moved out of their `.md` docs; `CreedCard.categorySlug` widened to allow
+> per-deck slugs; `CreedCard.deckId?` added. No route/storage/UI change. `tsc`
+> and `next build` clean. Next: align with Travis on B/C scope before starting.
+
 **Goal:** one place that knows all four decks. **Internal only — no visible change,
 no route changes, no storage changes.** (Storage re-key is Phase B; dashboard is
 Phase C.)

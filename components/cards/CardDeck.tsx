@@ -60,7 +60,7 @@ export function CardDeck({
   const card = cards[currentIndex];
 
   const getCategoryBg = (c: CreedCard) =>
-    CATEGORY_INFO[c.categorySlug]?.color ?? "#0f172a";
+    CATEGORY_INFO[c.categorySlug as keyof typeof CATEGORY_INFO]?.color ?? "#0f172a";
 
   const handleNavigate = (dir: "next" | "prev") => {
     directionRef.current = dir;
