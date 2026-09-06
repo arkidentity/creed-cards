@@ -11,20 +11,23 @@ the short version.
 
 | Repo | HEAD | State |
 |---|---|---|
-| `arkidentity/creed-cards` | `1021a05` | Deck 1 frozen at 50 + renumbered 1–50; per-category icons; all planning docs. |
-| `arkidentity/daily-dna` | `b54d6bd` | submodule → `1021a05`; `lib/creedCardTitles.ts` synced. |
-| `arkidentity/arkidentity` | `c619882` | submodule → `1021a05`. |
-| `arkidentity/dna-hub` | `45961a8` | `src/lib/creedCardsList.ts` synced; migration `229_creed_deck1_id_remap.sql` **RUN in Supabase**. |
+| `arkidentity/creed-cards` | `6aae40e` | Phase A shipped: `lib/decks.ts` registry + `lib/decks/{foundationsCards,fulfilledCards}.ts`. Deck 1 still frozen at 50 + renumbered 1–50; per-category icons; all planning docs. |
+| `arkidentity/daily-dna` | `73618b1` | submodule → `6aae40e`; `lib/creedCardTitles.ts` synced. |
+| `arkidentity/arkidentity` | `1da9703` | submodule → `6aae40e`. |
+| `arkidentity/dna-hub` | `45961a8` | Unaffected by Phase A. `src/lib/creedCardsList.ts` synced; migration `229_creed_deck1_id_remap.sql` **RUN in Supabase**. |
 
 **All 4 deck rosters are approved.** Full card copy exists and has been
 reviewed/fixed for two of them:
 
 - **Deck 1 Essentials** — 50 cards, live in `lib/cardData.ts` (`CARD_DATA`, ids 1–50).
-- **Deck 2 Foundations** — 50 cards written in `DECK2-FOUNDATIONS-CARDS.md`
-  (`FOUNDATIONS_CARDS` array, `doctrine` schema). Not in code.
-- **Deck 4 Fulfilled** — 50 cards written in `DECK4-FULFILLED-CARDS.md`
-  (`FULFILLED_CARDS` array, `fulfillment` schema). Not in code.
-- **Deck 3 Promises** — roster sketch only (`DECK-LINEUP.md`); no cards, no schema.
+- **Deck 2 Foundations** — 50 cards in code: `lib/decks/foundationsCards.ts`
+  (`FOUNDATIONS_CARDS`, `doctrine` schema / `CreedCard`). `DECK2-FOUNDATIONS-CARDS.md`
+  now keeps only the roster rationale.
+- **Deck 4 Fulfilled** — 50 cards in code: `lib/decks/fulfilledCards.ts`
+  (`FULFILLED_CARDS` + `FulfillmentCard` interface). `DECK4-FULFILLED-CARDS.md`
+  now keeps only the roster rationale.
+- **Deck 3 Promises** — roster sketch only (`DECK-LINEUP.md`); stub `PromiseCard`
+  type in `lib/decks.ts`, no cards, schema not designed.
 
 Category icons: `lib/categoryIcons.tsx` (`CategoryIcon({ slug, accentColor, stroke })`),
 15 marks. `lib/cardIcons.tsx` is a shim. Spec + colours in `CATEGORY-ICONS.md`.
