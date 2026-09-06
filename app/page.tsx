@@ -3,57 +3,26 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  CARD_DATA,
-  CATEGORY_INFO,
-  getCardOfTheDay,
-  getCardsByCategory,
-  type CategorySlug,
-} from "../lib/cardData";
-import {
-  getLearnedCards,
-  getLastStudiedCard,
-  getTodaySessionCount,
-} from "../lib/progress";
+  DECKS,
+  globalCardOfTheDay,
+  type Deck,
+} from "../lib/decks";
+import { getAllLearned, getTotalLearnedCount } from "../lib/progress";
 import { getQuizResult } from "../lib/quizProgress";
-import { CardIcon } from "../lib/cardIcons";
 import { useBasePath } from "../lib/basePathContext";
 
 export default function HomePage() {
   const base = useBasePath();
-  const [learnedIds, setLearnedIds] = useState<number[]>([]);
-  const [lastStudied, setLastStudied] = useState<number | null>(null);
-  const [todayCount, setTodayCount] = useState(0);
-  const [quizBestPct, setQuizBestPct] = useState<number | null>(null);
+  const [learnedByDeck, setLearnedByDeck] = useState<Record<number, number[]>>({});
+  const [totalLearned, setTotalLearned] = useState(0);
 
   useEffect(() => {
-    setLearnedIds(getLearnedCards());
-    setLastStudied(getLastStudiedCard());
-    setTodayCount(getTodaySessionCount());
-    // Show the best score across all 3 levels for the quiz tile
-    const best = [1, 2, 3]
-      .map((l) => getQuizResult(1, l)?.bestPct ?? null)
-      .filter((p): p is number => p !== null);
-    if (best.length > 0) setQuizBestPct(Math.max(...best));
+    setLearnedByDeck(getAllLearned());
+    setTotalLearned(getTotalLearnedCount());
   }, []);
 
-  const todayCard = getCardOfTheDay();
-  const learnedCount = learnedIds.length;
-  const totalCount = CARD_DATA.length;
-  const learnedPct = Math.round((learnedCount / totalCount) * 100);
-
-  const lastCard = lastStudied ? CARD_DATA.find((c) => c.id === lastStudied) : null;
-
-  const STUDY_MODES = [
-    { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: "Card 1 to 51" },
-    { label: "Random", icon: "⚡", href: `${base}/study?mode=random`, desc: "Shuffled deck" },
-    { label: "Unlearned", icon: "○", href: `${base}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
-    {
-      label: "Quiz",
-      icon: "✦",
-      href: `${base}/quiz/1`,
-      desc: quizBestPct !== null ? `Best: ${quizBestPct}%` : "3 levels",
-    },
-  ];
+  const today = globalCardOfTheDay();
+  const liveCount = DECKS.filter((d) => d.status === "live").length;
 
   return (
     <div
@@ -74,19 +43,11 @@ export default function HomePage() {
         }}
       >
         <div>
-          <h1
-            style={{
-              fontSize: 22,
-              fontWeight: 800,
-              letterSpacing: "0.06em",
-              color: "var(--foreground)",
-              margin: 0,
-            }}
-          >
+          <h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "0.06em", color: "var(--foreground)", margin: 0 }}>
             CREED CARDS
           </h1>
           <p style={{ fontSize: 12, color: "var(--muted)", margin: "2px 0 0", letterSpacing: "0.04em" }}>
-            Theological Foundations
+            {totalLearned} mastered · {liveCount} {liveCount === 1 ? "deck" : "decks"}
           </p>
         </div>
         <Link
@@ -114,207 +75,123 @@ export default function HomePage() {
 
       <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-        {/* Card of the Day */}
-        <Link
-          href={`${base}/study?mode=daily`}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-            borderRadius: 18,
-            overflow: "hidden",
-            textDecoration: "none",
-            background: `linear-gradient(145deg, ${todayCard.colors.dark}, ${todayCard.colors.dark}cc)`,
-            border: "1px solid rgba(255,255,255,0.07)",
-            padding: "16px 16px",
-          }}
-        >
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 10, color: todayCard.colors.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
-              Card of the Day
-            </div>
-            <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.03em", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {todayCard.title}
-            </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {todayCard.shortDesc}
-            </div>
-          </div>
-          <div style={{
-            flexShrink: 0,
-            display: "flex", alignItems: "center", gap: 5,
-            background: todayCard.colors.accent,
-            color: "#000",
-            padding: "8px 13px",
-            borderRadius: 10,
-            fontSize: 12,
-            fontWeight: 700,
-            whiteSpace: "nowrap",
-          }}>
-            Study Now →
-          </div>
-        </Link>
-
-        {/* Progress bar */}
-        <div
-          style={{
-            background: "var(--surface)",
-            borderRadius: 14,
-            padding: "14px 16px",
-            border: "1px solid var(--border)",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)" }}>
-              Overall Progress
-            </span>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)" }}>
-              {learnedCount} / {totalCount}
-            </span>
-          </div>
-          <div style={{ background: "var(--border)", borderRadius: 99, height: 6, overflow: "hidden" }}>
-            <div
-              style={{
-                height: "100%",
-                width: `${learnedPct}%`,
-                background: "var(--accent)",
-                borderRadius: 99,
-                transition: "width 0.6s ease",
-              }}
-            />
-          </div>
-          <div style={{ marginTop: 6, fontSize: 11, color: "var(--muted)" }}>
-            {learnedPct}% learned{todayCount > 0 && ` · ${todayCount} studied today`}
-          </div>
-        </div>
-
-        {/* Continue where you left off */}
-        {lastCard && (
+        {/* Cross-deck Card of the Day */}
+        {today && (
           <Link
-            href={`${base}/study?mode=sequential&start=${lastCard.id}`}
+            href={`${base}/deck/${today.deck.slug}`}
             style={{
               display: "flex",
               alignItems: "center",
               gap: 14,
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: 14,
-              padding: "14px 16px",
+              borderRadius: 18,
+              overflow: "hidden",
               textDecoration: "none",
+              background: `linear-gradient(145deg, ${today.card.colors.dark}, ${today.card.colors.dark}cc)`,
+              border: "1px solid rgba(255,255,255,0.07)",
+              padding: "16px 16px",
             }}
           >
-            <div style={{
-              width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-              background: lastCard.colors.dark,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <CardIcon categorySlug={lastCard.categorySlug} accentColor={lastCard.colors.accent} stroke="rgba(255,255,255,0.85)" />
-            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 10, color: "var(--accent)", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>
-                Continue
+              <div style={{ fontSize: 10, color: today.card.colors.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
+                Card of the Day · {today.deck.shortName}
               </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "var(--foreground)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {lastCard.title}
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.03em", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {today.card.title}
+              </div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {today.card.shortDesc}
               </div>
             </div>
-            <span style={{ fontSize: 16, color: "var(--muted)" }}>→</span>
+            <span style={{ flexShrink: 0, fontSize: 18, color: today.card.colors.accent }}>→</span>
           </Link>
         )}
 
-        {/* Study modes grid */}
+        {/* Deck shelf */}
         <div>
           <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-            Study Modes
+            Your Decks
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            {STUDY_MODES.map((m) => (
-              <Link
-                key={m.href}
-                href={m.href}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 4,
-                  background: "var(--surface)",
-                  border: "1px solid var(--border)",
-                  borderRadius: 14,
-                  padding: "14px 14px",
-                  textDecoration: "none",
-                }}
-              >
-                <span style={{ fontSize: 20 }}>{m.icon}</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "var(--foreground)" }}>{m.label}</span>
-                <span style={{ fontSize: 11, color: "var(--muted)" }}>{m.desc}</span>
-              </Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {DECKS.map((deck) => (
+              <DeckTile
+                key={deck.id}
+                deck={deck}
+                base={base}
+                learned={learnedByDeck[deck.id]?.length ?? 0}
+              />
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Browse by Category */}
-        <div>
-          <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-            Browse by Category
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            {(Object.entries(CATEGORY_INFO) as [CategorySlug, typeof CATEGORY_INFO[CategorySlug]][]).map(
-              ([slug, info]) => {
-                const categoryCards = getCardsByCategory(slug);
-                const catLearned = categoryCards.filter((c) => learnedIds.includes(c.id)).length;
-                const pct = categoryCards.length > 0 ? (catLearned / categoryCards.length) * 100 : 0;
+function DeckTile({ deck, base, learned }: { deck: Deck; base: string; learned: number }) {
+  const total = deck.cards.length;
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+  const isLive = deck.status === "live";
 
-                return (
-                  <Link
-                    key={slug}
-                    href={`${base}/study?mode=sequential&category=${slug}`}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 12,
-                      background: "var(--surface)",
-                      border: "1px solid var(--border)",
-                      borderRadius: 12,
-                      padding: "11px 14px",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {/* Progress ring */}
-                    <div style={{ position: "relative", width: 32, height: 32, flexShrink: 0 }}>
-                      <svg width="32" height="32" viewBox="0 0 32 32">
-                        <circle cx="16" cy="16" r="13" fill="none" stroke="var(--border)" strokeWidth="2.5" />
-                        <circle
-                          cx="16" cy="16" r="13"
-                          fill="none"
-                          stroke={info.accent}
-                          strokeWidth="2.5"
-                          strokeDasharray={`${2 * Math.PI * 13}`}
-                          strokeDashoffset={`${2 * Math.PI * 13 * (1 - pct / 100)}`}
-                          strokeLinecap="round"
-                          transform="rotate(-90 16 16)"
-                          style={{ transition: "stroke-dashoffset 0.4s ease" }}
-                        />
-                        <circle cx="16" cy="16" r="9" fill={info.color} />
-                      </svg>
-                    </div>
+  const quizBest = isLive
+    ? [1, 2, 3]
+        .map((l) => getQuizResult(deck.id, l)?.bestPct ?? null)
+        .filter((p): p is number => p !== null)
+    : [];
+  const bestPct = quizBest.length > 0 ? Math.max(...quizBest) : null;
 
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {info.name}
-                      </div>
-                      <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>
-                        {catLearned} / {categoryCards.length} learned
-                      </div>
-                    </div>
+  return (
+    <Link
+      href={`${base}/deck/${deck.slug}`}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        borderRadius: 16,
+        textDecoration: "none",
+        background: isLive
+          ? `linear-gradient(145deg, ${deck.cover.dark}, ${deck.cover.dark}cc)`
+          : "var(--surface)",
+        border: isLive ? "1px solid rgba(255,255,255,0.08)" : "1px solid var(--border)",
+        padding: "16px 16px",
+        opacity: isLive ? 1 : 0.75,
+      }}
+    >
+      {/* Progress ring */}
+      <div style={{ position: "relative", width: 40, height: 40, flexShrink: 0 }}>
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="16" fill="none" stroke={isLive ? "rgba(255,255,255,0.18)" : "var(--border)"} strokeWidth="3" />
+          {isLive && (
+            <circle
+              cx="20" cy="20" r="16"
+              fill="none"
+              stroke={deck.cover.accent}
+              strokeWidth="3"
+              strokeDasharray={`${2 * Math.PI * 16}`}
+              strokeDashoffset={`${2 * Math.PI * 16 * (1 - pct / 100)}`}
+              strokeLinecap="round"
+              transform="rotate(-90 20 20)"
+              style={{ transition: "stroke-dashoffset 0.4s ease" }}
+            />
+          )}
+        </svg>
+      </div>
 
-                    <span style={{ fontSize: 14, color: "var(--muted)" }}>›</span>
-                  </Link>
-                );
-              }
-            )}
-          </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 15, fontWeight: 800, color: isLive ? "#fff" : "var(--foreground)", letterSpacing: "0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {deck.shortName}
+        </div>
+        <div style={{ fontSize: 11, color: isLive ? "rgba(255,255,255,0.6)" : "var(--muted)", marginTop: 2 }}>
+          {isLive ? (
+            <>
+              {learned} / {total} learned{bestPct !== null && ` · Quiz ${bestPct}%`}
+            </>
+          ) : (
+            <>Coming soon · {total} cards</>
+          )}
         </div>
       </div>
 
-    </div>
+      <span style={{ flexShrink: 0, fontSize: 16, color: isLive ? "rgba(255,255,255,0.65)" : "var(--muted)" }}>›</span>
+    </Link>
   );
 }

@@ -1162,14 +1162,20 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   return a;
 }
 
+function dayOfYear(d = new Date()): number {
+  const start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+/** Deterministic "card of the day" pick from any card list (deck-agnostic). */
+export function getCardOfTheDayFrom<T>(cards: T[]): T {
+  const year = new Date().getFullYear();
+  const shuffled = seededShuffle(cards, year);
+  return shuffled[dayOfYear() % shuffled.length];
+}
+
 export function getCardOfTheDay(): CreedCard {
-  const today = new Date();
-  const year = today.getFullYear();
-  const start = new Date(year, 0, 0);
-  const diff = today.getTime() - start.getTime();
-  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const shuffled = seededShuffle(CARD_DATA, year);
-  return shuffled[dayOfYear % shuffled.length];
+  return getCardOfTheDayFrom(CARD_DATA);
 }
 
 export function getCardsByCategory(slug: CategorySlug): CreedCard[] {

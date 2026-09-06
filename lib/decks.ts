@@ -5,7 +5,12 @@
 // `lib/cardData.ts`. This registry just makes the other decks addressable so
 // Phases B (storage re-key) and C (dashboard) have something to build on.
 
-import { CARD_DATA, CATEGORY_INFO, type CreedCard } from "./cardData";
+import {
+  CARD_DATA,
+  CATEGORY_INFO,
+  getCardOfTheDayFrom,
+  type CreedCard,
+} from "./cardData";
 import { FOUNDATIONS_CARDS } from "./decks/foundationsCards";
 import { FULFILLED_CARDS, type FulfillmentCard } from "./decks/fulfilledCards";
 
@@ -175,4 +180,33 @@ export function getCard(deckId: number, cardId: number): AnyCard | undefined {
 /** Global card key: `${deckId}:${cardId}`. */
 export function cardKey(deckId: number, cardId: number): string {
   return `${deckId}:${cardId}`;
+}
+
+export const getLiveDecks = (): Deck[] => DECKS.filter((d) => d.status === "live");
+
+/** This deck's card of the day (deterministic per calendar day). */
+export function deckCardOfTheDay(deckId: number): AnyCard | undefined {
+  const cards = getDeck(deckId)?.cards as AnyCard[] | undefined;
+  if (!cards || cards.length === 0) return undefined;
+  return getCardOfTheDayFrom(cards);
+}
+
+/**
+ * Card of the day across all owned (live) decks — rotates deck-by-day, then
+ * card-by-day within that deck. Returns which deck it came from for attribution.
+ */
+export function globalCardOfTheDay(): { card: AnyCard; deck: Deck } | undefined {
+  const live = getLiveDecks();
+  if (live.length === 0) return undefined;
+  const start = new Date(new Date().getFullYear(), 0, 0);
+  const day = Math.floor((Date.now() - start.getTime()) / 86_400_000);
+  const deck = live[day % live.length];
+  const card = deckCardOfTheDay(deck.id);
+  return card ? { card, deck } : undefined;
+}
+
+/** Cards in one category of a deck. */
+export function deckCategoryCards(deckId: number, categorySlug: string): AnyCard[] {
+  const cards = (getDeck(deckId)?.cards as AnyCard[] | undefined) ?? [];
+  return cards.filter((c) => c.categorySlug === categorySlug);
 }
