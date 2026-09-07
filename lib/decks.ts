@@ -112,7 +112,7 @@ const FOUNDATIONS_DECK: Deck = {
   shortName: "Foundations",
   tagline: "Creeds, councils, and the deeper cuts of doctrine",
   schema: "doctrine",
-  status: "coming-soon",
+  status: "live",
   cover: { dark: "#44403c", accent: "#e8b562" },
   categories: FOUNDATIONS_CATEGORIES,
   cards: FOUNDATIONS_CARDS,
@@ -151,7 +151,7 @@ const FULFILLED_DECK: Deck = {
   shortName: "Fulfilled",
   tagline: "Old Testament prophecies and types fulfilled in Jesus",
   schema: "fulfillment",
-  status: "coming-soon",
+  status: "live",
   cover: { dark: "#1e1b4b", accent: "#a5b4fc" },
   categories: FULFILLED_CATEGORIES,
   cards: FULFILLED_CARDS,
@@ -183,6 +183,12 @@ export function cardKey(deckId: number, cardId: number): string {
 }
 
 export const getLiveDecks = (): Deck[] => DECKS.filter((d) => d.status === "live");
+
+/**
+ * Whether a deck has an authored/generatable quiz bank. Only Essentials until
+ * the quiz redesign (Phase E) adds per-deck banks.
+ */
+export const deckHasQuiz = (deckId: number): boolean => deckId === 1;
 
 /** This deck's card of the day (deterministic per calendar day). */
 export function deckCardOfTheDay(deckId: number): AnyCard | undefined {

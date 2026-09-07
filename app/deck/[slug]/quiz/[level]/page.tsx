@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getDeck } from "../../../../../lib/decks";
+import { getDeck, deckHasQuiz } from "../../../../../lib/decks";
 import { QuizSession } from "../../../../../components/quiz/QuizSession";
 
 export default async function DeckQuizLevelPage({
@@ -9,7 +9,7 @@ export default async function DeckQuizLevelPage({
 }) {
   const { slug, level } = await params;
   const deck = getDeck(slug);
-  if (!deck) notFound();
+  if (!deck || !deckHasQuiz(deck.id)) notFound();
 
   const numericLevel = parseInt(level) as 1 | 2 | 3;
   const validLevel = [1, 2, 3].includes(numericLevel) ? numericLevel : 1;

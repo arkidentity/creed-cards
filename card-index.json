@@ -47,7 +47,7 @@
       "slug": "foundations",
       "name": "Creed Cards (Foundations)",
       "shortName": "Foundations",
-      "status": "coming-soon",
+      "status": "live",
       "schema": "doctrine",
       "categories": [
         {
@@ -102,7 +102,7 @@
       "slug": "fulfilled",
       "name": "Creed Cards (Fulfilled)",
       "shortName": "Fulfilled",
-      "status": "coming-soon",
+      "status": "live",
       "schema": "fulfillment",
       "categories": [
         {

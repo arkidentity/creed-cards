@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { CreedCard } from "../../lib/cardData";
-import { CATEGORY_INFO } from "../../lib/cardData";
+import type { AnyCard, DeckSchema } from "../../lib/decks";
 import { CreedCard as CreedCardComponent } from "./CreedCard";
 
 interface CardDeckProps {
-  cards: CreedCard[];
+  cards: AnyCard[];
+  schema?: DeckSchema;
   currentIndex: number;
   onNavigate: (direction: "next" | "prev") => void;
   isFlipped: boolean;
@@ -48,6 +48,7 @@ const variants = {
 
 export function CardDeck({
   cards,
+  schema,
   currentIndex,
   onNavigate,
   isFlipped,
@@ -59,8 +60,7 @@ export function CardDeck({
   const backRef = useRef<HTMLDivElement | null>(null);
   const card = cards[currentIndex];
 
-  const getCategoryBg = (c: CreedCard) =>
-    CATEGORY_INFO[c.categorySlug as keyof typeof CATEGORY_INFO]?.color ?? "#0f172a";
+  const getCategoryBg = (c: AnyCard) => c.colors?.dark ?? "#0f172a";
 
   const handleNavigate = (dir: "next" | "prev") => {
     directionRef.current = dir;
@@ -133,6 +133,7 @@ export function CardDeck({
         >
           <CreedCardComponent
             card={card}
+            schema={schema}
             cardNumber={currentIndex + 1}
             totalCards={cards.length}
             isFlipped={isFlipped}

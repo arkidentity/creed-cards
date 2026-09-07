@@ -3,8 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { type CreedCard } from "../../lib/cardData";
-import { getDeck, deckCardOfTheDay } from "../../lib/decks";
+import { getDeck, deckCardOfTheDay, type AnyCard } from "../../lib/decks";
 import { useActiveDeckId } from "../../lib/deckContext";
 import {
   getLearnedCards,
@@ -27,15 +26,15 @@ interface UndoToast {
 }
 
 function buildCardList(
-  allCards: CreedCard[],
+  allCards: AnyCard[],
   mode: StudyMode,
   filter: FilterMode,
   startId: number | null,
   category: string | null,
   learnedIds: number[],
   todayId: number | null
-): { cards: CreedCard[]; startIndex: number } {
-  let cards: CreedCard[] = [...allCards];
+): { cards: AnyCard[]; startIndex: number } {
+  let cards: AnyCard[] = [...allCards];
 
   if (mode === "daily") {
     const startIndex = todayId != null ? cards.findIndex((c) => c.id === todayId) : -1;
@@ -73,7 +72,7 @@ export function StudyScreen() {
   const deckId = useActiveDeckId() ?? 1;
   const deck = getDeck(deckId);
   const deckSlug = deck?.slug ?? "essentials";
-  const deckCards = (deck?.cards ?? []) as CreedCard[];
+  const deckCards = (deck?.cards ?? []) as AnyCard[];
 
   const mode = (searchParams.get("mode") ?? "sequential") as StudyMode;
   const startParam = searchParams.get("start");
@@ -81,7 +80,7 @@ export function StudyScreen() {
   const categoryParam = searchParams.get("category");
 
   const [learnedIds, setLearnedIds] = useState<number[]>([]);
-  const [cards, setCards] = useState<CreedCard[]>([]);
+  const [cards, setCards] = useState<AnyCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [filter, setFilter] = useState<FilterMode>(filterParam);
@@ -344,6 +343,7 @@ export function StudyScreen() {
       <div style={{ flex: 1, padding: "0 16px 16px", minHeight: 0 }}>
         <CardDeck
           cards={cards}
+          schema={deck?.schema}
           currentIndex={currentIndex}
           onNavigate={handleNavigate}
           isFlipped={isFlipped}

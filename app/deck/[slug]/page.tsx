@@ -6,6 +6,7 @@ import {
   getDeck,
   deckCardOfTheDay,
   deckCategoryCards,
+  deckHasQuiz,
   type AnyCard,
 } from "../../../lib/decks";
 import {
@@ -57,15 +58,17 @@ export default function DeckHomePage({
       : undefined;
 
   const STUDY_MODES = [
-    { label: "Sequential", icon: "→", href: `${base}/study?mode=sequential`, desc: `Card 1 to ${totalCount}` },
-    { label: "Random", icon: "⚡", href: `${base}/study?mode=random`, desc: "Shuffled deck" },
-    { label: "Unlearned", icon: "○", href: `${base}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
-    {
-      label: "Quiz",
-      icon: "✦",
-      href: `${base}/quiz/${deck.id}`,
-      desc: quizBestPct !== null ? `Best: ${quizBestPct}%` : "3 levels",
-    },
+    { label: "Sequential", icon: "→", href: `${base}/deck/${deck.slug}/study?mode=sequential`, desc: `Card 1 to ${totalCount}` },
+    { label: "Random", icon: "⚡", href: `${base}/deck/${deck.slug}/study?mode=random`, desc: "Shuffled deck" },
+    { label: "Unlearned", icon: "○", href: `${base}/deck/${deck.slug}/study?mode=sequential&filter=unlearned`, desc: `${totalCount - learnedCount} remaining` },
+    ...(deckHasQuiz(deck.id)
+      ? [{
+          label: "Quiz",
+          icon: "✦",
+          href: `${base}/deck/${deck.slug}/quiz`,
+          desc: quizBestPct !== null ? `Best: ${quizBestPct}%` : "3 levels",
+        }]
+      : []),
   ];
 
   return (
@@ -149,7 +152,7 @@ export default function DeckHomePage({
         {/* Card of the Day (this deck) */}
         {isLive && todayCard && (
           <Link
-            href={`${base}/study?mode=daily`}
+            href={`${base}/deck/${deck.slug}/study?mode=daily`}
             style={{
               display: "flex",
               alignItems: "center",
@@ -227,7 +230,7 @@ export default function DeckHomePage({
         {/* Continue where you left off */}
         {isLive && lastCard && (
           <Link
-            href={`${base}/study?mode=sequential&start=${lastCard.id}`}
+            href={`${base}/deck/${deck.slug}/study?mode=sequential&start=${lastCard.id}`}
             style={{
               display: "flex",
               alignItems: "center",
@@ -344,7 +347,7 @@ export default function DeckHomePage({
                 };
 
                 return isLive ? (
-                  <Link key={cat.slug} href={`${base}/study?mode=sequential&category=${cat.slug}`} style={boxStyle}>
+                  <Link key={cat.slug} href={`${base}/deck/${deck.slug}/study?mode=sequential&category=${cat.slug}`} style={boxStyle}>
                     {inner}
                   </Link>
                 ) : (

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { DECKS, getDeck, deckCategoryCards } from "../../lib/decks";
+import { DECKS, getDeck, deckCategoryCards, deckHasQuiz } from "../../lib/decks";
 import {
   getAllLearned,
   getTotalLearnedCount,
@@ -240,6 +240,7 @@ export default function ProgressPage() {
         )}
 
         {/* Test Your Knowledge */}
+        {deckHasQuiz(selectedDeckId) && (
         <div>
           <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
             Test Your Knowledge
@@ -283,6 +284,7 @@ export default function ProgressPage() {
             })}
           </div>
         </div>
+        )}
 
         {/* Settings */}
         <div>

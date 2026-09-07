@@ -1,14 +1,19 @@
 "use client";
 
-import { useRef, type RefObject } from "react";
+import { type RefObject } from "react";
 import { motion } from "framer-motion";
 import type { CreedCard as CreedCardType } from "../../lib/cardData";
+import type { FulfillmentCard } from "../../lib/decks/fulfilledCards";
+import type { DeckSchema, AnyCard } from "../../lib/decks";
 import { CardFront } from "./CardFront";
 import { CardBack } from "./CardBack";
+import { FulfillmentCardFront } from "./FulfillmentCardFront";
+import { FulfillmentCardBack } from "./FulfillmentCardBack";
 import { playFlipSound } from "../../lib/progress";
 
 interface CreedCardProps {
-  card: CreedCardType;
+  card: AnyCard;
+  schema?: DeckSchema;
   cardNumber: number;
   totalCards: number;
   isFlipped: boolean;
@@ -20,6 +25,7 @@ interface CreedCardProps {
 
 export function CreedCard({
   card,
+  schema = "doctrine",
   cardNumber,
   totalCards,
   isFlipped,
@@ -36,6 +42,8 @@ export function CreedCard({
     onFlip();
   };
 
+  const isFulfillment = schema === "fulfillment";
+
   return (
     <div className="card-perspective" style={{ height: "100%" }}>
       <motion.div
@@ -45,8 +53,31 @@ export function CreedCard({
         onClick={handleClick}
         style={{ cursor: "pointer" }}
       >
-        <CardFront card={card} cardNumber={cardNumber} totalCards={totalCards} />
-        <CardBack ref={backRef} card={card} isLearned={isLearned} onToggleLearned={onToggleLearned} />
+        {isFulfillment ? (
+          <>
+            <FulfillmentCardFront
+              card={card as FulfillmentCard}
+              cardNumber={cardNumber}
+              totalCards={totalCards}
+            />
+            <FulfillmentCardBack
+              ref={backRef}
+              card={card as FulfillmentCard}
+              isLearned={isLearned}
+              onToggleLearned={onToggleLearned}
+            />
+          </>
+        ) : (
+          <>
+            <CardFront card={card as CreedCardType} cardNumber={cardNumber} totalCards={totalCards} />
+            <CardBack
+              ref={backRef}
+              card={card as CreedCardType}
+              isLearned={isLearned}
+              onToggleLearned={onToggleLearned}
+            />
+          </>
+        )}
       </motion.div>
     </div>
   );

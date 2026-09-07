@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getDeck } from "../../../../lib/decks";
+import { getDeck, deckHasQuiz } from "../../../../lib/decks";
 import { getQuizResult, type QuizResult } from "../../../../lib/quizProgress";
 import { useBasePath } from "../../../../lib/basePathContext";
 
@@ -60,6 +60,45 @@ export default function DeckQuizLevelsPage({
   const base = useBasePath();
   const deck = getDeck(slug);
   if (!deck) notFound();
+
+  if (!deckHasQuiz(deck.id)) {
+    return (
+      <div
+        style={{
+          minHeight: "100dvh",
+          background: "var(--background)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 14,
+          padding: 24,
+          textAlign: "center",
+        }}
+      >
+        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
+          {deck.shortName}
+        </div>
+        <p style={{ color: "var(--muted)", fontSize: 15, maxWidth: 280, lineHeight: 1.5 }}>
+          The quiz for this deck isn&apos;t ready yet. Study the cards for now.
+        </p>
+        <Link
+          href={`${base}/deck/${deck.slug}`}
+          style={{
+            padding: "10px 22px",
+            background: "var(--accent)",
+            color: "#000",
+            borderRadius: 10,
+            fontWeight: 700,
+            fontSize: 14,
+            textDecoration: "none",
+          }}
+        >
+          Back to {deck.shortName}
+        </Link>
+      </div>
+    );
+  }
 
   const [results, setResults] = useState<(QuizResult | null)[]>([null, null, null]);
 
