@@ -223,7 +223,14 @@ function FeaturedDeck({
           </Link>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>{learned} / {total}</span>
           <span style={{ marginLeft: "auto", flexShrink: 0 }}>
-            <Ring pct={pct} stroke="#fff" track="rgba(255,255,255,0.18)" size={38} />
+            <Ring
+              pct={pct}
+              stroke="#fff"
+              track="rgba(255,255,255,0.3)"
+              size={40}
+              label={`${pct}%`}
+              labelColor="#fff"
+            />
           </span>
         </div>
       </div>
@@ -306,20 +313,36 @@ function DeckTile({
           </span>
         </>
       ) : (
-        <span
-          style={{
-            position: "relative",
-            marginTop: "auto",
-            alignSelf: "flex-start",
-            fontSize: 10,
-            color: "var(--muted)",
-            border: "1px solid var(--border)",
-            borderRadius: 99,
-            padding: "2px 8px",
-          }}
-        >
-          In the works
-        </span>
+        <>
+          <span
+            style={{
+              position: "relative",
+              fontSize: 10.5,
+              lineHeight: 1.45,
+              color: "var(--muted)",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {deck.tagline}
+          </span>
+          <span
+            style={{
+              position: "relative",
+              marginTop: "auto",
+              alignSelf: "flex-start",
+              fontSize: 10,
+              color: "var(--muted)",
+              border: "1px solid var(--border)",
+              borderRadius: 99,
+              padding: "2px 8px",
+            }}
+          >
+            In the works
+          </span>
+        </>
       )}
     </Link>
   );
@@ -331,31 +354,42 @@ function Ring({
   stroke = "var(--accent)",
   track = "var(--border)",
   label,
+  labelColor = "var(--foreground)",
 }: {
   pct: number;
   size?: number;
   stroke?: string;
   track?: string;
   label?: string;
+  labelColor?: string;
 }) {
   const r = 16;
   return (
     <svg width={size} height={size} viewBox="0 0 40 40">
       <circle cx="20" cy="20" r={r} fill="none" stroke={track} strokeWidth="3" />
-      <circle
-        cx="20"
-        cy="20"
-        r={r}
-        fill="none"
-        stroke={stroke}
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeDasharray={RING}
-        strokeDashoffset={RING * (1 - pct / 100)}
-        transform="rotate(-90 20 20)"
-      />
+      {pct > 0 && (
+        <circle
+          cx="20"
+          cy="20"
+          r={r}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray={RING}
+          strokeDashoffset={RING * (1 - pct / 100)}
+          transform="rotate(-90 20 20)"
+        />
+      )}
       {label && (
-        <text x="20" y="24" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--foreground)">
+        <text
+          x="20"
+          y="23.5"
+          textAnchor="middle"
+          fontSize={label.length > 3 ? "9" : "10.5"}
+          fontWeight="700"
+          fill={labelColor}
+        >
           {label}
         </text>
       )}

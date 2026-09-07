@@ -56,19 +56,19 @@ export function FulfillmentCardFront({
         </span>
       </div>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ width: 136, height: 136, marginBottom: 18, flexShrink: 0 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4 }}>
+        <div style={{ width: 118, height: 118, marginBottom: 10, flexShrink: 0 }}>
           <CardIcon categorySlug={card.categorySlug} accentColor={card.colors.accent} stroke="rgba(255,255,255,0.9)" />
         </div>
 
         <h2
           style={{
-            fontSize: 30,
+            fontSize: 29,
             fontWeight: 800,
             letterSpacing: "0.04em",
             color: "#ffffff",
             textAlign: "center",
-            marginBottom: 8,
+            marginBottom: 6,
             lineHeight: 1.15,
             textShadow: "0 1px 3px rgba(0,0,0,0.4)",
           }}
@@ -78,12 +78,12 @@ export function FulfillmentCardFront({
 
         <p
           style={{
-            fontSize: 17,
+            fontSize: 16.5,
             color: "rgba(255,255,255,0.65)",
             textAlign: "center",
             letterSpacing: "0.02em",
             lineHeight: 1.5,
-            marginBottom: 24,
+            marginBottom: 20,
           }}
         >
           {card.shortDesc}
