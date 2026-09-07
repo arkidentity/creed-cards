@@ -89,36 +89,63 @@ export function FulfillmentCardFront({
           {card.shortDesc}
         </p>
 
-        {/* kind + dating chip */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "#000",
-              background: card.colors.accent,
-              padding: "5px 12px",
-              borderRadius: 20,
-            }}
-          >
-            {card.kind === "prophecy" ? "Prophecy" : "Type / Shadow"}
-          </span>
-          {card.centuriesBefore && (
+        {/* Two witnesses: OT ref → NT ref, with kind / basis / dating */}
+        <div
+          style={{
+            width: "100%",
+            background: "rgba(0,0,0,0.28)",
+            border: "1px solid rgba(255,255,255,0.09)",
+            borderRadius: 13,
+            padding: "12px 14px",
+            opacity: card.basis === "traditional" ? 0.82 : 1,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: "rgba(255,255,255,0.5)", whiteSpace: "nowrap" }}>
+              {card.otRef}
+            </span>
             <span
               style={{
-                fontSize: 12,
-                color: "rgba(255,255,255,0.55)",
-                background: "rgba(0,0,0,0.25)",
-                padding: "5px 12px",
-                borderRadius: 20,
-                border: "1px solid rgba(255,255,255,0.08)",
+                flex: 1,
+                maxWidth: 44,
+                height: 1,
+                position: "relative",
+                background: `linear-gradient(to right, ${card.colors.accent}33, ${card.colors.accent})`,
               }}
             >
-              {card.centuriesBefore}
+              <span
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: -3,
+                  borderTop: "3.5px solid transparent",
+                  borderBottom: "3.5px solid transparent",
+                  borderLeft: `5px solid ${card.colors.accent}`,
+                }}
+              />
             </span>
-          )}
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: card.colors.accent, whiteSpace: "nowrap" }}>
+              {card.ntRef}
+            </span>
+          </div>
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 10,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              textAlign: "center",
+              color: "rgba(255,255,255,0.42)",
+            }}
+          >
+            {card.kind === "prophecy" ? "Prophecy" : "Type"}
+            {" · "}
+            {card.basis === "stated" ? "stated in the NT" : "a traditional reading"}
+            {" · "}
+            {card.centuriesBefore
+              ? card.centuriesBefore.replace(/\s*BC$/, " yrs before Christ")
+              : "undated"}
+          </div>
         </div>
       </div>
     </div>

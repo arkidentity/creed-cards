@@ -190,6 +190,25 @@ export const getLiveDecks = (): Deck[] => DECKS.filter((d) => d.status === "live
  */
 export const deckHasQuiz = (deckId: number): boolean => deckId === 1;
 
+/** Label for the deck's kind, from its schema. `short` fits a narrow tile. */
+export function deckKindLabel(deck: Deck, short = false): string {
+  switch (deck.schema) {
+    case "fulfillment":
+      return short ? "Prophecy" : "Prophecy → Fulfilled";
+    case "promise":
+      return "Promises";
+    default:
+      return "Doctrine";
+  }
+}
+
+/** The card a viewer should resume in a deck, if any. */
+export function deckResumeCard(deckId: number, lastCardId: number | null): AnyCard | undefined {
+  if (lastCardId == null) return undefined;
+  const cards = getDeck(deckId)?.cards as AnyCard[] | undefined;
+  return cards?.find((c) => c.id === lastCardId);
+}
+
 /** This deck's card of the day (deterministic per calendar day). */
 export function deckCardOfTheDay(deckId: number): AnyCard | undefined {
   const cards = getDeck(deckId)?.cards as AnyCard[] | undefined;

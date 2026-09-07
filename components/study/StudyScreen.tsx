@@ -84,6 +84,8 @@ export function StudyScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [filter, setFilter] = useState<FilterMode>(filterParam);
+  const [category, setCategory] = useState<string | null>(categoryParam);
+  const [topicMenu, setTopicMenu] = useState(false);
   const [undoToast, setUndoToast] = useState<UndoToast | null>(null);
   const [showHint, setShowHint] = useState(true);
 
@@ -148,23 +150,35 @@ export function StudyScreen() {
     setUndoToast(null);
   }, [deckId]);
 
-  const toggleFilter = () => {
-    const next: FilterMode = filter === "all" ? "unlearned" : filter === "unlearned" ? "learned" : "all";
-    setFilter(next);
+  const rebuild = (nextFilter: FilterMode, nextCategory: string | null) => {
     const learned = getLearnedCards(deckId);
     const startId = cards[currentIndex]?.id ?? null;
+    // once traversing, category/filter changes shouldn't snap back to a "daily" pin
+    const traversalMode: StudyMode = mode === "daily" ? "sequential" : mode;
     const { cards: builtCards, startIndex } = buildCardList(
       deckCards,
-      mode,
-      next,
+      traversalMode,
+      nextFilter,
       startId,
-      categoryParam,
+      nextCategory,
       learned,
-      deckCardOfTheDay(deckId)?.id ?? null
+      null
     );
     setCards(builtCards);
     setCurrentIndex(startIndex);
     setIsFlipped(false);
+  };
+
+  const toggleFilter = () => {
+    const next: FilterMode = filter === "all" ? "unlearned" : filter === "unlearned" ? "learned" : "all";
+    setFilter(next);
+    rebuild(next, category);
+  };
+
+  const changeCategory = (slug: string | null) => {
+    setCategory(slug);
+    setTopicMenu(false);
+    rebuild(filter, slug);
   };
 
   const handleShare = async () => {
@@ -187,8 +201,9 @@ export function StudyScreen() {
     }
   };
 
-  const categoryName = categoryParam
-    ? (deck?.categories.find((c) => c.slug === categoryParam)?.name ?? categoryParam)
+  const categories = deck?.categories ?? [];
+  const categoryName = category
+    ? (categories.find((c) => c.slug === category)?.name ?? category)
     : null;
 
   const filterLabel: Record<FilterMode, string> = {
@@ -275,19 +290,77 @@ export function StudyScreen() {
           ←
         </Link>
 
-        <div style={{ flex: 1, textAlign: "center" }}>
-          {categoryName ? (
-            <div style={{ fontSize: 11, color: "var(--accent)", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              {categoryName}
-            </div>
-          ) : (
-            <div style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              {mode === "daily" ? "Daily Card" : mode === "random" ? "Random" : "Study"}
-            </div>
-          )}
+        <div style={{ flex: 1, textAlign: "center", position: "relative" }}>
+          <button
+            onClick={() => categories.length > 0 && setTopicMenu((v) => !v)}
+            disabled={categories.length === 0}
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              cursor: categories.length > 0 ? "pointer" : "default",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 5,
+              color: categoryName ? "var(--accent)" : "var(--muted)",
+              fontSize: 11,
+              fontWeight: categoryName ? 700 : 600,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              maxWidth: "100%",
+            }}
+          >
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {categoryName ?? (mode === "daily" ? "Daily Card" : mode === "random" ? "Random" : "All Topics")}
+            </span>
+            {categories.length > 0 && <span style={{ fontSize: 9, opacity: 0.7 }}>▾</span>}
+          </button>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 1 }}>
             {currentIndex + 1} / {cards.length}
           </div>
+
+          {topicMenu && (
+            <>
+              <div
+                onClick={() => setTopicMenu(false)}
+                style={{ position: "fixed", inset: 0, zIndex: 40 }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 8px)",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  zIndex: 41,
+                  width: 240,
+                  maxHeight: 320,
+                  overflowY: "auto",
+                  background: "var(--surface-elevated)",
+                  border: "1px solid var(--border-strong)",
+                  borderRadius: 12,
+                  padding: 6,
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                  textAlign: "left",
+                }}
+              >
+                <TopicItem active={!category} label="All topics" onClick={() => changeCategory(null)} />
+                {categories.map((c) => {
+                  const catCards = deckCards.filter((x) => x.categorySlug === c.slug);
+                  const done = catCards.filter((x) => learnedIds.includes(x.id)).length;
+                  return (
+                    <TopicItem
+                      key={c.slug}
+                      active={category === c.slug}
+                      label={c.name}
+                      meta={`${done}/${catCards.length}`}
+                      accent={c.accent}
+                      onClick={() => changeCategory(c.slug)}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Filter toggle */}
@@ -362,5 +435,48 @@ export function StudyScreen() {
         />
       )}
     </div>
+  );
+}
+
+function TopicItem({
+  active,
+  label,
+  meta,
+  accent,
+  onClick,
+}: {
+  active: boolean;
+  label: string;
+  meta?: string;
+  accent?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        width: "100%",
+        padding: "9px 10px",
+        borderRadius: 8,
+        border: "none",
+        background: active ? "var(--surface-2)" : "transparent",
+        color: "var(--foreground)",
+        cursor: "pointer",
+        textAlign: "left",
+      }}
+    >
+      {accent ? (
+        <span style={{ width: 7, height: 7, borderRadius: 99, background: accent, flexShrink: 0 }} />
+      ) : (
+        <span style={{ width: 7, flexShrink: 0 }} />
+      )}
+      <span style={{ flex: 1, fontSize: 12.5, fontWeight: active ? 700 : 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {label}
+      </span>
+      {meta && <span style={{ fontSize: 11, color: "var(--muted)", fontVariantNumeric: "tabular-nums" }}>{meta}</span>}
+    </button>
   );
 }

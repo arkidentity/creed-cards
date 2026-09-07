@@ -4,25 +4,44 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   DECKS,
+  getDeck,
   globalCardOfTheDay,
+  deckKindLabel,
+  deckResumeCard,
   type Deck,
 } from "../lib/decks";
-import { getAllLearned, getTotalLearnedCount } from "../lib/progress";
-import { getQuizResult } from "../lib/quizProgress";
+import {
+  getAllLearned,
+  getTotalLearnedCount,
+  getLastStudiedCard,
+  getFocusDeck,
+} from "../lib/progress";
 import { useBasePath } from "../lib/basePathContext";
+
+const RING = 2 * Math.PI * 16;
 
 export default function HomePage() {
   const base = useBasePath();
   const [learnedByDeck, setLearnedByDeck] = useState<Record<number, number[]>>({});
+  const [lastByDeck, setLastByDeck] = useState<Record<number, number | null>>({});
   const [totalLearned, setTotalLearned] = useState(0);
+  const [focusId, setFocusId] = useState<number | null>(null);
 
   useEffect(() => {
     setLearnedByDeck(getAllLearned());
     setTotalLearned(getTotalLearnedCount());
+    setFocusId(getFocusDeck());
+    const last: Record<number, number | null> = {};
+    for (const d of DECKS) if (d.status === "live") last[d.id] = getLastStudiedCard(d.id);
+    setLastByDeck(last);
   }, []);
 
   const today = globalCardOfTheDay();
-  const liveCount = DECKS.filter((d) => d.status === "live").length;
+  const decksInProgress = Object.values(learnedByDeck).filter((a) => a.length > 0).length;
+
+  const focusDeck =
+    focusId != null ? DECKS.find((d) => d.id === focusId && d.status === "live") : undefined;
+  const gridDecks = focusDeck ? DECKS.filter((d) => d.id !== focusDeck.id) : DECKS;
 
   return (
     <div
@@ -47,7 +66,8 @@ export default function HomePage() {
             CREED CARDS
           </h1>
           <p style={{ fontSize: 12, color: "var(--muted)", margin: "2px 0 0", letterSpacing: "0.04em" }}>
-            {totalLearned} mastered · {liveCount} {liveCount === 1 ? "deck" : "decks"}
+            {totalLearned} mastered
+            {decksInProgress > 0 && ` · ${decksInProgress} ${decksInProgress === 1 ? "deck" : "decks"} in progress`}
           </p>
         </div>
         <Link
@@ -73,51 +93,59 @@ export default function HomePage() {
         </Link>
       </div>
 
-      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 14 }}>
 
-        {/* Cross-deck Card of the Day */}
+        {/* Cross-deck card of the day — slim strip */}
         {today && (
           <Link
-            href={`${base}/deck/${today.deck.slug}`}
+            href={`${base}/deck/${today.deck.slug}/study?mode=daily`}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 14,
-              borderRadius: 18,
-              overflow: "hidden",
+              gap: 10,
+              padding: "11px 13px",
+              borderRadius: 12,
+              border: "1px solid var(--border)",
+              background: "var(--surface)",
               textDecoration: "none",
-              background: `linear-gradient(145deg, ${today.card.colors.dark}, ${today.card.colors.dark}cc)`,
-              border: "1px solid rgba(255,255,255,0.07)",
-              padding: "16px 16px",
             }}
           >
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 10, color: today.card.colors.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
-                Card of the Day · {today.deck.shortName}
+            <span style={{ width: 7, height: 7, borderRadius: 99, flexShrink: 0, background: today.card.colors.accent }} />
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
+                Card of the day · {today.deck.shortName}
               </div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.03em", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "var(--foreground)", marginTop: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {today.card.title}
               </div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {today.card.shortDesc}
-              </div>
             </div>
-            <span style={{ flexShrink: 0, fontSize: 18, color: today.card.colors.accent }}>→</span>
+            <span style={{ marginLeft: "auto", color: "var(--muted)", flexShrink: 0 }}>→</span>
           </Link>
         )}
 
-        {/* Deck shelf */}
+        {/* Focus deck — featured */}
+        {focusDeck && (
+          <FeaturedDeck
+            deck={focusDeck}
+            base={base}
+            learned={learnedByDeck[focusDeck.id]?.length ?? 0}
+            resumeId={lastByDeck[focusDeck.id] ?? null}
+          />
+        )}
+
+        {/* Deck grid */}
         <div>
           <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-            Your Decks
+            {focusDeck ? "Other decks" : "Your decks"}
           </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {DECKS.map((deck) => (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {gridDecks.map((deck) => (
               <DeckTile
                 key={deck.id}
                 deck={deck}
                 base={base}
                 learned={learnedByDeck[deck.id]?.length ?? 0}
+                resumeId={lastByDeck[deck.id] ?? null}
               />
             ))}
           </div>
@@ -127,74 +155,210 @@ export default function HomePage() {
   );
 }
 
-function DeckTile({ deck, base, learned }: { deck: Deck; base: string; learned: number }) {
+function FeaturedDeck({
+  deck,
+  base,
+  learned,
+  resumeId,
+}: {
+  deck: Deck;
+  base: string;
+  learned: number;
+  resumeId: number | null;
+}) {
+  const total = deck.cards.length;
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+  const resume = deckResumeCard(deck.id, resumeId);
+  const href = resume
+    ? `${base}/deck/${deck.slug}/study?mode=sequential&start=${resume.id}`
+    : `${base}/deck/${deck.slug}/study?mode=sequential`;
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 18,
+        border: "1px solid rgba(255,255,255,0.12)",
+        padding: 16,
+      }}
+    >
+      <span
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `linear-gradient(150deg, ${deck.cover.accent}, transparent 72%)`,
+          opacity: 0.22,
+        }}
+      />
+      <div style={{ position: "relative" }}>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
+          Focus deck · {deckKindLabel(deck)}
+        </div>
+        <Link
+          href={`${base}/deck/${deck.slug}`}
+          style={{ fontSize: 22, fontWeight: 800, color: "#fff", margin: "3px 0 12px", display: "inline-block", textDecoration: "none" }}
+        >
+          {deck.shortName}
+        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <Link
+            href={href}
+            style={{
+              background: "#fff",
+              color: "#10131c",
+              fontSize: 12,
+              fontWeight: 800,
+              padding: "9px 15px",
+              borderRadius: 10,
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              maxWidth: 190,
+            }}
+          >
+            {resume ? `Continue → ${resume.title}` : "Start studying"}
+          </Link>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>{learned} / {total}</span>
+          <span style={{ marginLeft: "auto", flexShrink: 0 }}>
+            <Ring pct={pct} stroke="#fff" track="rgba(255,255,255,0.18)" size={38} />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DeckTile({
+  deck,
+  base,
+  learned,
+  resumeId,
+}: {
+  deck: Deck;
+  base: string;
+  learned: number;
+  resumeId: number | null;
+}) {
   const total = deck.cards.length;
   const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
   const isLive = deck.status === "live";
-
-  const quizBest = isLive
-    ? [1, 2, 3]
-        .map((l) => getQuizResult(deck.id, l)?.bestPct ?? null)
-        .filter((p): p is number => p !== null)
-    : [];
-  const bestPct = quizBest.length > 0 ? Math.max(...quizBest) : null;
+  const resume = isLive ? deckResumeCard(deck.id, resumeId) : undefined;
 
   return (
     <Link
       href={`${base}/deck/${deck.slug}`}
       style={{
+        position: "relative",
+        overflow: "hidden",
         display: "flex",
-        alignItems: "center",
-        gap: 14,
+        flexDirection: "column",
+        gap: 9,
+        minHeight: 134,
+        padding: 14,
         borderRadius: 16,
+        border: isLive ? "1px solid var(--border-strong)" : "1px solid var(--border)",
+        background: "var(--surface)",
         textDecoration: "none",
-        background: isLive
-          ? `linear-gradient(145deg, ${deck.cover.accent}22, ${deck.cover.dark} 60%)`
-          : "var(--surface)",
-        border: isLive
-          ? `1px solid ${deck.cover.accent}66`
-          : "1px solid var(--border)",
-        boxShadow: isLive ? `inset 4px 0 0 ${deck.cover.accent}` : undefined,
-        padding: "16px 16px 16px 20px",
-        opacity: isLive ? 1 : 0.7,
+        opacity: isLive ? 1 : 0.6,
       }}
     >
-      {/* Progress ring */}
-      <div style={{ position: "relative", width: 40, height: 40, flexShrink: 0 }}>
-        <svg width="40" height="40" viewBox="0 0 40 40">
-          <circle cx="20" cy="20" r="16" fill="none" stroke={isLive ? "rgba(255,255,255,0.18)" : "var(--border)"} strokeWidth="3" />
-          {isLive && (
-            <circle
-              cx="20" cy="20" r="16"
-              fill="none"
-              stroke={deck.cover.accent}
-              strokeWidth="3"
-              strokeDasharray={`${2 * Math.PI * 16}`}
-              strokeDashoffset={`${2 * Math.PI * 16 * (1 - pct / 100)}`}
-              strokeLinecap="round"
-              transform="rotate(-90 20 20)"
-              style={{ transition: "stroke-dashoffset 0.4s ease" }}
-            />
-          )}
-        </svg>
-      </div>
+      {isLive && (
+        <span
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(120% 90% at 0% 0%, ${deck.cover.accent}, transparent 60%)`,
+            opacity: 0.16,
+          }}
+        />
+      )}
+      <span style={{ position: "relative", fontSize: 9, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+        {deckKindLabel(deck, true)}{isLive && ` · ${total}`}
+      </span>
+      <span style={{ position: "relative", fontSize: 16, fontWeight: 800, letterSpacing: "0.01em", color: "var(--foreground)" }}>
+        {deck.shortName}
+      </span>
 
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 15, fontWeight: 800, color: isLive ? "#fff" : "var(--foreground)", letterSpacing: "0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {deck.shortName}
-        </div>
-        <div style={{ fontSize: 11, color: isLive ? "rgba(255,255,255,0.6)" : "var(--muted)", marginTop: 2 }}>
-          {isLive ? (
-            <>
-              {learned} / {total} learned{bestPct !== null && ` · Quiz ${bestPct}%`}
-            </>
-          ) : (
-            <>Coming soon · {total} cards</>
-          )}
-        </div>
-      </div>
-
-      <span style={{ flexShrink: 0, fontSize: 16, color: isLive ? "rgba(255,255,255,0.65)" : "var(--muted)" }}>›</span>
+      {isLive ? (
+        <>
+          <span
+            style={{
+              position: "relative",
+              fontSize: 10.5,
+              color: resume ? "var(--accent)" : "var(--muted)",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {resume ? `▶ ${resume.title}` : "Not started"}
+          </span>
+          <span style={{ position: "relative", marginTop: "auto", height: 4, borderRadius: 99, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
+            <span style={{ display: "block", height: "100%", width: `${pct}%`, borderRadius: 99, background: deck.cover.accent }} />
+          </span>
+          <span style={{ position: "relative", display: "flex", justifyContent: "space-between", fontSize: 11, color: "var(--muted)" }}>
+            <span>{learned} / {total}</span>
+            <span>{pct}%</span>
+          </span>
+        </>
+      ) : (
+        <span
+          style={{
+            position: "relative",
+            marginTop: "auto",
+            alignSelf: "flex-start",
+            fontSize: 10,
+            color: "var(--muted)",
+            border: "1px solid var(--border)",
+            borderRadius: 99,
+            padding: "2px 8px",
+          }}
+        >
+          In the works
+        </span>
+      )}
     </Link>
+  );
+}
+
+function Ring({
+  pct,
+  size = 40,
+  stroke = "var(--accent)",
+  track = "var(--border)",
+  label,
+}: {
+  pct: number;
+  size?: number;
+  stroke?: string;
+  track?: string;
+  label?: string;
+}) {
+  const r = 16;
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r={r} fill="none" stroke={track} strokeWidth="3" />
+      <circle
+        cx="20"
+        cy="20"
+        r={r}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray={RING}
+        strokeDashoffset={RING * (1 - pct / 100)}
+        transform="rotate(-90 20 20)"
+      />
+      {label && (
+        <text x="20" y="24" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--foreground)">
+          {label}
+        </text>
+      )}
+    </svg>
   );
 }
