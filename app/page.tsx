@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   DECKS,
-  getDeck,
   globalCardOfTheDay,
   deckKindLabel,
   deckResumeCard,
@@ -16,6 +15,7 @@ import {
   getLastStudiedCard,
   getFocusDeck,
 } from "../lib/progress";
+import { CategoryIcon } from "../lib/categoryIcons";
 import { useBasePath } from "../lib/basePathContext";
 
 const RING = 2 * Math.PI * 16;
@@ -48,24 +48,24 @@ export default function HomePage() {
       style={{
         minHeight: "100dvh",
         background: "var(--background)",
-        paddingBottom: "calc(80px + env(safe-area-inset-bottom, 0px))",
+        paddingBottom: "calc(90px + env(safe-area-inset-bottom, 0px))",
       }}
     >
       {/* Header */}
       <div
         style={{
-          padding: "20px 20px 12px",
-          paddingTop: "calc(20px + env(safe-area-inset-top, 0px))",
+          padding: "24px 20px 8px",
+          paddingTop: "calc(24px + env(safe-area-inset-top, 0px))",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "0.06em", color: "var(--foreground)", margin: 0 }}>
+          <h1 style={{ fontSize: 25, fontWeight: 800, letterSpacing: "0.06em", color: "var(--foreground)", margin: 0 }}>
             CREED CARDS
           </h1>
-          <p style={{ fontSize: 12, color: "var(--muted)", margin: "2px 0 0", letterSpacing: "0.04em" }}>
+          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "5px 0 0", letterSpacing: "0.02em" }}>
             {totalLearned} mastered
             {decksInProgress > 0 && ` · ${decksInProgress} ${decksInProgress === 1 ? "deck" : "decks"} in progress`}
           </p>
@@ -76,16 +76,16 @@ export default function HomePage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 38,
-            height: 38,
-            borderRadius: 12,
+            width: 42,
+            height: 42,
+            borderRadius: 13,
             background: "var(--surface-2)",
             color: "var(--muted)",
             textDecoration: "none",
           }}
           title="Progress"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
             <line x1="18" y1="20" x2="18" y2="10" />
             <line x1="12" y1="20" x2="12" y2="4" />
             <line x1="6" y1="20" x2="6" y2="14" />
@@ -93,34 +93,54 @@ export default function HomePage() {
         </Link>
       </div>
 
-      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 30 }}>
 
-        {/* Cross-deck card of the day — slim strip */}
+        {/* Card of the day */}
         {today && (
-          <Link
-            href={`${base}/deck/${today.deck.slug}/study?mode=daily`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "11px 13px",
-              borderRadius: 12,
-              border: "1px solid var(--border)",
-              background: "var(--surface)",
-              textDecoration: "none",
-            }}
-          >
-            <span style={{ width: 7, height: 7, borderRadius: 99, flexShrink: 0, background: today.card.colors.accent }} />
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
-                Card of the day · {today.deck.shortName}
+          <section style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 14 }}>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+              Card of the Day
+            </h2>
+            <Link
+              href={`${base}/deck/${today.deck.slug}/study?mode=daily`}
+              style={{
+                display: "block",
+                borderRadius: 20,
+                textDecoration: "none",
+                background: `linear-gradient(155deg, ${today.card.colors.dark} 0%, ${mix(today.card.colors.dark, today.card.colors.accent, 0.22)} 100%)`,
+                border: `1px solid ${today.card.colors.accent}55`,
+                boxShadow: `0 18px 44px -22px ${today.card.colors.accent}66`,
+                padding: "20px 20px 18px",
+              }}
+            >
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: today.card.colors.accent, marginBottom: 8 }}>
+                From {today.deck.shortName}
               </div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "var(--foreground)", marginTop: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <div style={{ fontSize: 23, fontWeight: 800, color: "#fff", letterSpacing: "0.02em", lineHeight: 1.2 }}>
                 {today.card.title}
               </div>
-            </div>
-            <span style={{ marginLeft: "auto", color: "var(--muted)", flexShrink: 0 }}>→</span>
-          </Link>
+              <div style={{ fontSize: 14.5, color: "rgba(255,255,255,0.62)", marginTop: 6, lineHeight: 1.45 }}>
+                {today.card.shortDesc}
+              </div>
+              <div style={{ marginTop: 16, display: "flex" }}>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    background: today.card.colors.accent,
+                    color: "#10131c",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    padding: "9px 16px",
+                    borderRadius: 11,
+                  }}
+                >
+                  Study now →
+                </span>
+              </div>
+            </Link>
+          </section>
         )}
 
         {/* Focus deck — featured */}
@@ -134,11 +154,11 @@ export default function HomePage() {
         )}
 
         {/* Deck grid */}
-        <div>
-          <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-            {focusDeck ? "Other decks" : "Your decks"}
+        <section style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+            {focusDeck ? "Other Decks" : "Your Decks"}
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {gridDecks.map((deck) => (
               <DeckTile
                 key={deck.id}
@@ -149,7 +169,7 @@ export default function HomePage() {
               />
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
@@ -174,67 +194,60 @@ function FeaturedDeck({
     : `${base}/deck/${deck.slug}/study?mode=sequential`;
 
   return (
-    <div
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        borderRadius: 18,
-        border: "1px solid rgba(255,255,255,0.12)",
-        padding: 16,
-      }}
-    >
-      <span
-        aria-hidden
+    <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+        Focus Deck
+      </h2>
+      <div
         style={{
-          position: "absolute",
-          inset: 0,
-          background: `linear-gradient(150deg, ${deck.cover.accent}, transparent 72%)`,
-          opacity: 0.22,
+          borderRadius: 20,
+          border: `1px solid ${deck.cover.accent}55`,
+          background: `linear-gradient(155deg, ${deck.cover.dark}, ${mix(deck.cover.dark, deck.cover.accent, 0.2)})`,
+          padding: 20,
         }}
-      />
-      <div style={{ position: "relative" }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
-          Focus deck · {deckKindLabel(deck)}
-        </div>
-        <Link
-          href={`${base}/deck/${deck.slug}`}
-          style={{ fontSize: 22, fontWeight: 800, color: "#fff", margin: "3px 0 12px", display: "inline-block", textDecoration: "none" }}
-        >
-          {deck.shortName}
-        </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <Link
-            href={href}
-            style={{
-              background: "#fff",
-              color: "#10131c",
-              fontSize: 12,
-              fontWeight: 800,
-              padding: "9px 15px",
-              borderRadius: 10,
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              maxWidth: 190,
-            }}
-          >
-            {resume ? `Continue → ${resume.title}` : "Start studying"}
-          </Link>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>{learned} / {total}</span>
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <span style={{ width: 44, height: 44, flexShrink: 0, display: "block" }}>
+            <CategoryIcon slug={deck.icon} accentColor={deck.cover.accent} stroke="rgba(255,255,255,0.92)" />
+          </span>
+          <div style={{ minWidth: 0 }}>
+            <Link
+              href={`${base}/deck/${deck.slug}`}
+              style={{ fontSize: 22, fontWeight: 800, color: "#fff", textDecoration: "none", display: "block" }}
+            >
+              {deck.shortName}
+            </Link>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", letterSpacing: "0.02em", marginTop: 2 }}>
+              {deckKindLabel(deck)} · {learned} / {total}
+            </div>
+          </div>
           <span style={{ marginLeft: "auto", flexShrink: 0 }}>
-            <Ring
-              pct={pct}
-              stroke="#fff"
-              track="rgba(255,255,255,0.3)"
-              size={40}
-              label={`${pct}%`}
-              labelColor="#fff"
-            />
+            <Ring pct={pct} stroke="#fff" track="rgba(255,255,255,0.3)" size={42} label={`${pct}%`} labelColor="#fff" />
           </span>
         </div>
+        <Link
+          href={href}
+          style={{
+            marginTop: 16,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            background: "#fff",
+            color: "#10131c",
+            fontSize: 14,
+            fontWeight: 800,
+            padding: "12px 16px",
+            borderRadius: 12,
+            textDecoration: "none",
+          }}
+        >
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {resume ? `Continue · ${resume.title}` : "Start studying"}
+          </span>
+          <span style={{ marginLeft: "auto", flexShrink: 0 }}>→</span>
+        </Link>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -258,45 +271,45 @@ function DeckTile({
     <Link
       href={`${base}/deck/${deck.slug}`}
       style={{
-        position: "relative",
-        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        gap: 9,
-        minHeight: 134,
-        padding: 14,
-        borderRadius: 16,
-        border: isLive ? "1px solid var(--border-strong)" : "1px solid var(--border)",
-        background: "var(--surface)",
+        gap: 10,
+        minHeight: 208,
+        padding: 16,
+        borderRadius: 18,
+        border: `1px solid ${isLive ? deck.cover.accent + "66" : "var(--border)"}`,
+        background: isLive
+          ? `linear-gradient(160deg, ${mix(deck.cover.dark, deck.cover.accent, 0.3)} 0%, ${deck.cover.dark} 62%)`
+          : "var(--surface)",
+        boxShadow: isLive ? `inset 0 1px 0 ${deck.cover.accent}40` : undefined,
         textDecoration: "none",
-        opacity: isLive ? 1 : 0.6,
+        opacity: isLive ? 1 : 0.72,
       }}
     >
-      {isLive && (
-        <span
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `radial-gradient(120% 90% at 0% 0%, ${deck.cover.accent}, transparent 60%)`,
-            opacity: 0.16,
-          }}
+      <span style={{ width: 40, height: 40, display: "block", opacity: isLive ? 1 : 0.6 }}>
+        <CategoryIcon
+          slug={deck.icon}
+          accentColor={isLive ? deck.cover.accent : "var(--muted)"}
+          stroke={isLive ? "rgba(255,255,255,0.9)" : "var(--muted)"}
         />
-      )}
-      <span style={{ position: "relative", fontSize: 9, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-        {deckKindLabel(deck, true)}{isLive && ` · ${total}`}
       </span>
-      <span style={{ position: "relative", fontSize: 16, fontWeight: 800, letterSpacing: "0.01em", color: "var(--foreground)" }}>
+
+      <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em", color: isLive ? "#fff" : "var(--foreground)" }}>
         {deck.shortName}
       </span>
+      {isLive && (
+        <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {deckKindLabel(deck, true)} · {total}
+        </span>
+      )}
 
       {isLive ? (
         <>
           <span
             style={{
-              position: "relative",
-              fontSize: 10.5,
-              color: resume ? "var(--accent)" : "var(--muted)",
+              marginTop: "auto",
+              fontSize: 12,
+              color: resume ? deck.cover.accent : "rgba(255,255,255,0.5)",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -304,10 +317,10 @@ function DeckTile({
           >
             {resume ? `▶ ${resume.title}` : "Not started"}
           </span>
-          <span style={{ position: "relative", marginTop: "auto", height: 4, borderRadius: 99, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
+          <span style={{ height: 5, borderRadius: 99, background: "rgba(255,255,255,0.14)", overflow: "hidden" }}>
             <span style={{ display: "block", height: "100%", width: `${pct}%`, borderRadius: 99, background: deck.cover.accent }} />
           </span>
-          <span style={{ position: "relative", display: "flex", justifyContent: "space-between", fontSize: 11, color: "var(--muted)" }}>
+          <span style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "rgba(255,255,255,0.6)" }}>
             <span>{learned} / {total}</span>
             <span>{pct}%</span>
           </span>
@@ -316,12 +329,11 @@ function DeckTile({
         <>
           <span
             style={{
-              position: "relative",
-              fontSize: 10.5,
-              lineHeight: 1.45,
+              fontSize: 12.5,
+              lineHeight: 1.5,
               color: "var(--muted)",
               display: "-webkit-box",
-              WebkitLineClamp: 2,
+              WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
             }}
@@ -330,14 +342,13 @@ function DeckTile({
           </span>
           <span
             style={{
-              position: "relative",
               marginTop: "auto",
               alignSelf: "flex-start",
-              fontSize: 10,
+              fontSize: 11,
               color: "var(--muted)",
               border: "1px solid var(--border)",
               borderRadius: 99,
-              padding: "2px 8px",
+              padding: "3px 10px",
             }}
           >
             In the works
@@ -395,4 +406,16 @@ function Ring({
       )}
     </svg>
   );
+}
+
+/** Blend two hex colours; t=0 → a, t=1 → b. */
+function mix(a: string, b: string, t: number): string {
+  const pa = parseInt(a.slice(1), 16);
+  const pb = parseInt(b.slice(1), 16);
+  const ch = (shift: number) => {
+    const ca = (pa >> shift) & 0xff;
+    const cb = (pb >> shift) & 0xff;
+    return Math.round(ca + (cb - ca) * t);
+  };
+  return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
 }

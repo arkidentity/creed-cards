@@ -112,7 +112,7 @@ export default function DeckHomePage({
         <div style={{ minWidth: 0, flex: 1 }}>
           <h1
             style={{
-              fontSize: 20,
+              fontSize: 23,
               fontWeight: 800,
               letterSpacing: "0.04em",
               color: "var(--foreground)",
@@ -124,7 +124,7 @@ export default function DeckHomePage({
           >
             {deck.shortName.toUpperCase()}
           </h1>
-          <p style={{ fontSize: 10, color: "var(--muted)", margin: "3px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: 11.5, color: "var(--muted)", margin: "4px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>
             {deckKindLabel(deck)}{isLive && ` · ${total} cards`}
           </p>
         </div>
@@ -148,11 +148,11 @@ export default function DeckHomePage({
         )}
       </div>
 
-      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 18 }}>
+      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 22 }}>
 
         {/* Orientation line for non-doctrine decks */}
         {isLive && deck.schema !== "doctrine" && (
-          <p style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.5, margin: "-4px 0 0" }}>
+          <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.55, margin: "-6px 0 0" }}>
             {deck.tagline}.
           </p>
         )}
@@ -167,7 +167,7 @@ export default function DeckHomePage({
               marginTop: 4,
             }}
           >
-            <div style={{ fontSize: 10, color: deck.cover.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
+            <div style={{ fontSize: 11, color: deck.cover.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
               Coming Soon
             </div>
             <div style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
@@ -186,17 +186,17 @@ export default function DeckHomePage({
                 alignItems: "center",
                 gap: 12,
                 borderRadius: 14,
-                padding: "14px 16px",
+                padding: "16px 18px",
                 background: deck.cover.accent,
                 color: "#10131c",
                 textDecoration: "none",
               }}
             >
               <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.09em", textTransform: "uppercase", opacity: 0.7 }}>
+                <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.09em", textTransform: "uppercase", opacity: 0.75 }}>
                   {resumeCard ? "Continue" : "Get started"}
                 </div>
-                <div style={{ fontSize: 15, fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <div style={{ fontSize: 17, fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 2 }}>
                   {resumeCard ? resumeCard.title : "Start studying"}
                 </div>
               </div>
@@ -225,11 +225,11 @@ export default function DeckHomePage({
                       title={`${name} — ${sub}`}
                       trailing={
                         r ? (
-                          <span style={{ fontSize: 11, color: "var(--muted)" }}>
+                          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
                             Best <b style={{ color: "var(--accent)" }}>{r.bestPct}%</b>
                           </span>
                         ) : (
-                          <span style={{ fontSize: 11, color: "var(--muted)" }}>Not tried</span>
+                          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>Not tried</span>
                         )
                       }
                     />
@@ -246,7 +246,7 @@ export default function DeckHomePage({
                 background: "transparent",
                 border: "none",
                 color: isFocus ? "var(--accent)" : "var(--muted)",
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: 600,
                 letterSpacing: "0.04em",
                 cursor: "pointer",
@@ -264,7 +264,7 @@ export default function DeckHomePage({
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h2 style={{ fontSize: 12, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 10px" }}>
+    <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 12px" }}>
       {children}
     </h2>
   );
@@ -290,18 +290,18 @@ function Row({
         display: "flex",
         alignItems: "center",
         gap: 12,
-        padding: "12px 14px",
+        padding: "14px 15px",
         border: "1px solid var(--border)",
-        borderRadius: 12,
+        borderRadius: 13,
         background: "var(--surface)",
-        marginBottom: 7,
+        marginBottom: 8,
         textDecoration: "none",
       }}
     >
-      <span style={{ width: 20, textAlign: "center", color: "var(--muted)", fontSize: 15, flexShrink: 0 }}>{icon}</span>
+      <span style={{ width: 22, textAlign: "center", color: "var(--muted)", fontSize: 17, flexShrink: 0 }}>{icon}</span>
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontSize: 13.5, fontWeight: 650, color: "var(--foreground)" }}>{title}</div>
-        {desc && <div style={{ fontSize: 11, color: "var(--muted)" }}>{desc}</div>}
+        <div style={{ fontSize: 15, fontWeight: 650, color: "var(--foreground)" }}>{title}</div>
+        {desc && <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{desc}</div>}
       </div>
       <span style={{ marginLeft: "auto", flexShrink: 0 }}>
         {trailing ?? <span style={{ color: "var(--muted)", fontSize: 13 }}>›</span>}

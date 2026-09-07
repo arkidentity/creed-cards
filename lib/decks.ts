@@ -57,8 +57,10 @@ export interface Deck {
   tagline: string;
   schema: DeckSchema;
   status: DeckStatus;
-  // Provisional deck-shelf cover (Phase C). Not rendered yet.
+  // Deck-shelf cover colour (dark ground + accent) and the CategoryIcon slug
+  // used as the deck's mark on the shelf tile.
   cover: { dark: string; accent: string };
+  icon: string;
   categories: DeckCategory[];
   cards: CreedCard[] | FulfillmentCard[] | PromiseCard[];
 }
@@ -84,7 +86,8 @@ const ESSENTIALS_DECK: Deck = {
   tagline: "Theological Foundations",
   schema: "doctrine",
   status: "live",
-  cover: { dark: "#0f172a", accent: "#3b82f6" },
+  cover: { dark: "#16244a", accent: "#5b9bff" },
+  icon: "trinity",
   categories: ESSENTIALS_CATEGORIES,
   cards: CARD_DATA,
 };
@@ -113,7 +116,8 @@ const FOUNDATIONS_DECK: Deck = {
   tagline: "Creeds, councils, and the deeper cuts of doctrine",
   schema: "doctrine",
   status: "live",
-  cover: { dark: "#44403c", accent: "#e8b562" },
+  cover: { dark: "#413320", accent: "#e8b562" },
+  icon: "creeds",
   categories: FOUNDATIONS_CATEGORIES,
   cards: FOUNDATIONS_CARDS,
 };
@@ -129,7 +133,8 @@ const PROMISES_DECK: Deck = {
   tagline: "God's promises, sorted by the situation they speak to",
   schema: "promise",
   status: "coming-soon",
-  cover: { dark: "#134e4a", accent: "#5eead4" },
+  cover: { dark: "#123f3c", accent: "#5eead4" },
+  icon: "covenant",
   categories: [],
   cards: [],
 };
@@ -152,7 +157,8 @@ const FULFILLED_DECK: Deck = {
   tagline: "Old Testament prophecies and types fulfilled in Jesus",
   schema: "fulfillment",
   status: "live",
-  cover: { dark: "#1e1b4b", accent: "#a5b4fc" },
+  cover: { dark: "#221c52", accent: "#a5b4fc" },
+  icon: "prophecy",
   categories: FULFILLED_CATEGORIES,
   cards: FULFILLED_CARDS,
 };
