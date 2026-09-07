@@ -274,12 +274,14 @@ function DeckTile({
         display: "flex",
         flexDirection: "column",
         gap: 10,
+        minWidth: 0,
+        overflow: "hidden",
         minHeight: 208,
         padding: 16,
         borderRadius: 18,
         border: `1px solid ${isLive ? deck.cover.accent + "66" : "var(--border)"}`,
         background: isLive
-          ? `linear-gradient(160deg, ${mix(deck.cover.dark, deck.cover.accent, 0.3)} 0%, ${deck.cover.dark} 62%)`
+          ? `linear-gradient(160deg, ${mix(deck.cover.dark, deck.cover.accent, 0.32)} 0%, ${deck.cover.dark} 62%)`
           : "var(--surface)",
         boxShadow: isLive ? `inset 0 1px 0 ${deck.cover.accent}40` : undefined,
         textDecoration: "none",
@@ -294,7 +296,7 @@ function DeckTile({
         />
       </span>
 
-      <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em", color: isLive ? "#fff" : "var(--foreground)" }}>
+      <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em", color: isLive ? "#fff" : "var(--foreground)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
         {deck.shortName}
       </span>
       {isLive && (

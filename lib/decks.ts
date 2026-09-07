@@ -116,7 +116,7 @@ const FOUNDATIONS_DECK: Deck = {
   tagline: "Creeds, councils, and the deeper cuts of doctrine",
   schema: "doctrine",
   status: "live",
-  cover: { dark: "#413320", accent: "#e8b562" },
+  cover: { dark: "#4a3512", accent: "#f5c56a" },
   icon: "creeds",
   categories: FOUNDATIONS_CATEGORIES,
   cards: FOUNDATIONS_CARDS,

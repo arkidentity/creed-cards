@@ -15,6 +15,7 @@ import {
   setFocusDeck,
 } from "../../../lib/progress";
 import { getQuizResult, type QuizResult } from "../../../lib/quizProgress";
+import { CategoryIcon } from "../../../lib/categoryIcons";
 import { useBasePath } from "../../../lib/basePathContext";
 
 const QUIZ_LEVELS = [
@@ -22,6 +23,20 @@ const QUIZ_LEVELS = [
   { level: 2, name: "Level 2", sub: "Scripture" },
   { level: 3, name: "Level 3", sub: "History" },
 ] as const;
+
+const RING = 2 * Math.PI * 16;
+
+/** Blend two hex colours; t=0 → a, t=1 → b. */
+function mix(a: string, b: string, t: number): string {
+  const pa = parseInt(a.slice(1), 16);
+  const pb = parseInt(b.slice(1), 16);
+  const ch = (s: number) => {
+    const ca = (pa >> s) & 0xff;
+    const cb = (pb >> s) & 0xff;
+    return Math.round(ca + (cb - ca) * t);
+  };
+  return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
+}
 
 export default function DeckHomePage({
   params,
@@ -57,6 +72,7 @@ export default function DeckHomePage({
   const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
   const isLive = deck.status === "live";
   const hasQuiz = deckHasQuiz(deck.id);
+  const accent = deck.cover.accent;
 
   const resumeCard = lastStudied != null ? cards.find((c) => c.id === lastStudied) : undefined;
   const studyBase = `${base}/deck/${deck.slug}/study`;
@@ -70,172 +86,190 @@ export default function DeckHomePage({
     setIsFocus(next);
   };
 
-  const RING = 2 * Math.PI * 16;
-
   return (
     <div
       style={{
         minHeight: "100dvh",
         background: "var(--background)",
-        paddingBottom: "calc(80px + env(safe-area-inset-bottom, 0px))",
+        paddingBottom: "calc(90px + env(safe-area-inset-bottom, 0px))",
       }}
     >
-      {/* Header */}
       <div
         style={{
-          padding: "20px 20px 12px",
-          paddingTop: "calc(20px + env(safe-area-inset-top, 0px))",
+          padding: "16px 16px 0",
+          paddingTop: "calc(16px + env(safe-area-inset-top, 0px))",
           display: "flex",
-          alignItems: "center",
-          gap: 12,
+          flexDirection: "column",
+          gap: 24,
         }}
       >
-        <Link
-          href={base || "/"}
+        {/* Deck hero */}
+        <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 36,
-            height: 36,
-            borderRadius: 10,
-            background: "var(--surface-2)",
-            color: "var(--foreground)",
-            textDecoration: "none",
-            fontSize: 18,
-            flexShrink: 0,
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: 22,
+            border: `1px solid ${accent}66`,
+            background: isLive
+              ? `linear-gradient(160deg, ${mix(deck.cover.dark, accent, 0.34)} 0%, ${deck.cover.dark} 68%)`
+              : "var(--surface)",
+            boxShadow: isLive ? `inset 0 1px 0 ${accent}45` : undefined,
+            padding: "16px 18px 20px",
           }}
-          title="All decks"
         >
-          ←
-        </Link>
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <h1
-            style={{
-              fontSize: 23,
-              fontWeight: 800,
-              letterSpacing: "0.04em",
-              color: "var(--foreground)",
-              margin: 0,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {deck.shortName.toUpperCase()}
-          </h1>
-          <p style={{ fontSize: 11.5, color: "var(--muted)", margin: "4px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-            {deckKindLabel(deck)}{isLive && ` · ${total} cards`}
-          </p>
-        </div>
-        {isLive && (
-          <svg width="42" height="42" viewBox="0 0 40 40" style={{ flexShrink: 0 }}>
-            <circle cx="20" cy="20" r="16" fill="none" stroke="var(--border)" strokeWidth="3.5" />
-            <circle
-              cx="20" cy="20" r="16"
-              fill="none"
-              stroke={deck.cover.accent}
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeDasharray={RING}
-              strokeDashoffset={RING * (1 - pct / 100)}
-              transform="rotate(-90 20 20)"
-            />
-            <text x="20" y="24" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--foreground)">
-              {pct}
-            </text>
-          </svg>
-        )}
-      </div>
+          {/* top row: back + ring */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <Link
+              href={base || "/"}
+              title="All decks"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 36,
+                height: 36,
+                borderRadius: 11,
+                background: isLive ? "rgba(0,0,0,0.28)" : "var(--surface-2)",
+                color: isLive ? "#fff" : "var(--foreground)",
+                textDecoration: "none",
+                fontSize: 18,
+                flexShrink: 0,
+              }}
+            >
+              ←
+            </Link>
+            <span style={{ marginLeft: "auto", flexShrink: 0 }}>
+              {isLive && (
+                <svg width="46" height="46" viewBox="0 0 40 40">
+                  <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="3.5" />
+                  {pct > 0 && (
+                    <circle
+                      cx="20" cy="20" r="16"
+                      fill="none"
+                      stroke="#fff"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeDasharray={RING}
+                      strokeDashoffset={RING * (1 - pct / 100)}
+                      transform="rotate(-90 20 20)"
+                    />
+                  )}
+                  <text x="20" y="24" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#fff">
+                    {pct}%
+                  </text>
+                </svg>
+              )}
+            </span>
+          </div>
 
-      <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 22 }}>
-
-        {/* Orientation line for non-doctrine decks */}
-        {isLive && deck.schema !== "doctrine" && (
-          <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.55, margin: "-6px 0 0" }}>
-            {deck.tagline}.
-          </p>
-        )}
-
-        {!isLive && (
-          <div
-            style={{
-              background: `linear-gradient(145deg, ${deck.cover.dark}, ${deck.cover.dark}cc)`,
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: 18,
-              padding: "18px 16px",
-              marginTop: 4,
-            }}
-          >
-            <div style={{ fontSize: 11, color: deck.cover.accent, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
-              Coming Soon
-            </div>
-            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
-              {total} cards are written and in review. This deck isn&apos;t open for study yet.
+          {/* identity */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 14 }}>
+            <span style={{ width: 46, height: 46, flexShrink: 0, display: "block", opacity: isLive ? 1 : 0.6 }}>
+              <CategoryIcon
+                slug={deck.icon}
+                accentColor={isLive ? accent : "var(--muted)"}
+                stroke={isLive ? "rgba(255,255,255,0.92)" : "var(--muted)"}
+              />
+            </span>
+            <div style={{ minWidth: 0 }}>
+              <h1
+                style={{
+                  fontSize: 24,
+                  fontWeight: 800,
+                  letterSpacing: "0.03em",
+                  color: isLive ? "#fff" : "var(--foreground)",
+                  margin: 0,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {deck.shortName.toUpperCase()}
+              </h1>
+              <p style={{ fontSize: 11.5, color: isLive ? "rgba(255,255,255,0.6)" : "var(--muted)", margin: "4px 0 0", letterSpacing: "0.07em", textTransform: "uppercase" }}>
+                {deckKindLabel(deck)}{isLive && ` · ${total} cards`}
+              </p>
             </div>
           </div>
-        )}
 
-        {isLive && (
-          <>
-            {/* Primary action */}
+          {isLive && deck.schema !== "doctrine" && (
+            <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.7)", lineHeight: 1.5, margin: "14px 0 0" }}>
+              {deck.tagline}.
+            </p>
+          )}
+
+          {isLive ? (
             <Link
               href={primaryHref}
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 12,
-                borderRadius: 14,
-                padding: "16px 18px",
-                background: deck.cover.accent,
+                gap: 10,
+                marginTop: 18,
+                borderRadius: 13,
+                padding: "14px 16px",
+                background: "#fff",
                 color: "#10131c",
                 textDecoration: "none",
               }}
             >
               <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.09em", textTransform: "uppercase", opacity: 0.75 }}>
+                <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.6 }}>
                   {resumeCard ? "Continue" : "Get started"}
                 </div>
-                <div style={{ fontSize: 17, fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 2 }}>
+                <div style={{ fontSize: 16, fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 2 }}>
                   {resumeCard ? resumeCard.title : "Start studying"}
                 </div>
               </div>
               <span style={{ marginLeft: "auto", fontWeight: 800, flexShrink: 0 }}>→</span>
             </Link>
+          ) : (
+            <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.55, margin: "16px 0 0" }}>
+              {total} cards are written and in review. This deck isn&apos;t open for study yet.
+            </p>
+          )}
+        </div>
 
+        {isLive && (
+          <>
             {/* Study */}
-            <div>
+            <section>
               <SectionLabel>Study</SectionLabel>
-              <Row href={`${studyBase}?mode=sequential`} icon="→" title="In order" desc={`Card 1 to ${total}`} />
-              <Row href={`${studyBase}?mode=random`} icon="⇄" title="Shuffle" desc="Whole deck, random" />
-              <Row href={`${studyBase}?mode=sequential&filter=unlearned`} icon="○" title="Unlearned only" desc={`${total - learned} left`} />
-            </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <Row href={`${studyBase}?mode=sequential`} accent={accent} icon="→" title="In order" desc={`Card 1 to ${total}`} />
+                <Row href={`${studyBase}?mode=random`} accent={accent} icon="⇄" title="Shuffle" desc="Whole deck, random" />
+                <Row href={`${studyBase}?mode=sequential&filter=unlearned`} accent={accent} icon="○" title="Unlearned only" desc={`${total - learned} left`} />
+              </div>
+            </section>
 
             {/* Test */}
             {hasQuiz && (
-              <div>
+              <section>
                 <SectionLabel>Test</SectionLabel>
-                {QUIZ_LEVELS.map(({ level, name, sub }, i) => {
-                  const r = quizResults[i];
-                  return (
-                    <Row
-                      key={level}
-                      href={`${base}/deck/${deck.slug}/quiz/${level}`}
-                      icon={["①", "②", "③"][i]}
-                      title={`${name} — ${sub}`}
-                      trailing={
-                        r ? (
-                          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
-                            Best <b style={{ color: "var(--accent)" }}>{r.bestPct}%</b>
-                          </span>
-                        ) : (
-                          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>Not tried</span>
-                        )
-                      }
-                    />
-                  );
-                })}
-              </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {QUIZ_LEVELS.map(({ level, name, sub }, i) => {
+                    const r = quizResults[i];
+                    return (
+                      <Row
+                        key={level}
+                        href={`${base}/deck/${deck.slug}/quiz/${level}`}
+                        accent={accent}
+                        icon={["①", "②", "③"][i]}
+                        title={`${name} — ${sub}`}
+                        trailing={
+                          r ? (
+                            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+                              Best <b style={{ color: accent }}>{r.bestPct}%</b>
+                            </span>
+                          ) : (
+                            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>Not tried</span>
+                          )
+                        }
+                      />
+                    );
+                  })}
+                </div>
+              </section>
             )}
 
             {/* Focus toggle */}
@@ -243,14 +277,15 @@ export default function DeckHomePage({
               onClick={toggleFocus}
               style={{
                 alignSelf: "center",
-                background: "transparent",
-                border: "none",
-                color: isFocus ? "var(--accent)" : "var(--muted)",
-                fontSize: 13,
-                fontWeight: 600,
+                background: isFocus ? `${accent}1a` : "transparent",
+                border: `1px solid ${isFocus ? accent + "66" : "var(--border-strong)"}`,
+                color: isFocus ? accent : "var(--muted)",
+                fontSize: 12.5,
+                fontWeight: 700,
                 letterSpacing: "0.04em",
                 cursor: "pointer",
-                padding: "4px 8px",
+                padding: "9px 18px",
+                borderRadius: 99,
               }}
             >
               {isFocus ? "★ Focused deck" : "☆ Make this my focus"}
@@ -264,7 +299,7 @@ export default function DeckHomePage({
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 12px" }}>
+    <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase", margin: "0 0 12px" }}>
       {children}
     </h2>
   );
@@ -275,12 +310,14 @@ function Row({
   icon,
   title,
   desc,
+  accent,
   trailing,
 }: {
   href: string;
   icon: string;
   title: string;
   desc?: string;
+  accent: string;
   trailing?: React.ReactNode;
 }) {
   return (
@@ -289,22 +326,36 @@ function Row({
       style={{
         display: "flex",
         alignItems: "center",
-        gap: 12,
+        gap: 13,
         padding: "14px 15px",
-        border: "1px solid var(--border)",
-        borderRadius: 13,
-        background: "var(--surface)",
-        marginBottom: 8,
+        border: "1px solid var(--border-strong)",
+        borderRadius: 14,
+        background: "var(--surface-elevated)",
         textDecoration: "none",
       }}
     >
-      <span style={{ width: 22, textAlign: "center", color: "var(--muted)", fontSize: 17, flexShrink: 0 }}>{icon}</span>
+      <span
+        style={{
+          width: 34,
+          height: 34,
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 10,
+          background: "var(--surface-2)",
+          color: accent,
+          fontSize: 16,
+        }}
+      >
+        {icon}
+      </span>
       <div style={{ minWidth: 0 }}>
         <div style={{ fontSize: 15, fontWeight: 650, color: "var(--foreground)" }}>{title}</div>
-        {desc && <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{desc}</div>}
+        {desc && <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{desc}</div>}
       </div>
       <span style={{ marginLeft: "auto", flexShrink: 0 }}>
-        {trailing ?? <span style={{ color: "var(--muted)", fontSize: 13 }}>›</span>}
+        {trailing ?? <span style={{ color: "var(--muted)", fontSize: 15 }}>›</span>}
       </span>
     </Link>
   );
