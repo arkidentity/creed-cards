@@ -19,9 +19,9 @@ import { CategoryIcon } from "../../../lib/categoryIcons";
 import { useBasePath } from "../../../lib/basePathContext";
 
 const QUIZ_LEVELS = [
-  { level: 1, name: "Level 1", sub: "Vocabulary" },
-  { level: 2, name: "Level 2", sub: "Scripture" },
-  { level: 3, name: "Level 3", sub: "History" },
+  { level: 1, name: "Level 1", sub: "Words & Meaning" },
+  { level: 2, name: "Level 2", sub: "Scripture & History" },
+  { level: 3, name: "Level 3", sub: "Connections" },
 ] as const;
 
 const RING = 2 * Math.PI * 16;

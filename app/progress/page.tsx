@@ -16,9 +16,9 @@ import { getQuizResult, type QuizResult } from "../../lib/quizProgress";
 import { useBasePath } from "../../lib/basePathContext";
 
 const QUIZ_LEVELS = [
-  { level: 1, name: "Level 1", subtitle: "Surface Recognition" },
-  { level: 2, name: "Level 2", subtitle: "Content Mastery" },
-  { level: 3, name: "Level 3", subtitle: "Deep Understanding" },
+  { level: 1, name: "Level 1", subtitle: "Words & Meaning" },
+  { level: 2, name: "Level 2", subtitle: "Scripture & History" },
+  { level: 3, name: "Level 3", subtitle: "Connections" },
 ] as const;
 
 export default function ProgressPage() {

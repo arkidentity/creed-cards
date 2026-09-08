@@ -11,9 +11,9 @@ import { getDeck } from "../../lib/decks";
 const deckSlug = (deckId: number) => getDeck(deckId)?.slug ?? "essentials";
 
 const LEVEL_LABELS = {
-  1: "Surface Recognition",
-  2: "Content Mastery",
-  3: "Deep Understanding",
+  1: "Words & Meaning",
+  2: "Scripture & History",
+  3: "Connections",
 };
 
 const AUTO_ADVANCE_MS = 1600;

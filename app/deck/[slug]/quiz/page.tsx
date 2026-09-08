@@ -11,22 +11,22 @@ const LEVELS = [
   {
     level: 1,
     name: "Level 1",
-    subtitle: "Surface Recognition",
-    desc: "Match cards by their titles, terms, and categories.",
+    subtitle: "Words & Meaning",
+    desc: "The Greek and Hebrew words behind the doctrines — and what they mean.",
     icon: "○",
   },
   {
     level: 2,
     name: "Level 2",
-    subtitle: "Content Mastery",
-    desc: "Identify cards from their key verses and definitions.",
+    subtitle: "Scripture & History",
+    desc: "Where each doctrine is anchored, and the councils and history behind it.",
     icon: "◑",
   },
   {
     level: 3,
     name: "Level 3",
-    subtitle: "Deep Understanding",
-    desc: "Historical context, heresies, and cross-card theology.",
+    subtitle: "Connections",
+    desc: "How the doctrines fit together — and the ones people often confuse.",
     icon: "●",
   },
 ] as const;
@@ -159,14 +159,14 @@ export default function DeckQuizLevelsPage({
             QUIZ
           </h1>
           <p style={{ fontSize: 11, color: "var(--muted)", margin: "2px 0 0" }}>
-            {deck.name} · 20 questions
+            {deck.name} · 12 questions
           </p>
         </div>
       </div>
 
       <div style={{ padding: "0 16px", display: "flex", flexDirection: "column", gap: 10 }}>
         <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 6px" }}>
-          Choose a level. Each attempt draws 20 questions from a rotating bank — no two runs are the same.
+          Choose a level. Each attempt draws 12 questions from a larger bank — no two runs are the same.
         </p>
 
         {LEVELS.map(({ level, name, subtitle, desc, icon }, i) => {

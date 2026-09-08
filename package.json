@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prebuild": "tsx scripts/gen-card-index.ts",
-    "gen:index": "tsx scripts/gen-card-index.ts"
+    "prebuild": "tsx scripts/gen-card-index.ts && tsx scripts/gen-quiz-bank.ts",
+    "gen:index": "tsx scripts/gen-card-index.ts",
+    "gen:quiz": "tsx scripts/gen-quiz-bank.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.1",
