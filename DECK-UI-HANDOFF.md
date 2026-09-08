@@ -88,11 +88,18 @@ jsonb + `focus_deck_id`), `231` (`church_creed_pushes.deck_id` + RPC).
 
 ## Roadmap left
 
-- **E — quiz redesign** (`QUIZ-REDESIGN.md`): 4 levels, ~120 authored questions
-  for Deck 1; `lib/quizEngine.ts` currently ignores `deckId` and always pulls
-  `CARD_DATA` (Essentials). Two pre-freeze L3 questions (`l3-x-06`, `l3-x-12`)
-  are about Foundations topics — fix here. Also sweep the dead `BottomNav` /
-  `getDeckMeta`.
+- **E — quiz redesign — DONE 2026-09-08** (`creed-cards` `2565c95`, daily-dna
+  `988be98`, ark-identity `99e6668`; dna-hub untouched). 3 levels
+  (Words & Meaning / Scripture & History / Connections), 85 authored items
+  (25/35/25) in `lib/quiz/deck1Bank.ts`, generated from `QUIZ-BANK-DECK1.md` by
+  `scripts/gen-quiz-bank.ts` (`npm run gen:quiz`, also in `prebuild`).
+  `quizEngine.ts` keeps `generateQuestions` / `QuizQuestion` but now draws 12
+  from the bank with a per-attempt option shuffle; every programmatic generator
+  deleted. `quizData.ts` trimmed to the `QuizQuestion` interface
+  (`DECK_META`/`getDeckMeta`/`L3Question`/`DECK1_L3_QUESTIONS` gone). `BottomNav`
+  deleted. `l3-x-06`/`l3-x-12` dropped (Foundations topics). Old localStorage
+  best-scores carry over untouched. Bank is Essentials-only; a second deck needs
+  its own `deckN Bank.ts` + `DECK_BANKS` entry, and `deckHasQuiz` widened.
 - **F — Promises deck**: design the `promise` schema (`DECK-LINEUP.md`), write
   ~50 cards + a promise card renderer + category icons; flip `status: "live"`.
 - **Migration `232+` — Hub `cards_mastered` cutover**: repoint
