@@ -111,3 +111,13 @@
 .hint-pulse {
   animation: hintPulse 2s ease-in-out infinite;
 }
+
+/* Desktop max-width — Creed Cards is a phone-shaped UI; without this every
+   page (shelf, deck home, study, quiz, progress) stretches edge-to-edge on
+   wide screens. Applied once at the layout level (standalone + both embeds). */
+.creed-shell {
+  max-width: 480px;
+  margin-inline: auto;
+  min-height: 100dvh;
+  background: var(--background);
+}

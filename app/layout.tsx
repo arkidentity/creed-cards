@@ -29,7 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        <div className="creed-shell">{children}</div>
+      </body>
     </html>
   );
 }
