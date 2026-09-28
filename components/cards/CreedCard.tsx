@@ -1,6 +1,6 @@
 "use client";
 
-import { type RefObject } from "react";
+import { type RefObject, useEffect } from "react";
 import { motion } from "framer-motion";
 import type { CreedCard as CreedCardType } from "../../lib/cardData";
 import type { FulfillmentCard } from "../../lib/decks/fulfilledCards";
@@ -10,6 +10,8 @@ import { CardBack } from "./CardBack";
 import { FulfillmentCardFront } from "./FulfillmentCardFront";
 import { FulfillmentCardBack } from "./FulfillmentCardBack";
 import { playFlipSound } from "../../lib/progress";
+import { getCreedGoDeeper } from "../../lib/goDeeper";
+import { useCreedTracker } from "../../lib/trackingContext";
 
 interface CreedCardProps {
   card: AnyCard;
@@ -43,6 +45,16 @@ export function CreedCard({
   };
 
   const isFulfillment = schema === "fulfillment";
+
+  // Count back views only for cards with Go Deeper: it's the denominator for open rate.
+  const track = useCreedTracker();
+  const hasGoDeeper = !isFulfillment && !!getCreedGoDeeper(card as CreedCardType);
+  useEffect(() => {
+    if (isFlipped && hasGoDeeper) {
+      track({ deckId: card.deckId ?? 1, cardId: card.id, title: card.title, event: "back_view" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFlipped, hasGoDeeper, card.id]);
 
   return (
     <div className="card-perspective" style={{ height: "100%" }}>

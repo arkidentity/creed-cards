@@ -14,6 +14,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import type { CreedCard } from "../../lib/cardData";
 import type { CreedGoDeeper } from "../../lib/goDeeper";
+import { useCreedTracker } from "../../lib/trackingContext";
 
 interface GoDeeperSheetProps {
   card: CreedCard;
@@ -28,6 +29,7 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
   const [mounted, setMounted] = useState(false);
   const [openQ, setOpenQ] = useState<number | null>(null);
   const dragStartY = useRef<number | null>(null);
+  const track = useCreedTracker();
 
   useEffect(() => setMounted(true), []);
 
@@ -189,7 +191,10 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
                       return (
                         <div key={item.q} style={{ border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden" }}>
                           <button
-                            onClick={() => setOpenQ(isOpen ? null : i)}
+                            onClick={() => {
+                              setOpenQ(isOpen ? null : i);
+                              if (!isOpen) track({ deckId: card.deckId ?? 1, cardId: card.id, title: card.title, event: "question", question: item.q });
+                            }}
                             aria-expanded={isOpen}
                             style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", background: "transparent", border: "none", textAlign: "left", cursor: "pointer", color: "var(--foreground)", fontSize: 14, fontWeight: 600 }}
                           >

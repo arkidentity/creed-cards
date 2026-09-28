@@ -4,6 +4,7 @@ import { forwardRef, useState } from "react";
 import type { CreedCard } from "../../lib/cardData";
 import { getCreedGoDeeper } from "../../lib/goDeeper";
 import { GoDeeperSheet } from "./GoDeeperSheet";
+import { useCreedTracker } from "../../lib/trackingContext";
 
 interface CardBackProps {
   card: CreedCard;
@@ -15,6 +16,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
   function CardBack({ card, isLearned, onToggleLearned }, ref) {
     const goDeeper = getCreedGoDeeper(card);
     const [sheetOpen, setSheetOpen] = useState(false);
+    const track = useCreedTracker();
     return (
       <>
       <div
@@ -148,6 +150,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
               onClick={(e) => {
                 e.stopPropagation();
                 setSheetOpen(true);
+                track({ deckId: card.deckId ?? 1, cardId: card.id, title: card.title, event: "open" });
               }}
               style={{
                 flex: 1,
