@@ -153,7 +153,7 @@ export const CARD_DATA: CreedCard[] = [
       "He is the image of the invisible God, the firstborn of all creation. For by Him all things were created, both in the heavens and on earth.",
     reference: "Colossians 1:15-16",
     historicalContext:
-      "The Council of Nicaea (325 AD) affirmed that the Son is \"begotten, not made, being of one substance with the Father,\" refuting the claim that Jesus was a created being.",
+      "Early Christians faced the teaching that the Son was a created being. The church answered that He is \"begotten, not made,\" sharing the Father's own being.",
     reflection:
       "What does it mean for your life that Jesus is both fully God and fully human?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
@@ -171,12 +171,12 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termHighlight: "Holy Spirit",
     definition:
-      "The Third Person of the Trinity is God the Holy Spirit, who proceeds from the Father and the Son. The Spirit inspired Scripture, conceived Christ in Mary's womb, empowers believers, and unites us with Christ. The Spirit is God dwelling in us.",
+      "The Third Person of the Trinity is God the Holy Spirit, sent by the Father and the Son. The Spirit inspired Scripture, conceived Christ in Mary's womb, empowers believers, and unites us with Christ. The Spirit is God dwelling in us.",
     scripture:
       "The Helper, the Holy Spirit, whom the Father will send in My name, He will teach you all things, and bring to your remembrance all that I said to you.",
     reference: "John 14:26",
     historicalContext:
-      "The Council of Constantinople (381 AD) affirmed the full deity of the Holy Spirit against those who denied the Spirit's personhood, declaring the Spirit is \"worshiped and glorified together with the Father and the Son.\"",
+      "Some early Christians accepted that Jesus was God but said the Spirit was something less. The church answered that the Spirit is \"worshiped and glorified together with the Father and the Son.\"",
     reflection:
       "How is the Holy Spirit active in your life today?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
@@ -222,7 +222,7 @@ export const CARD_DATA: CreedCard[] = [
       "In the beginning God created the heavens and the earth.",
     reference: "Genesis 1:1",
     historicalContext:
-      "Against Gnosticism's claim that matter is evil and created by a lesser god, the church affirmed that the one true God created all things good. The Nicene Creed states God is \"maker of heaven and earth, of all things visible and invisible.\"",
+      "Some early teachers claimed the physical world was made by a lesser god. The church answered that the one true God made all things, and made them good. The Nicene Creed states God is \"maker of heaven and earth, of all things visible and invisible.\"",
     reflection:
       "How does knowing that God created you on purpose and for a purpose affect your daily life?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
@@ -245,7 +245,7 @@ export const CARD_DATA: CreedCard[] = [
       "God created man in His own image, in the image of God He created him; male and female He created them.",
     reference: "Genesis 1:27",
     historicalContext:
-      "Early theologians such as Irenaeus distinguished the image (retained after the Fall) from the likeness (lost, and restored in Christ). The doctrine grounds human dignity, the sanctity of life, and the call to see Christ in the least of these.",
+      "Even after sin entered the world, the Bible still says every person bears God's image (Genesis 9:6). That is why Christians hold that every human life has worth, whatever a person's age, ability, or background.",
     reflection:
       "How would you treat the next person you meet if you truly believed they carry the image of God?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },
@@ -917,7 +917,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termNote: "Ekklēsia appears in Matthew 16:18.",
     definition:
-      "The Church is the community of all believers in Jesus Christ—those called out from the world to belong to God. We are one body with Christ as our Head, united by the Spirit across time and space. The Church is both local (gathered congregations) and universal (all believers everywhere).",
+      "The Church is the community of all believers in Jesus Christ—the people God has gathered to belong to Him. We are one body with Christ as our Head, united by the Spirit across time and space. The Church is both local (gathered congregations) and universal (all believers everywhere).",
     scripture:
       "For even as the body is one and yet has many members, and all the members of the body, though they are many, are one body, so also is Christ.",
     reference: "1 Corinthians 12:12",

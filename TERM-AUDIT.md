@@ -99,6 +99,8 @@ A **Go Deeper** button sits beside **Mark as Learned** on the card back, shown o
 
 Pilot cards (Essentials): **#1** echad (homoousios in its story), **#5** perichōrēsis, **#22** hamartia, **#36** ekklēsia, **#40** mathētēs. For these, the card's Historical Context was shortened to plain sentences and the names and dates moved into Go Deeper.
 
+**Batch 2 (2026-09-28):** #2 patēr, #3 huios tou Theou, #4 pneuma hagion, #6 bara Elohim, #7 imago Dei (10 of 50 done). Same history-shortening on #3, #4, #6, #7. **#4 definition:** "proceeds from the Father and the Son" → "sent by the Father and the Son"; the *and the Son* difference is now a middle-path question in #4's Go Deeper. **#36 definition:** dropped "called out from the world" (contradicted the ekklēsia fix). Second fact-check pass on the pilot five: Shema dating, Athanasius's role, Pelagius's view, Genesis 3 wording, John 8:31 quote, disciple customs hedged.
+
 ## Next: Foundations (Deck 2)
 
 Decided by Travis, 2026-09-28:
