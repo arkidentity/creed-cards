@@ -37,32 +37,35 @@ export interface CreedGoDeeper {
 }
 
 const ENTRIES: Record<string, CreedGoDeeper> = {
-  // ── Essentials #1 · One God in Three Persons · homoousios ──────────────
+  // ── Essentials #1 · One God in Three Persons · echad ─────────────────
   "1:1": {
-    pronunciation: "hoh-moh-OO-see-os",
-    meaning: "Of the same being. Whatever the Father is, as God, the Son is too.",
+    pronunciation: "eh-KHAHD",
+    meaning: "One. Israel's most basic confession: there is one God, and only one.",
     wordNote:
-      "Not a Bible word. The church chose it in AD 325 to sum up what many verses teach together.",
+      "Echad is the ordinary Hebrew word for \"one.\" It can count a single thing (\"one day,\" Genesis 1:5) or describe things made one (\"one flesh,\" Genesis 2:24).",
     verses: [
-      { ref: "John 1:1", note: "The Word was with God, and the Word was God.", usesWord: false },
-      { ref: "John 10:30", note: "Jesus: \"I and the Father are one.\"", usesWord: false },
-      { ref: "Colossians 2:9", note: "All the fullness of God lives in Christ in bodily form.", usesWord: false },
-      { ref: "Hebrews 1:3", note: "The Son is \"the exact representation of His being.\"", usesWord: false },
+      { ref: "Deuteronomy 6:4", note: "The Shema: \"The Lord our God, the Lord is one.\"", usesWord: true },
+      { ref: "Genesis 2:24", note: "A man and his wife become \"one flesh.\"", usesWord: true },
+      { ref: "Mark 12:29", note: "Jesus quotes the Shema as the first and greatest commandment.", usesWord: false },
+      { ref: "1 Corinthians 8:6", note: "\"One God, the Father… and one Lord, Jesus Christ.\" Paul seems to echo the Shema, with Jesus included in its one Lord.", usesWord: false },
     ],
     story: [
-      "In the early 300s, a popular church leader in Alexandria, Egypt, named Arius taught that the Son was the first and greatest thing God ever made, but still made. \"There was a time when He was not,\" his followers said.",
-      "In AD 325 the emperor Constantine called church leaders from across the empire to Nicaea, in what's now Turkey. They faced a problem. According to Athanasius, who was there, Arius's side could agree with every Bible phrase put in front of them while still meaning the Son was created. So the council chose one word that couldn't be bent: homoousios. The Son is of the same being as the Father.",
-      "The argument didn't end there. It went on for more than fifty years, until a council at Constantinople in AD 381 settled it and expanded the creed into the Nicene Creed churches still say today.",
+      "The Shema, named for its first word, \"Hear,\" is Israel's central confession. Faithful Jews have prayed it every morning and evening for more than two thousand years. In a world full of gods, it said there is one.",
+      "The first Christians were Jews who kept praying the Shema while worshiping Jesus. Paul even seems to echo its words to include Jesus within the one Lord (1 Corinthians 8:6).",
+      "Centuries later, a church leader named Arius taught that the Son was a created being. In AD 325 the Council of Nicaea chose the word homoousios, \"same being,\" to say clearly that the Son shares the one being of God.",
     ],
     people: [
-      { name: "Arius", say: "AIR-ee-us", who: "A church leader in Alexandria who taught that the Son was created. His teaching is what the council answered." },
-      { name: "Constantine", say: "KON-stan-teen", who: "The first Roman emperor to become a Christian. He called the Council of Nicaea." },
-      { name: "Athanasius", say: "ath-uh-NAY-shus", who: "A young assistant at Nicaea who later became bishop of Alexandria. He defended this word for decades and was sent into exile five times for it." },
+      { name: "Arius", say: "AIR-ee-us", who: "A church leader in Alexandria, Egypt, who taught that the Son was created. His teaching is what the Council of Nicaea answered." },
+      { name: "Athanasius", say: "ath-uh-NAY-shus", who: "A young assistant at Nicaea who later became bishop of Alexandria. He defended the Son's full divinity for decades and was sent into exile five times for it." },
     ],
     questions: [
       {
-        q: "If the word isn't in the Bible, why use it?",
-        a: "For the same reason Christians use the word \"Trinity,\" which isn't in the Bible either. A single word can sum up what many verses teach together. Homoousios doesn't add anything to Scripture. It puts a fence around what Scripture already says about Jesus.",
+        q: "Does echad mean God is more than one person?",
+        a: "Not by itself. It's the ordinary word for \"one,\" and Jewish readers have always read the Shema as confessing that God is one and unique. The word can describe a unity made of parts, as in \"one flesh,\" so it leaves room for what Christians later confessed. But Christians base their belief in the Trinity on how the whole Bible speaks of the Father, Son, and Spirit, not on this one word.",
+      },
+      {
+        q: "Where do \"Trinity\" and homoousios come from, if they aren't Bible words?",
+        a: "They're church words that sum up what many verses teach together. \"Trinity\" names the one God who is Father, Son, and Spirit. Homoousios, chosen at Nicaea in AD 325, says the Son is of the same being as the Father. Neither adds to Scripture. They put a fence around what it already says.",
       },
       {
         q: "Do all Christians believe this?",

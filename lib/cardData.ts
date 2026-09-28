@@ -95,19 +95,19 @@ export const CARD_DATA: CreedCard[] = [
     categorySlug: "trinity",
     title: "ONE GOD IN THREE PERSONS",
     shortDesc: "Unity in Diversity",
-    term: "ὁμοούσιος",
-    termLabel: "Greek",
-    translation: "Homoousios",
-    englishMeaning: "Same Being",
-    termType: "church",
-    termNote: "A church term, adopted at the Council of Nicaea (AD 325).",
+    term: "אֶחָד",
+    termLabel: "Hebrew",
+    translation: "Echad",
+    englishMeaning: "One",
+    termType: "bible",
+    termHighlight: "one",
     definition:
       "The Father, Son, and Holy Spirit are not three gods but one God in three Persons. Each Person is fully God, sharing the same divine essence. They are eternally distinct yet completely united—three \"whos\" in one \"what.\"",
     scripture:
       "Hear, O Israel! The Lord is our God, the Lord is one!",
     reference: "Deuteronomy 6:4",
     historicalContext:
-      "The word homoousios, meaning \"same being,\" was chosen at the Council of Nicaea in AD 325 to say clearly that Jesus is fully God, not a created being.",
+      "Israel's great confession, the Shema, calls God echad: one. The same word describes a husband and wife becoming \"one flesh\" (Genesis 2:24), a real unity, not only a count. Christians came to understand God's oneness as the one life shared by the Father, Son, and Spirit.",
     reflection:
       "Why is it important that God is both one and three, rather than just one or just three?",
     colors: { dark: "#0f172a", accent: "#3b82f6" },

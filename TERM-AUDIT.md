@@ -24,11 +24,11 @@ Readers reported that the Greek/Hebrew/Latin terms were confusing, and one quest
 
 ## Results — Essentials
 
-**22 in the card's verse · 23 Bible words cited to another verse · 5 church terms.** (First pass said 21/24; #43 *hypomonē* is in Hebrews 10:36 and was misfiled.) #41 *agapē*: the verse shown uses the verb; the noun is in the rest of v35, so it gets both a highlight and a note. #7 *imago Dei* is the Latin Bible's own wording of Genesis 1:27.
+**23 in the card's verse · 23 Bible words cited to another verse · 4 church terms.** (#1 changed 2026-09-28 from the church term *homoousios* to the Hebrew *echad*, which is in Deuteronomy 6:4. *Homoousios* now lives in #1's Go Deeper.) (First pass said 21/24; #43 *hypomonē* is in Hebrews 10:36 and was misfiled.) #41 *agapē*: the verse shown uses the verb; the noun is in the rest of v35, so it gets both a highlight and a note. #7 *imago Dei* is the Latin Bible's own wording of Genesis 1:27.
 
 | # | Card | Term | Status | Card's verse | Note shown on the card |
 |---|---|---|---|---|---|
-| 1 | One God In Three Persons | *Homoousios* | ⚠️ church term — labeled | Deuteronomy 6:4 | A church term, adopted at the Council of Nicaea (AD 325). |
+| 1 | One God In Three Persons | *Echad* | ✅ in the card's verse — highlighted | Deuteronomy 6:4 | — |
 | 2 | God The Father | *Patēr* | ✅ in the card's verse — highlighted | Ephesians 1:3 | — |
 | 3 | God The Son | *Huios tou Theou* | ⚠️ Bible word, other verse — cited | Colossians 1:15-16 | Huios tou Theou appears in John 20:31. |
 | 4 | God The Holy Spirit | *Pneuma Hagion* | ✅ in the card's verse — highlighted | John 14:26 | — |
@@ -97,7 +97,7 @@ Word roots aren't word meanings. Fixed on the card face:
 
 A **Go Deeper** button sits beside **Mark as Learned** on the card back, shown only when the card has an entry in `lib/goDeeper.ts`. It opens a bottom sheet (`components/cards/GoDeeperSheet.tsx`, portaled to `document.body` so the card's 3D transform can't trap it) with: What It Means · Where It Shows Up (verses marked "uses this word" / "teaches this idea") · The Story Behind It · The People (with pronunciation) · Questions People Ask.
 
-Pilot cards (Essentials): **#1** homoousios, **#5** perichōrēsis, **#22** hamartia, **#36** ekklēsia, **#40** mathētēs. For these, the card's Historical Context was shortened to plain sentences and the names and dates moved into Go Deeper.
+Pilot cards (Essentials): **#1** echad (homoousios in its story), **#5** perichōrēsis, **#22** hamartia, **#36** ekklēsia, **#40** mathētēs. For these, the card's Historical Context was shortened to plain sentences and the names and dates moved into Go Deeper.
 
 ## Next: Foundations (Deck 2)
 
