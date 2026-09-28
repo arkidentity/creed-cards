@@ -110,6 +110,7 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
               {card.termLabel && (
                 <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                   {card.termLabel}
+                  {card.termType && (card.termType === "church" ? " · Church term" : " · Bible word")}
                 </span>
               )}
             </div>

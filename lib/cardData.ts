@@ -11,6 +11,9 @@ export interface CreedCard {
   termLabel?: string; // 'Greek' | 'Hebrew' | 'Latin'
   translation?: string;
   englishMeaning?: string;
+  // Is the term itself in Scripture, or a word the church coined to name a biblical idea?
+  termType?: 'bible' | 'church';
+  termNote?: string; // Where the word is used, or where the church term came from
   definition: string;
   scripture: string;
   reference: string;
@@ -95,6 +98,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Homoousios",
     englishMeaning: "Same Being",
+    termType: "church",
+    termNote: "A word the church adopted at the Council of Nicaea (AD 325) to say the Son shares the Father's very being. It names what Jesus teaches in John 10:30.",
     definition:
       "The Father, Son, and Holy Spirit are not three gods but one God in three Persons. Each Person is fully God, sharing the same divine essence. They are eternally distinct yet completely united—three \"whos\" in one \"what.\"",
     scripture:
@@ -116,6 +121,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Patēr",
     englishMeaning: "Father",
+    termType: "bible",
+    termNote: "Used in Ephesians 1:3.",
     definition:
       "The First Person of the Trinity is God the Father, the eternal source of all being. He is Creator of all things, visible and invisible. The Father loves the Son and gives all things into His hands. In Christ, we are adopted as His beloved children.",
     scripture:
@@ -137,6 +144,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Huios tou Theou",
     englishMeaning: "Son of God",
+    termType: "bible",
+    termNote: "Used in John 20:31.",
     definition:
       "The Second Person of the Trinity is God the Son, eternally begotten of the Father. Jesus Christ is both fully God and fully human. He is the visible image of the invisible God, through whom all things were created and in whom all things hold together.",
     scripture:
@@ -158,6 +167,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Pneuma Hagion",
     englishMeaning: "Holy Spirit",
+    termType: "bible",
+    termNote: "Used in John 14:26.",
     definition:
       "The Third Person of the Trinity is God the Holy Spirit, who proceeds from the Father and the Son. The Spirit inspired Scripture, conceived Christ in Mary's womb, empowers believers, and unites us with Christ. The Spirit is God dwelling in us.",
     scripture:
@@ -179,6 +190,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Perichōrēsis",
     englishMeaning: "Mutual Indwelling",
+    termType: "church",
+    termNote: "A word early Greek-speaking church teachers used for how the Father, Son, and Spirit live in one another. John of Damascus (700s) made it well known. It names what Jesus describes in John 17:21.",
     definition:
       "The three Persons of the Trinity live in one another — the Father in the Son, the Son in the Father, the Spirit in both. This is not three gods cooperating and not one God playing three parts, but a communion of self-giving love with no beginning and no end. The early church called it the divine dance. In Christ, we are drawn into it.",
     scripture:
@@ -196,10 +209,12 @@ export const CARD_DATA: CreedCard[] = [
     categorySlug: "trinity",
     title: "THE CREATOR GOD",
     shortDesc: "Maker of All Things",
-    term: "אֱלֹהִים בָּרָא",
+    term: "בָּרָא אֱלֹהִים",
     termLabel: "Hebrew",
-    translation: "Elohim Bara",
+    translation: "Bara Elohim",
     englishMeaning: "God Created",
+    termType: "bible",
+    termNote: "Used in Genesis 1:1.",
     definition:
       "The Triune God created all things, visible and invisible, by His word and for His glory. Creation reveals God's power, wisdom, and goodness. All creation exists in and through and for Jesus Christ, who sustains all things by His powerful word.",
     scripture:
@@ -221,6 +236,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Latin",
     translation: "Imago Dei",
     englishMeaning: "Image of God",
+    termType: "bible",
+    termNote: "The wording of Genesis 1:27 in the Latin Bible. In Hebrew, it's tselem Elohim.",
     definition:
       "Every human being is made in the image of God — able to know Him, reflect His character, and represent His rule in the world. Sin defaces the image but never erases it. It is being restored in those who are being formed into the likeness of Christ, who is Himself the perfect image of God.",
     scripture:
@@ -242,6 +259,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Pantokratōr",
     englishMeaning: "Almighty",
+    termType: "bible",
+    termNote: "Used in Revelation 1:8, where it's translated \"the Almighty.\"",
     definition:
       "God is sovereign over all creation, ruling with perfect wisdom, power, and love. Nothing happens outside His knowledge or control. His sovereignty gives us confidence that His good purposes will prevail, even when we don't understand His ways.",
     scripture:
@@ -265,6 +284,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Ensarkōsis",
     englishMeaning: "In Flesh",
+    termType: "church",
+    termNote: "A word early church teachers formed from the Bible's phrase \"in the flesh\" (1 John 4:2). It names what John 1:14 describes.",
     definition:
       "The eternal Son of God took on human nature, becoming fully human while remaining fully divine. Jesus Christ is one Person with two natures—divine and human—united without mixture or separation. God became one of us to save us.",
     scripture:
@@ -286,6 +307,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Parthenos",
     englishMeaning: "Virgin",
+    termType: "bible",
+    termNote: "Used in Luke 1:27.",
     definition:
       "Jesus was conceived by the Holy Spirit in the virgin Mary. He had no human father. This miraculous conception shows that Jesus' origin is divine, while being born of Mary shows His genuine humanity. He is God's Son entering our world.",
     scripture:
@@ -307,6 +330,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Henōsis Hypostatikē",
     englishMeaning: "Hypostatic Union",
+    termType: "church",
+    termNote: "A phrase developed in the 400s, especially by Cyril of Alexandria, and reflected in the Council of Chalcedon (AD 451). It names what Colossians 2:9 teaches.",
     definition:
       "Jesus Christ is completely God and completely human in one Person. He is not half-God and half-human, nor does He alternate between being God and being human. Both natures exist fully and permanently united in one Person.",
     scripture:
@@ -328,6 +353,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Hilasmos",
     englishMeaning: "Atoning sacrifice — the mercy seat",
+    termType: "bible",
+    termNote: "Used in 1 John 2:2.",
     definition:
       "Jesus' death on the cross was the perfect sacrifice for sin. He took our place and carried what sin does to us — the guilt, the death, the separation — all the way through to the other side. His blood was not paid to an angry Father to change His mind toward us; the Father gave the Son because He already loved the world. At the cross Jesus disarmed sin, death, and the powers that held us, and in His own body He healed and remade what humanity had broken. Through His sacrifice we are forgiven, reconciled, and made new.",
     scripture:
@@ -349,6 +376,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Hebrew",
     translation: "Kippur",
     englishMeaning: "Covering",
+    termType: "bible",
+    termNote: "Used in the name Yom Kippur, the Day of Atonement (Leviticus 23:27).",
     definition:
       "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, God's justice is satisfied, our sins are forgiven, and we are fully reconciled to God.",
     scripture:
@@ -370,6 +399,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Anastasis",
     englishMeaning: "Rising Again",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 15:21.",
     definition:
       "On the third day after His crucifixion, Jesus rose bodily from the dead, conquering sin and death. His resurrection proves He is the Son of God and guarantees our own resurrection. Death no longer has the final word.",
     scripture:
@@ -391,6 +422,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Analēpsis",
     englishMeaning: "Taking Up",
+    termType: "bible",
+    termNote: "Used in Luke 9:51, for Jesus being \"taken up.\"",
     definition:
       "Forty days after His resurrection, Jesus ascended bodily into heaven. He sits at the Father's right hand, ruling over all creation. Though absent in body, He is present with us by His Spirit. Our humanity now reigns in heaven.",
     scripture:
@@ -414,6 +447,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Paraklētos",
     englishMeaning: "Helper",
+    termType: "bible",
+    termNote: "Used in John 14:16.",
     definition:
       "Jesus promised to send \"another Comforter\" who would be with us forever. The Holy Spirit is our Helper, Advocate, and Counselor. He comforts us in sorrow, guides us in truth, and strengthens us for service. He is God's presence with us.",
     scripture:
@@ -435,6 +470,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Palingenesia",
     englishMeaning: "New Birth",
+    termType: "bible",
+    termNote: "Used in Titus 3:5.",
     definition:
       "The Holy Spirit gives us new life in Christ. We are born again, not by our own effort, but by God's power. The Spirit transforms our hearts, making us new creations. What was dead in sin is made alive in Christ.",
     scripture:
@@ -456,6 +493,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Hagiasmos",
     englishMeaning: "Making Holy",
+    termType: "bible",
+    termNote: "Used in 1 Thessalonians 4:3.",
     definition:
       "The Holy Spirit progressively transforms believers into the likeness of Christ. This lifelong process makes us holy—set apart for God and increasingly free from sin's power. We cooperate with the Spirit, but He provides the power for real change.",
     scripture:
@@ -477,6 +516,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Karpos tou Pneumatos",
     englishMeaning: "Fruit of the Spirit",
+    termType: "bible",
+    termNote: "Used in Galatians 5:22.",
     definition:
       "The Holy Spirit produces Christlike character in believers. This fruit—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control—is evidence of the Spirit's presence and work. We don't manufacture this fruit; the Spirit grows it in us.",
     scripture:
@@ -498,6 +539,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Charismata",
     englishMeaning: "Grace Gifts",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 12:4.",
     definition:
       "The Holy Spirit distributes spiritual gifts to believers for the common good of the Church. These gifts—including teaching, service, healing, prophecy, and others—are tools for building up the body of Christ. Every believer has gifts to use for God's glory.",
     scripture:
@@ -519,6 +562,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Enoikēsis",
     englishMeaning: "Dwelling Within",
+    termType: "church",
+    termNote: "A word church teachers built from the Bible's verb \"to dwell in\" (Romans 8:11). It names what 1 Corinthians 3:16 describes.",
     definition:
       "Every believer is a temple where the Holy Spirit dwells. God's presence is not distant but intimately near. The Spirit lives in us, making our bodies sacred spaces. This indwelling presence guarantees our inheritance and empowers holy living.",
     scripture:
@@ -542,6 +587,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Hamartia",
     englishMeaning: "Missing the Mark",
+    termType: "bible",
+    termNote: "Used in Romans 6:23. Romans 3:23 uses the verb form, \"have sinned.\"",
     definition:
       "Sin is any thought, word, or action that falls short of God's holy standard — and the Fall is where it began. When Adam and Eve chose their own way over God's, sin and death entered the world. Every person since is born with a broken nature. We don't just commit sins; we are sinners who need rescue.",
     scripture:
@@ -563,6 +610,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Euangelion",
     englishMeaning: "Good News",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 15:1.",
     definition:
       "The gospel is the good news that Jesus Christ died for our sins and rose from the dead, according to the Scriptures. Through faith in Him, we receive forgiveness, reconciliation with God, and eternal life. This is God's free gift, not something we earn.",
     scripture:
@@ -584,6 +633,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Charis",
     englishMeaning: "Grace",
+    termType: "bible",
+    termNote: "Used in Ephesians 2:8.",
     definition:
       "Grace is God's unmerited favor toward sinners. We cannot earn or deserve it. God freely gives us what we don't deserve—forgiveness, adoption, eternal life—based on Christ's merit, not our own. Salvation is by grace alone, through faith alone.",
     scripture:
@@ -605,6 +656,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Pistis",
     englishMeaning: "Faith",
+    termType: "bible",
+    termNote: "Used in Romans 5:1.",
     definition:
       "Faith — or belief — is wholehearted trust in Jesus Christ for salvation. The Greek word pistis covers both: it goes beyond intellectual agreement to complete reliance on Christ and His finished work. It looks away from ourselves and rests in His righteousness alone. Faith is the empty hand that receives what God freely gives — and even faith itself is His gift.",
     scripture:
@@ -626,6 +679,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Metanoia",
     englishMeaning: "Change of Mind",
+    termType: "bible",
+    termNote: "Used in Acts 20:21. Acts 3:19 uses the verb form, \"repent.\"",
     definition:
       "Repentance is a change of mind and heart that turns from sin and turns to God. It's not just feeling sorry but a radical reorientation of life. True repentance is a gift from God that leads to life. It accompanies genuine faith and continues throughout the Christian life.",
     scripture:
@@ -647,6 +702,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Dikaiōsis",
     englishMeaning: "Declaring Righteous",
+    termType: "bible",
+    termNote: "Used in Romans 4:25. Romans 4:5 uses the verb form, \"justifies.\"",
     definition:
       "Justification is God's act of declaring sinners righteous based on Christ's righteousness, received by faith. It's a legal verdict: \"not guilty.\" God credits Christ's perfect obedience to our account. We stand before God as if we had never sinned and perfectly obeyed.",
     scripture:
@@ -668,6 +725,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "En Christō",
     englishMeaning: "In Christ",
+    termType: "bible",
+    termNote: "Used in 2 Corinthians 5:17.",
     definition:
       "Every blessing of salvation comes to us because we are joined to Jesus Himself. By the Spirit we share His death, His resurrection, and His life; what is true of Him becomes true of us. We died, we were raised, we are seated with Him. \"In Christ\" is Paul's most repeated phrase — the ground of the whole Christian life.",
     scripture:
@@ -689,6 +748,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Huiothesia",
     englishMeaning: "Placing as Sons",
+    termType: "bible",
+    termNote: "Used in Romans 8:15.",
     definition:
       "Through faith in Christ, God adopts us as His children. We receive the full legal rights and privileges of sons and daughters. We belong to God's family, with Christ as our elder brother. The Spirit witnesses to our hearts that we are God's beloved children.",
     scripture:
@@ -710,6 +771,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Kainē Diathēkē",
     englishMeaning: "New Covenant",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 11:25.",
     definition:
       "God promised through Jeremiah a new covenant — not carved in stone but written on the heart. In it, sins are remembered no more, everyone knows the Lord, and the Spirit supplies the power the law never could. Jesus sealed this covenant in His blood. We do not live under the old terms; we live as heirs of the new.",
     scripture:
@@ -731,6 +794,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Sōtēria",
     englishMeaning: "Deliverance",
+    termType: "bible",
+    termNote: "Used in Luke 19:9. Luke 19:10 uses the verb form, \"to save.\"",
     definition:
       "Salvation is God's complete rescue of humanity from sin, death, and judgment through Jesus Christ. It is past (saved from sin's penalty), present (being saved from sin's power), and future (will be saved from sin's presence). Salvation is entirely God's gift — received by faith, never earned.",
     scripture:
@@ -752,6 +817,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Basileia tou Theou",
     englishMeaning: "Reign of God",
+    termType: "bible",
+    termNote: "Used in Mark 1:15. Matthew usually says \"kingdom of heaven,\" as in Matthew 4:17.",
     definition:
       "The Kingdom of God is God's reign breaking into human history through Jesus Christ. Jesus' first words in ministry were 'The Kingdom of God is at hand.' The Kingdom is both present — Christ reigns now in the hearts of His people — and coming — fully established when He returns. To follow Jesus is to live as a citizen of this Kingdom today.",
     scripture:
@@ -775,6 +842,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Theopneustos",
     englishMeaning: "God-Breathed",
+    termType: "bible",
+    termNote: "Used in 2 Timothy 3:16, and nowhere else in the Bible.",
     definition:
       "All Scripture is inspired by God—literally \"breathed out\" by Him. The Bible is not merely human words about God, but God's own Word to humanity. Through human authors, the Holy Spirit guided the writing of Scripture, making it fully trustworthy and authoritative for faith and life.",
     scripture:
@@ -796,6 +865,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Exousia",
     englishMeaning: "Authority",
+    termType: "bible",
+    termNote: "Used in Matthew 28:18, for Jesus' authority.",
     definition:
       "Scripture is the final authority for Christian faith and practice. When God speaks in His Word, He speaks with absolute authority. The Bible judges all human traditions, experiences, and teachings. We submit to Scripture because we submit to Christ, who affirmed the Scriptures.",
     scripture:
@@ -817,6 +888,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Logos",
     englishMeaning: "The Word",
+    termType: "bible",
+    termNote: "Used in John 1:1.",
     definition:
       "Jesus Christ is the living Word of God, and all Scripture points to Him. The Old Testament prepares for His coming; the Gospels proclaim His life, death, and resurrection; the Epistles explain His work; Revelation reveals His return. To read Scripture rightly is to see Christ on every page.",
     scripture:
@@ -840,6 +913,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Ekklēsia",
     englishMeaning: "Called-Out Assembly",
+    termType: "bible",
+    termNote: "Used in Matthew 16:18.",
     definition:
       "The Church is the community of all believers in Jesus Christ—those called out from the world to belong to God. We are one body with Christ as our Head, united by the Spirit across time and space. The Church is both local (gathered congregations) and universal (all believers everywhere).",
     scripture:
@@ -861,6 +936,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Sōma Christou",
     englishMeaning: "Body of Christ",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 12:27.",
     definition:
       "The Church is Christ's body on earth—He is the Head, and believers are the members. Each person has a unique role, gifted by the Spirit for the common good. We are interdependent; what affects one member affects all. Together we make Christ's presence visible in the world.",
     scripture:
@@ -882,6 +959,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Baptisma",
     englishMeaning: "Immersion",
+    termType: "bible",
+    termNote: "Used in Romans 6:4.",
     definition:
       "Baptism is the sacrament of initiation into the Christian faith. Through baptism, we are united with Christ in His death and resurrection, washed clean from sin, and marked as God's children. It is both an act of obedience and a visible sign of invisible grace.",
     scripture:
@@ -903,6 +982,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Koinōnia",
     englishMeaning: "Communion / Sharing",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 10:16.",
     definition:
       "The Lord's Supper is the sacred meal where the Church remembers Christ's sacrifice and experiences real communion with Him and with one another. The cup and bread are a koinōnia — a sharing — in Christ's body and blood. We eat together as His family, proclaiming His death until He returns.",
     scripture:
@@ -922,10 +1003,12 @@ export const CARD_DATA: CreedCard[] = [
     categorySlug: "life",
     title: "DISCIPLESHIP",
     shortDesc: "Following Jesus",
-    term: "Μαθητεία",
+    term: "Μαθητής",
     termLabel: "Greek",
-    translation: "Mathēteia",
-    englishMeaning: "Being a Student",
+    translation: "Mathētēs",
+    englishMeaning: "Disciple / Learner",
+    termType: "bible",
+    termNote: "Used in Matthew 16:24, where it's translated \"disciples.\"",
     definition:
       "Discipleship is the lifelong journey of following Jesus, learning from Him, and becoming like Him. A disciple is not just someone who believes in Jesus but someone who walks with Him daily, obeys His teaching, and makes following Him the central priority of life.",
     scripture:
@@ -947,6 +1030,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Agapē",
     englishMeaning: "Self-Giving Love",
+    termType: "bible",
+    termNote: "Used in John 13:35.",
     definition:
       "Love is the defining mark of Christian discipleship. This is not mere sentiment but self-giving love modeled on Christ's sacrifice. We love God with our whole being and love our neighbors—even enemies—as ourselves. Love fulfills the law and bears witness to Christ.",
     scripture:
@@ -968,6 +1053,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Proseuchē",
     englishMeaning: "Prayer",
+    termType: "bible",
+    termNote: "Used in Philippians 4:6. 1 Thessalonians 5:17 uses the verb form, \"pray.\"",
     definition:
       "Prayer is intimate conversation with God—speaking and listening, asking and adoring, confessing and thanking. Through prayer we draw near to God and He draws near to us. Jesus modeled a life of constant prayer, teaching us to pray \"Our Father\" and to persist in asking, seeking, and knocking.",
     scripture:
@@ -989,6 +1076,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Hypomonē",
     englishMeaning: "Patient Endurance",
+    termType: "bible",
+    termNote: "Used in Hebrews 10:36.",
     definition:
       "True disciples persevere in faith through trials, suffering, and doubt. This endurance is not stoic resignation but confident hope in God's faithfulness. God preserves His children, and those who are truly born again will continue in faith to the end. The one who endures to the end will be saved.",
     scripture:
@@ -1010,6 +1099,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Pathēma",
     englishMeaning: "Suffering",
+    termType: "bible",
+    termNote: "Used in Romans 8:18.",
     definition:
       "Suffering is part of following Christ in a fallen world. Yet God uses our trials to refine faith, build character, and conform us to Christ's image. We are not promised escape from suffering but God's presence in it. Our momentary afflictions are producing eternal glory.",
     scripture:
@@ -1031,6 +1122,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Martyria",
     englishMeaning: "Testimony",
+    termType: "bible",
+    termNote: "Used in Revelation 12:11. Acts 1:8 uses the related word \"witnesses.\"",
     definition:
       "Every Christian is called to be a witness—to testify about Jesus through both words and actions. We share the gospel message and live it out, making Christ visible to a watching world. Our witness flows from what we have seen and experienced of Christ's love and transformation.",
     scripture:
@@ -1054,6 +1147,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Parousia",
     englishMeaning: "Arrival",
+    termType: "bible",
+    termNote: "Used in 1 Thessalonians 4:15.",
     definition:
       "Jesus Christ will return visibly and gloriously to judge the living and the dead and establish His eternal kingdom. This is the \"blessed hope\" that motivates holy living and faithful service. We do not know the day or hour, but we watch and wait with eager expectation.",
     scripture:
@@ -1075,6 +1170,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Anastasis Nekrōn",
     englishMeaning: "Rising of the Dead",
+    termType: "bible",
+    termNote: "Used in 1 Corinthians 15:42.",
     definition:
       "At Christ's return, all people will be raised bodily from death. Believers will receive glorified, imperishable bodies like Christ's resurrection body. Unbelievers will also be raised to face judgment. Death will not have the final word—resurrection is God's promise to all humanity.",
     scripture:
@@ -1096,6 +1193,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Krisis",
     englishMeaning: "Judgment",
+    termType: "bible",
+    termNote: "Used in Hebrews 9:27.",
     definition:
       "Christ will judge all people, separating the sheep from the goats. Those who trust in Christ are declared righteous by grace and enter eternal life. Those who reject Him face eternal separation from God. This judgment is both sobering and hopeful—justice will be done, and God's people will be vindicated.",
     scripture:
@@ -1117,6 +1216,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Ouranos Kainos, Gē Kainē",
     englishMeaning: "New Heaven, New Earth",
+    termType: "bible",
+    termNote: "Used in Revelation 21:1.",
     definition:
       "God will create a new heaven and new earth where righteousness dwells. This is not a destruction but a renewal—all creation will be liberated from sin and death. God will dwell with His people forever, wiping away every tear. Paradise lost in Genesis is restored in Revelation.",
     scripture:
@@ -1138,6 +1239,8 @@ export const CARD_DATA: CreedCard[] = [
     termLabel: "Greek",
     translation: "Zōē Aiōnios",
     englishMeaning: "Eternal Life",
+    termType: "bible",
+    termNote: "Used in John 17:3.",
     definition:
       "Eternal life is not simply living forever — it is a new quality of life in relationship with God that begins the moment we trust Christ. Jesus defined it as knowing the Father and the Son. It cannot be ended by death; Christ's resurrection is its guarantee. The life that starts now continues into the new creation without end.",
     scripture:

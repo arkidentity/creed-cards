@@ -64,6 +64,16 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
             </p>
           </div>
 
+          {/* About the Word — Bible word vs. church term, and where it's used */}
+          {card.term && card.termNote && (
+            <Section label={card.termType === "church" ? "About the Word · Church term" : "About the Word · Bible word"}>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--muted)" }}>
+                <span style={{ color: "var(--foreground)" }}>{card.term}</span>
+                {card.translation ? ` (${card.translation})` : ""}. {card.termNote}
+              </p>
+            </Section>
+          )}
+
           {/* Historical Context */}
           <Section label="Historical Context">
             <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--muted)" }}>
