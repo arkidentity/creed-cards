@@ -87,7 +87,7 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
         {card.term && (
           <div
             style={{
-              padding: "10px 20px",
+              padding: "14px 24px",
               background: "rgba(0,0,0,0.25)",
               borderRadius: 12,
               border: `1px solid rgba(255,255,255,0.08)`,
@@ -95,32 +95,31 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
               alignSelf: "center",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: 10 }}>
-              <span
-                style={{
-                  fontSize: 23,
-                  fontWeight: 300,
-                  color: card.colors.accent,
-                  letterSpacing: "0.02em",
-                  lineHeight: 1.3,
-                }}
-              >
-                {card.term}
-              </span>
-              {card.termLabel && (
-                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                  {card.termLabel}
-                  {card.termType && (card.termType === "church" ? " · Church term" : " · Bible word")}
-                </span>
-              )}
+            {card.termLabel && (
+              <div style={termTag}>{card.termLabel}</div>
+            )}
+            <div
+              style={{
+                fontSize: 32,
+                fontWeight: 300,
+                color: card.colors.accent,
+                letterSpacing: "0.02em",
+                lineHeight: 1.3,
+                margin: "4px 0",
+              }}
+            >
+              {card.term}
             </div>
+            {card.termType && (
+              <div style={termTag}>{card.termType === "church" ? "Church term" : "Bible word"}</div>
+            )}
             {card.translation && (
-              <div style={{ marginTop: 4, display: "flex", justifyContent: "center", gap: 8, alignItems: "center" }}>
-                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)" }}>{card.translation}</span>
+              <div style={{ marginTop: 8, display: "flex", justifyContent: "center", gap: 8, alignItems: "baseline" }}>
+                <span style={{ fontSize: 17, fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>{card.translation}</span>
                 {card.englishMeaning && (
                   <>
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>·</span>
-                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{card.englishMeaning}</span>
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)" }}>·</span>
+                    <span style={{ fontSize: 17, color: "rgba(255,255,255,0.65)" }}>{card.englishMeaning}</span>
                   </>
                 )}
               </div>
@@ -144,6 +143,14 @@ export function CardFront({ card, cardNumber, totalCards }: CardFrontProps) {
     </div>
   );
 }
+
+const termTag: React.CSSProperties = {
+  fontSize: 12,
+  fontWeight: 600,
+  color: "rgba(255,255,255,0.55)",
+  letterSpacing: "0.1em",
+  textTransform: "uppercase",
+};
 
 function adjustBrightness(hex: string, amount: number): string {
   const num = parseInt(hex.replace("#", ""), 16);

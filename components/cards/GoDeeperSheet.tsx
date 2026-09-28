@@ -56,7 +56,7 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
           onClick={stop}
           onPointerDown={stop}
           onTouchStart={stop}
-          style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "flex-end", justifyContent: "center" }}
+          style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "flex-end", justifyContent: "center", ...sheetVars }}
           role="dialog"
           aria-modal="true"
           aria-label={`Go deeper: ${card.title}`}
@@ -67,7 +67,7 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)" }}
+            style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.7)" }}
           />
 
           {/* Sheet */}
@@ -80,8 +80,9 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
               position: "relative",
               width: "100%",
               maxWidth: 480,
-              maxHeight: "88vh",
-              background: "var(--surface)",
+              height: "calc(100dvh - 56px - env(safe-area-inset-top, 0px))",
+              maxHeight: 820,
+              background: "#111827",
               borderRadius: "20px 20px 0 0",
               display: "flex",
               flexDirection: "column",
@@ -210,6 +211,17 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
     document.body
   );
 }
+
+// The host app (Daily DNA / ARK Identity) doesn't define the creed-cards theme
+// vars, and the sheet is portaled to document.body — so it carries its own.
+const sheetVars = {
+  "--surface": "#111827",
+  "--foreground": "#f5f5f5",
+  "--muted": "#a3adbf",
+  "--border": "rgba(255, 255, 255, 0.1)",
+  "--border-strong": "rgba(255, 255, 255, 0.18)",
+  color: "#f5f5f5",
+} as React.CSSProperties;
 
 const body: React.CSSProperties = { fontSize: 15, lineHeight: 1.6, color: "var(--foreground)" };
 const muted: React.CSSProperties = { fontSize: 14, lineHeight: 1.55, color: "var(--muted)" };
