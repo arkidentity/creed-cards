@@ -1,7 +1,9 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import type { CreedCard } from "../../lib/cardData";
+import { getCreedGoDeeper } from "../../lib/goDeeper";
+import { GoDeeperSheet } from "./GoDeeperSheet";
 
 interface CardBackProps {
   card: CreedCard;
@@ -11,7 +13,10 @@ interface CardBackProps {
 
 export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
   function CardBack({ card, isLearned, onToggleLearned }, ref) {
+    const goDeeper = getCreedGoDeeper(card);
+    const [sheetOpen, setSheetOpen] = useState(false);
     return (
+      <>
       <div
         ref={ref}
         className="card-face card-face-back"
@@ -57,22 +62,18 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
             }}
           >
             <p style={{ fontSize: 15, lineHeight: 1.6, color: "#fff", fontStyle: "italic", marginBottom: 8 }}>
-              &ldquo;{card.scripture}&rdquo;
+              &ldquo;{highlightTerm(card.scripture, card.termHighlight, card.colors.accent)}&rdquo;
             </p>
             <p style={{ fontSize: 12, fontWeight: 700, color: card.colors.accent, letterSpacing: "0.05em" }}>
               {card.reference}
             </p>
-          </div>
-
-          {/* About the Word — Bible word vs. church term, and where it's used */}
-          {card.term && card.termNote && (
-            <Section label={card.termType === "church" ? "About the Word · Church term" : "About the Word · Bible word"}>
-              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--muted)" }}>
-                <span style={{ color: "var(--foreground)" }}>{card.term}</span>
-                {card.translation ? ` (${card.translation})` : ""}. {card.termNote}
+            {/* Only when the word isn't in this verse (or needs a caveat): where it's used, or where the church term came from */}
+            {card.termNote && (
+              <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(255,255,255,0.6)", marginTop: 6 }}>
+                {card.termNote}
               </p>
-            </Section>
-          )}
+            )}
+          </div>
 
           {/* Historical Context */}
           <Section label="Historical Context">
@@ -96,7 +97,7 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
           </Section>
         </div>
 
-        {/* Mark as Learned button */}
+        {/* Mark as Learned (left) + Go Deeper (right, only when the card has an entry) */}
         <div
           style={{
             padding: "12px 20px 20px",
@@ -104,6 +105,8 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
             flexShrink: 0,
             borderTop: "1px solid var(--border)",
             background: "var(--surface)",
+            display: "flex",
+            gap: 10,
           }}
         >
           <button
@@ -112,8 +115,9 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
               onToggleLearned();
             }}
             style={{
-              width: "100%",
-              padding: "13px 20px",
+              flex: 1,
+              minWidth: 0,
+              padding: "13px 12px",
               borderRadius: 12,
               border: isLearned ? `1.5px solid var(--success)` : `1.5px solid var(--border-strong)`,
               background: isLearned ? "var(--success-dim)" : "transparent",
@@ -139,11 +143,54 @@ export const CardBack = forwardRef<HTMLDivElement, CardBackProps>(
             </span>
             {isLearned ? "Learned" : "Mark as Learned"}
           </button>
+          {goDeeper && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSheetOpen(true);
+              }}
+              style={{
+                flex: 1,
+                minWidth: 0,
+                padding: "13px 12px",
+                borderRadius: 12,
+                border: `1.5px solid ${card.colors.accent}`,
+                background: "transparent",
+                color: card.colors.accent,
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Go Deeper
+            </button>
+          )}
         </div>
       </div>
+      {goDeeper && (
+        <GoDeeperSheet card={card} entry={goDeeper} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+      )}
+      </>
     );
   }
 );
+
+/** Highlight the English words that translate the card's term (first match only). */
+function highlightTerm(text: string, phrase: string | undefined, accent: string) {
+  if (!phrase) return text;
+  const i = text.indexOf(phrase);
+  if (i === -1) return text;
+  return (
+    <>
+      {text.slice(0, i)}
+      <span style={{ fontStyle: "normal", fontWeight: 600, color: "#fff", boxShadow: `inset 0 -0.45em 0 ${accent}55`, padding: "0 1px" }}>
+        {phrase}
+      </span>
+      {text.slice(i + phrase.length)}
+    </>
+  );
+}
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
