@@ -231,7 +231,7 @@ export const CARD_DATA: CreedCard[] = [
     id: 7,
     category: "Trinity & Nature of God",
     categorySlug: "trinity",
-    title: "IMAGO DEI",
+    title: "GOD'S IMAGE",
     shortDesc: "Made in His Image",
     term: "imago Dei",
     termLabel: "Latin",

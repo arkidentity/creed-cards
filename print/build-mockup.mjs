@@ -1,5 +1,6 @@
 // Builds a print mockup of one Creed Cards category (front + back of each card).
 // Usage: node print/build-mockup.mjs <categorySlug>   → print/mockup-<slug>.html
+// Latin-script terms skip the transliteration line (it would repeat the term).
 // Card size: 3.5 x 5 in (336 x 480 CSS px). Bleed + crop marks come later.
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
@@ -31,7 +32,7 @@ const front = (c) => `
     <div class="top"><span>Creed Cards</span><span>${pad(c.id)}</span></div>
     <div class="mark">${icon("#efe6d2", GOLD)}</div>
     <div class="term" ${/[֐-׿]/.test(c.term) ? 'dir="rtl"' : ""}>${esc(c.term)}</div>
-    <div class="translit">${esc(c.translation)} · <em>${esc(c.englishMeaning)}</em></div>
+    <div class="translit">${/^[\x00-\u024F\s']+$/.test(c.term) ? "" : `${esc(c.translation)} · `}<em>${esc(c.englishMeaning)}</em></div>
     <div class="rule"></div>
     <h2>${esc(c.title)}</h2>
     <div class="sub">${esc(c.shortDesc)}</div>

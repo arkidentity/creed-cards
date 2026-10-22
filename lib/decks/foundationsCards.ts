@@ -354,7 +354,7 @@ export const FOUNDATIONS_CARDS: CreedCard[] = [
     id: 17,
     category: "Deeper Christology",
     categorySlug: "christ",
-    title: "CHRISTUS VICTOR",
+    title: "CHRIST THE VICTOR",
     shortDesc: "The Cross as Conquest",
     term: "Christus Victor",
     termLabel: "Latin",
