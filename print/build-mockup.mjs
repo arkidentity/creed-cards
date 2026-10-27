@@ -2,6 +2,7 @@
 // Usage: node print/build-mockup.mjs <categorySlug>   → print/mockup-<slug>.html
 // Latin-script terms skip the transliteration line (it would repeat the term).
 // Card size: 3.5 x 5 in (336 x 480 CSS px). Bleed + crop marks come later.
+// Each back carries a QR to the card's short link (QR_BASE + id), which opens the digital card with Go Deeper.
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -24,6 +25,10 @@ const ICONS = {
 const icon = (s, a) => `<svg viewBox="0 0 120 120">${(ICONS[slug] || ICONS.trinity)(s, a)}</svg>`;
 const esc = (t = "") => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const pad = (n) => String(n).padStart(2, "0");
+const QR_BASE = "https://arkidentity.com/cc/";
+const QRCode = createRequire(import.meta.url)("qrcode");
+const qr = {};
+for (const c of cards) qr[c.id] = await QRCode.toString(QR_BASE + c.id, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2a2620", light: "#0000" } });
 const GOLD = "#c9a45c";
 
 const front = (c) => `
@@ -49,7 +54,7 @@ const back = (c) => `
     <p class="hist"><b>Background.</b> ${esc(c.historicalContext)}</p>
     <div class="ask"><span>At the table</span>${esc(c.reflection)}</div>
   </div>
-  <div class="foot"><span>ARK Identity</span><span>Go deeper in Daily DNA</span></div>
+  <div class="foot"><div class="go"><b>Go deeper</b><span>Scan for the story behind it, the people, and the questions people ask.</span><i>ARK Identity</i></div><div class="qr">${qr[c.id]}</div></div>
 </div>`;
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><title>Creed Cards print mockup: ${esc(cat.name)}</title>
@@ -87,10 +92,16 @@ cite{display:block;font:600 8px Inter;font-style:normal;letter-spacing:.12em;tex
 .hist b{color:var(--ink)}
 .ask{margin-top:auto;background:color-mix(in srgb,var(--dark) 7%,var(--paper));border-top:1px solid var(--gold);padding:8px 10px;font:italic 500 13.5px/1.25 'Cormorant Garamond',serif}
 .ask span{display:block;font:600 7.5px Inter;font-style:normal;letter-spacing:.18em;text-transform:uppercase;color:#8a7a5c;margin-bottom:3px}
-.foot{display:flex;justify-content:space-between;padding:8px 16px 11px;font:500 7.5px Inter;letter-spacing:.16em;text-transform:uppercase;color:#8a7a5c}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:9px 16px 12px}
+.go{display:flex;flex-direction:column;gap:2px;max-width:190px}
+.go b{font:700 13px 'Cormorant Garamond',serif;letter-spacing:.06em;color:var(--ink)}
+.go span{font-size:8.5px;line-height:1.35;color:#4a443a}
+.go i{font:500 7px Inter;font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:#8a7a5c;margin-top:4px}
+.qr{width:56px;height:56px;flex-shrink:0}
+.qr svg{width:100%;height:100%;display:block}
 </style></head><body>
 <h1>Creed Cards (Essentials): ${esc(cat.name)}</h1>
-<p class="note">Print mockup · 3.5 × 5 in · front and back of each card</p>
+<p class="note">Print mockup · 3.5 × 5 in · front and back of each card · QR (0.58 in) opens ${QR_BASE}&lt;card&gt;</p>
 ${cards.map((c) => `<div class="pair">${front(c)}${back(c)}</div>`).join("")}
 </body></html>`;
 writeFileSync(join(root, "print", `mockup-${slug}.html`), html);
