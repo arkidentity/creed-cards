@@ -2,7 +2,7 @@
 // Usage: node print/build-mockup.mjs <categorySlug>   → print/mockup-<slug>.html
 // Latin-script terms skip the transliteration line (it would repeat the term).
 // Card size: 3.5 x 5 in (336 x 480 CSS px). Bleed + crop marks come later.
-// Each back carries a QR to the card's short link (QR_BASE + id), which opens the digital card with Go Deeper.
+// Each back carries a QR to the card's short link (QR_BASE + "1-" + id, deck-card), which opens the digital card with Go Deeper.
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -28,7 +28,7 @@ const pad = (n) => String(n).padStart(2, "0");
 const QR_BASE = "https://arkidentity.com/cc/";
 const QRCode = createRequire(import.meta.url)("qrcode");
 const qr = {};
-for (const c of cards) qr[c.id] = await QRCode.toString(QR_BASE + c.id, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2a2620", light: "#0000" } });
+for (const c of cards) qr[c.id] = await QRCode.toString(QR_BASE + "1-" + c.id, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2a2620", light: "#0000" } });
 const GOLD = "#c9a45c";
 
 const front = (c) => `
@@ -101,7 +101,7 @@ cite{display:block;font:600 8px Inter;font-style:normal;letter-spacing:.12em;tex
 .qr svg{width:100%;height:100%;display:block}
 </style></head><body>
 <h1>Creed Cards (Essentials): ${esc(cat.name)}</h1>
-<p class="note">Print mockup · 3.5 × 5 in · front and back of each card · QR (0.58 in) opens ${QR_BASE}&lt;card&gt;</p>
+<p class="note">Print mockup · 3.5 × 5 in · front and back of each card · QR (0.58 in) opens ${QR_BASE}1-&lt;card&gt;</p>
 ${cards.map((c) => `<div class="pair">${front(c)}${back(c)}</div>`).join("")}
 </body></html>`;
 writeFileSync(join(root, "print", `mockup-${slug}.html`), html);

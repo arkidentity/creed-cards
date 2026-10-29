@@ -518,7 +518,7 @@ const ENTRIES: Record<string, CreedGoDeeper> = {
     questions: [
       {
         q: "Why do Bibles translate this word differently?",
-        a: "Some Bibles say \"propitiation,\" which means turning away anger. Some say \"expiation,\" which means wiping sin away. Many newer Bibles say \"atoning sacrifice.\" Christians agree on the heart of it: God Himself provided the sacrifice because He loves the world (1 John 4:10). They differ on how much the word is about God's anger against sin and how much it's about removing sin. It's a good one to talk through with your group.",
+        a: "Some Bibles say \"propitiation,\" which means turning away anger. Some say \"expiation,\" which means wiping sin away. Many newer Bibles say \"atoning sacrifice.\" Christians agree on the heart of it: God Himself provided the sacrifice because He loves the world (1 John 4:10). They differ on how much the word is about God's anger against sin and how much it's about removing sin. This card leans toward love as the starting point: the Father gave the Son because He already loved the world, not to change His mind. It's a good one to talk through with your group.",
       },
       {
         q: "Why did there have to be blood?",
@@ -913,7 +913,7 @@ const ENTRIES: Record<string, CreedGoDeeper> = {
       },
       {
         q: "Paul says we're made right by faith, but James says \"not by faith alone.\" Do they disagree?",
-        a: "Christians agree on the heart of this: saving faith is real trust in Jesus, and real trust shows up in how a person lives. Both Paul and James point to Abraham (Romans 4:3; James 2:21-23). Christians differ on how to put it. Some say we're made right with God by faith alone, and good works are the fruit that follows. Others say faith and the life it produces work together in being made right with God. Both views have deep roots in church history. It's a good one to talk through with your group.",
+        a: "Christians agree on the heart of this: saving faith is real trust in Jesus, and real trust shows up in how a person lives. Both Paul and James point to Abraham (Romans 4:3; James 2:21-23). Christians differ on how to put it. Some say we're made right with God by faith alone, and good works are the fruit that follows. Others say faith and the life it produces work together in being made right with God. Both views have deep roots in church history. This card holds the first view. It's a good one to talk through with your group.",
       },
       {
         q: "What if my faith feels small?",
@@ -980,7 +980,7 @@ const ENTRIES: Record<string, CreedGoDeeper> = {
     questions: [
       {
         q: "Does God declare us right, or make us right?",
-        a: "Christians agree we're made right with God only because of Jesus, and that it's a gift of grace. They differ on how to describe it. Some believe God declares us right, counting Jesus' righteousness as ours, and then makes us holy over time. Others believe God's declaring and His making new happen together as one work. Both views have deep roots in church history. It's a good one to talk through with your group.",
+        a: "Christians agree we're made right with God only because of Jesus, and that it's a gift of grace. They differ on how to describe it. Some believe God declares us right, counting Jesus' righteousness as ours, and then makes us holy over time. Others believe God's declaring and His making new happen together as one work. Both views have deep roots in church history. This card holds the first view. It's a good one to talk through with your group.",
       },
       {
         q: "Is it fair for God to declare guilty people right?",
@@ -1207,7 +1207,7 @@ const ENTRIES: Record<string, CreedGoDeeper> = {
     questions: [
       {
         q: "How does the Bible relate to church tradition?",
-        a: "Christians agree the Bible has a unique authority and that the church has always read it together. They differ on how the two relate. Some believe Scripture alone is the final authority, with tradition as a helpful guide under it. Others believe Scripture and the church's teaching together carry God's authority. Both views have deep roots in church history. It's a good one to talk through with your group.",
+        a: "Christians agree the Bible has a unique authority and that the church has always read it together. They differ on how the two relate. Some believe Scripture alone is the final authority, with tradition as a helpful guide under it. Others believe Scripture and the church's teaching together carry God's authority. Both views have deep roots in church history. This card holds the first view. It's a good one to talk through with your group.",
       },
       {
         q: "What about parts of the Bible that are hard to understand?",

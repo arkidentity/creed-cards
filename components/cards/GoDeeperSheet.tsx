@@ -27,9 +27,7 @@ const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
 export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps) {
   const [mounted, setMounted] = useState(false);
-  const [openQ, setOpenQ] = useState<number | null>(null);
   const dragStartY = useRef<number | null>(null);
-  const track = useCreedTracker();
 
   useEffect(() => setMounted(true), []);
 
@@ -142,72 +140,7 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
                 gap: 22,
               }}
             >
-              <Section label="What It Means">
-                <p style={body}>{entry.meaning}</p>
-                {entry.wordNote && <p style={{ ...muted, marginTop: 8 }}>{entry.wordNote}</p>}
-              </Section>
-
-              <Section label="Where It Shows Up">
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {entry.verses.map((v) => (
-                    <div key={v.ref} style={{ borderLeft: `2px solid ${v.usesWord ? accent : "var(--border-strong)"}`, paddingLeft: 12 }}>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: "var(--foreground)" }}>{v.ref}</span>
-                        <span style={{ fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase", color: v.usesWord ? accent : "var(--muted)" }}>
-                          {v.usesWord ? "uses this word" : "teaches this idea"}
-                        </span>
-                      </div>
-                      <p style={{ ...muted, marginTop: 2 }}>{v.note}</p>
-                    </div>
-                  ))}
-                </div>
-              </Section>
-
-              <Section label="The Story Behind It">
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {entry.story.map((para, i) => <p key={i} style={body}>{para}</p>)}
-                </div>
-              </Section>
-
-              {entry.people && entry.people.length > 0 && (
-                <Section label="The People">
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {entry.people.map((p) => (
-                      <div key={p.name}>
-                        <span style={{ fontSize: 14, fontWeight: 700, color: "var(--foreground)" }}>{p.name}</span>
-                        <span style={{ fontSize: 12, color: accent, marginLeft: 8 }}>{p.say}</span>
-                        <p style={{ ...muted, marginTop: 2 }}>{p.who}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Section>
-              )}
-
-              {entry.questions && entry.questions.length > 0 && (
-                <Section label="Questions People Ask">
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {entry.questions.map((item, i) => {
-                      const isOpen = openQ === i;
-                      return (
-                        <div key={item.q} style={{ border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden" }}>
-                          <button
-                            onClick={() => {
-                              setOpenQ(isOpen ? null : i);
-                              if (!isOpen) track({ deckId: card.deckId ?? 1, cardId: card.id, title: card.title, event: "question", question: item.q });
-                            }}
-                            aria-expanded={isOpen}
-                            style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", background: "transparent", border: "none", textAlign: "left", cursor: "pointer", color: "var(--foreground)", fontSize: 14, fontWeight: 600 }}
-                          >
-                            <span style={{ flex: 1 }}>{item.q}</span>
-                            <span style={{ color: "var(--muted)", transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>⌄</span>
-                          </button>
-                          {isOpen && <p style={{ ...muted, padding: "0 14px 14px" }}>{item.a}</p>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Section>
-              )}
+              <GoDeeperBody card={card} entry={entry} />
             </div>
           </motion.div>
         </div>
@@ -217,9 +150,87 @@ export function GoDeeperSheet({ card, entry, open, onClose }: GoDeeperSheetProps
   );
 }
 
+/** The Go Deeper sections, shared by the sheet and the QR landing page. */
+export function GoDeeperBody({ card, entry }: { card: CreedCard; entry: CreedGoDeeper }) {
+  const [openQ, setOpenQ] = useState<number | null>(null);
+  const track = useCreedTracker();
+  const accent = card.colors.accent;
+
+  return (
+    <>
+      <Section label="What It Means">
+        <p style={body}>{entry.meaning}</p>
+        {entry.wordNote && <p style={{ ...muted, marginTop: 8 }}>{entry.wordNote}</p>}
+      </Section>
+
+      <Section label="Where It Shows Up">
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {entry.verses.map((v) => (
+            <div key={v.ref} style={{ borderLeft: `2px solid ${v.usesWord ? accent : "var(--border-strong)"}`, paddingLeft: 12 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "var(--foreground)" }}>{v.ref}</span>
+                <span style={{ fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase", color: v.usesWord ? accent : "var(--muted)" }}>
+                  {v.usesWord ? "uses this word" : "teaches this idea"}
+                </span>
+              </div>
+              <p style={{ ...muted, marginTop: 2 }}>{v.note}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section label="The Story Behind It">
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {entry.story.map((para, i) => <p key={i} style={body}>{para}</p>)}
+        </div>
+      </Section>
+
+      {entry.people && entry.people.length > 0 && (
+        <Section label="The People">
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {entry.people.map((p) => (
+              <div key={p.name}>
+                <span style={{ fontSize: 14, fontWeight: 700, color: "var(--foreground)" }}>{p.name}</span>
+                <span style={{ fontSize: 12, color: accent, marginLeft: 8 }}>{p.say}</span>
+                <p style={{ ...muted, marginTop: 2 }}>{p.who}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {entry.questions && entry.questions.length > 0 && (
+        <Section label="Questions People Ask">
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {entry.questions.map((item, i) => {
+              const isOpen = openQ === i;
+              return (
+                <div key={item.q} style={{ border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden" }}>
+                  <button
+                    onClick={() => {
+                      setOpenQ(isOpen ? null : i);
+                      if (!isOpen) track({ deckId: card.deckId ?? 1, cardId: card.id, title: card.title, event: "question", question: item.q });
+                    }}
+                    aria-expanded={isOpen}
+                    style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", background: "transparent", border: "none", textAlign: "left", cursor: "pointer", color: "var(--foreground)", fontSize: 14, fontWeight: 600 }}
+                  >
+                    <span style={{ flex: 1 }}>{item.q}</span>
+                    <span style={{ color: "var(--muted)", transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>⌄</span>
+                  </button>
+                  {isOpen && <p style={{ ...muted, padding: "0 14px 14px" }}>{item.a}</p>}
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+      )}
+    </>
+  );
+}
+
 // The host app (Daily DNA / ARK Identity) doesn't define the creed-cards theme
 // vars, and the sheet is portaled to document.body — so it carries its own.
-const sheetVars = {
+export const sheetVars = {
   "--surface": "#111827",
   "--foreground": "#f5f5f5",
   "--muted": "#a3adbf",

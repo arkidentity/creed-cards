@@ -380,7 +380,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termNote: "Kippur appears in Yom Kippur, the Day of Atonement (Leviticus 23:27).",
     definition:
-      "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, God's justice is satisfied, our sins are forgiven, and we are fully reconciled to God.",
+      "Atonement is what Christ accomplished on the cross to restore our broken relationship with God. His death fulfilled everything the Old Testament sacrificial system foreshadowed — a complete covering for sin. Through the cross, sin is dealt with, our sins are forgiven, and we are fully reconciled to God.",
     scripture:
       "God was in Christ reconciling the world to Himself, not counting their trespasses against them.",
     reference: "2 Corinthians 5:19",
@@ -729,7 +729,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termNote: "En Christō appears in 2 Corinthians 5:17.",
     definition:
-      "Every blessing of salvation comes to us because we are joined to Jesus Himself. By the Spirit we share His death, His resurrection, and His life; what is true of Him becomes true of us. We died, we were raised, we are seated with Him. \"In Christ\" is Paul's most repeated phrase — the ground of the whole Christian life.",
+      "Every blessing of salvation comes to us because we are joined to Jesus Himself. By the Spirit we share His death, His resurrection, and His life; what is true of Him becomes true of us. We died, we were raised, we are seated with Him. \"In Christ\" is one of Paul's most repeated phrases — the ground of the whole Christian life.",
     scripture:
       "I have been crucified with Christ; and it is no longer I who live, but Christ lives in me.",
     reference: "Galatians 2:20",
@@ -959,11 +959,11 @@ export const CARD_DATA: CreedCard[] = [
     term: "Βάπτισμα",
     termLabel: "Greek",
     translation: "Baptisma",
-    englishMeaning: "Immersion",
+    englishMeaning: "Washing, immersion",
     termType: "bible",
     termHighlight: "baptism",
     definition:
-      "Baptism is the sacrament of initiation into the Christian faith. Through baptism, we are united with Christ in His death and resurrection, washed clean from sin, and marked as God's children. It is both an act of obedience and a visible sign of invisible grace.",
+      "Baptism is how Jesus told His followers to begin the Christian life. The Bible ties it to being joined to Christ in His death and resurrection, washed from sin, and marked as God's children. It is both an act of obedience and a sign of God's grace.",
     scripture:
       "Or do you not know that all of us who have been baptized into Christ Jesus have been baptized into His death? Therefore we have been buried with Him through baptism into death.",
     reference: "Romans 6:3-4",
@@ -1081,7 +1081,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termHighlight: "endurance",
     definition:
-      "True disciples persevere in faith through trials, suffering, and doubt. This endurance is not stoic resignation but confident hope in God's faithfulness. God preserves His children, and those who are truly born again will continue in faith to the end. The one who endures to the end will be saved.",
+      "True disciples persevere in faith through trials, suffering, and doubt. This endurance is not stoic resignation but confident hope in God's faithfulness. God holds on to His children, and they hold on to Him. The one who endures to the end will be saved.",
     scripture:
       "For you have need of endurance, so that when you have done the will of God, you may receive what was promised.",
     reference: "Hebrews 10:36",
