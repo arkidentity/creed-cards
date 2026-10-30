@@ -8,25 +8,25 @@ body{background:#d9d4ca;font-family:Inter,sans-serif;padding:32px 16px}
 h1{font:600 20px Inter;color:#333;text-align:center;margin-bottom:4px}
 .note{text-align:center;color:#555;font-size:13px;margin-bottom:28px}
 .pair{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
-.card{width:336px;height:480px;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card{width:384px;height:576px;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 /* FRONT */
 .front{background:radial-gradient(120% 80% at 50% 30%,color-mix(in srgb,var(--dark) 70%,#3a4a6e) 0%,var(--dark) 70%);color:var(--cream);padding:14px}
 .frame{height:100%;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:8px;display:flex;flex-direction:column;align-items:center;padding:16px 18px;text-align:center}
 .top,.bottom{font:500 8.5px Inter;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
 .top{width:100%;display:flex;justify-content:space-between}
-.mark{width:84px;height:84px;margin:20px 0 12px}
+.mark{width:100px;height:100px;margin:30px 0 16px}
 .lang{font:500 7.5px Inter;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.term{font:500 24px 'Noto Serif Hebrew','Noto Serif',serif;line-height:1.2;opacity:.92}
-.translit{font:500 15px 'Cormorant Garamond',serif;margin-top:6px;opacity:.85}
-.rule{width:40px;height:1px;background:var(--gold);margin:18px 0}
-.front h2{font:700 30px/1.05 'Cormorant Garamond',serif;letter-spacing:.06em}
-.sub{font:italic 500 15px 'Cormorant Garamond',serif;margin-top:6px;opacity:.8}
+.term{font:500 28px 'Noto Serif Hebrew','Noto Serif',serif;line-height:1.2;opacity:.92}
+.translit{font:500 17px 'Cormorant Garamond',serif;margin-top:6px;opacity:.85}
+.rule{width:46px;height:1px;background:var(--gold);margin:22px 0}
+.front h2{font:700 35px/1.05 'Cormorant Garamond',serif;letter-spacing:.06em}
+.sub{font:italic 500 17px 'Cormorant Garamond',serif;margin-top:6px;opacity:.8}
 .bottom{margin-top:auto}
 /* BACK */
 .back{background:var(--paper);color:var(--ink);display:flex;flex-direction:column}
 .band{background:var(--dark);color:var(--cream);padding:11px 16px;display:flex;gap:10px;align-items:baseline}
 .num{font:600 9px Inter;color:var(--gold);letter-spacing:.1em}
-.btitle{font:700 15px 'Cormorant Garamond',serif;letter-spacing:.06em}
+.btitle{font:700 17px 'Cormorant Garamond',serif;letter-spacing:.06em}
 .body{--k:1;padding:14px 16px 0;display:flex;flex-direction:column;justify-content:flex-start;position:relative;gap:8px;flex:1;min-height:0;overflow:hidden}
 .def{font-size:calc(10.6px * var(--k));line-height:1.48}
 blockquote{font:italic 500 calc(14px * var(--k))/1.28 'Cormorant Garamond',serif;border-left:2px solid var(--gold);margin:0 14px 0 16px;padding:2px 0 2px 12px}
@@ -40,11 +40,11 @@ cite{display:block;font:600 8px Inter;font-style:normal;letter-spacing:.12em;tex
 .go b{font:700 13px 'Cormorant Garamond',serif;letter-spacing:.06em;color:var(--ink)}
 .go span{font-size:8.5px;line-height:1.35;color:#4a443a}
 .go i{font:500 7px Inter;font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:#8a7a5c;margin-top:4px}
-.qr{width:56px;height:56px;flex-shrink:0}
+.qr{width:62px;height:62px;flex-shrink:0}
 .qr svg{width:100%;height:100%;display:block}
 </style></head><body>
 <h1>Creed Cards (Essentials), all 50 cards</h1>
-<p class="note">Print mockup · 3.5 × 5 in · front and back of each card · QR (0.58 in) opens https://arkidentity.com/cc/1-&lt;card&gt;</p>
+<p class="note">Print mockup · 4 × 6 in · front and back of each card · QR (0.58 in) opens https://arkidentity.com/cc/1-&lt;card&gt;</p>
 <div class="pair">
 <div class="card front" style="--dark:#0f172a">
   <div class="frame">
@@ -1251,7 +1251,7 @@ cite{display:block;font:600 8px Inter;font-style:normal;letter-spacing:.12em;tex
 window.addEventListener("load", () => document.fonts.ready.then(() => {
   for (const b of document.querySelectorAll(".back .body")) {
     const fits = (k) => { b.style.setProperty("--k", k); const last = b.lastElementChild; return last.offsetTop + last.offsetHeight <= b.clientHeight - 14; };
-    let lo = 0.75, hi = 1.35;
+    let lo = 0.75, hi = 1.45;
     if (!fits(lo)) { b.style.setProperty("--k", lo); continue; }
     for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; fits(m) ? (lo = m) : (hi = m); }
     b.style.setProperty("--k", (lo * 0.98).toFixed(3)); b.style.justifyContent = "space-between";
