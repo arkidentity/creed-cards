@@ -39,10 +39,6 @@ const QRCode = createRequire(import.meta.url)("qrcode");
 const qr = {};
 for (const c of cards) qr[c.id] = await QRCode.toString(QR_BASE + "1-" + c.id, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2a2620", light: "#0000" } });
 const GOLD = "#c9a45c";
-// Fit values measured in a browser (?measure), baked in so every screen and the printer get the same layout.
-const FIT_PATH = join(root, "print", "fit.json");
-let FIT = {};
-try { FIT = JSON.parse(readFileSync(FIT_PATH, "utf8")); } catch {}
 
 const front = (c) => `
 <div class="card front" style="--dark:${catOf(c).color}">
@@ -62,7 +58,7 @@ const front = (c) => `
 const back = (c) => `
 <div class="card back" style="--dark:${catOf(c).color}">
   <div class="band"><span class="num">${pad(c.id)}</span><span class="btitle">${esc(c.title)}</span></div>
-  <div class="body" data-id="${c.id}"${FIT[c.id] ? ` style="--k:${FIT[c.id]};justify-content:space-between"` : ""}>
+  <div class="body">
     <p class="def">${esc(c.definition)}</p>
     <blockquote>“${esc(c.scripture)}”<cite>${esc(c.reference)}</cite></blockquote>
     <p class="hist"><b>Background.</b> ${esc(c.historicalContext)}</p>
@@ -102,7 +98,7 @@ h1{font:600 20px Inter;color:#333;text-align:center;margin-bottom:4px}
 .btitle{font:700 15px 'Cormorant Garamond',serif;letter-spacing:.06em}
 .body{--k:1;padding:14px 16px 0;display:flex;flex-direction:column;justify-content:flex-start;position:relative;gap:8px;flex:1;min-height:0;overflow:hidden}
 .def{font-size:calc(10.6px * var(--k));line-height:1.48}
-blockquote{font:italic 500 calc(13.5px * var(--k))/1.28 'Cormorant Garamond',serif;border-left:2px solid var(--gold);margin:0 14px 0 16px;padding:2px 0 2px 12px}
+blockquote{font:italic 500 calc(14px * var(--k))/1.28 'Cormorant Garamond',serif;border-left:2px solid var(--gold);margin:0 14px 0 16px;padding:2px 0 2px 12px}
 cite{display:block;font:600 8px Inter;font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:#8a7a5c;margin-top:4px}
 .hist{font-size:calc(9.6px * var(--k));line-height:1.45;color:#4a443a}
 .hist b{color:var(--ink)}
@@ -122,17 +118,13 @@ ${cards.map((c) => `<div class="pair">${front(c)}${back(c)}</div>`).join("")}
 <script>
 // Fit each back: grow the text (k from 1 up to 1.35) until the body is full, shrink (down to .85) if it overflows.
 window.addEventListener("load", () => document.fonts.ready.then(() => {
-  if (!location.search.includes("measure")) return;
-  const out = {};
   for (const b of document.querySelectorAll(".back .body")) {
-    const fits = (k) => { b.style.setProperty("--k", k); const last = b.lastElementChild; return last.offsetTop + last.offsetHeight <= b.clientHeight - 18; };
-    let lo = 0.72, hi = 1.3;
-    b.style.justifyContent = "flex-start";
-    if (!fits(lo)) { b.style.setProperty("--k", lo); out[b.dataset.id] = lo; continue; }
+    const fits = (k) => { b.style.setProperty("--k", k); const last = b.lastElementChild; return last.offsetTop + last.offsetHeight <= b.clientHeight - 14; };
+    let lo = 0.75, hi = 1.35;
+    if (!fits(lo)) { b.style.setProperty("--k", lo); continue; }
     for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; fits(m) ? (lo = m) : (hi = m); }
-    b.style.setProperty("--k", (lo * 0.97).toFixed(3)); b.style.justifyContent = "space-between"; out[b.dataset.id] = +b.style.getPropertyValue("--k");
+    b.style.setProperty("--k", (lo * 0.98).toFixed(3)); b.style.justifyContent = "space-between";
   }
-  window.FIT = out;
 }));
 </script>
 </body></html>`;
