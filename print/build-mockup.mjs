@@ -32,6 +32,7 @@ const ICONS = {
 };
 const icon = (c, s, a) => `<svg viewBox="0 0 120 120">${(ICONS[c.categorySlug] || ICONS.trinity)(s, a)}</svg>`;
 const esc = (t = "") => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const lang = (t) => (/[\u0590-\u05FF]/.test(t) ? "Hebrew" : /[\u0370-\u03FF\u1F00-\u1FFF]/.test(t) ? "Greek" : "Latin");
 const pad = (n) => String(n).padStart(2, "0");
 const QR_BASE = "https://arkidentity.com/cc/";
 const QRCode = createRequire(import.meta.url)("qrcode");
@@ -44,6 +45,7 @@ const front = (c) => `
   <div class="frame">
     <div class="top"><span>Creed Cards</span><span>${pad(c.id)}</span></div>
     <div class="mark">${icon(c, "#efe6d2", GOLD)}</div>
+    <div class="lang">${lang(c.term)}</div>
     <div class="term" ${/[֐-׿]/.test(c.term) ? 'dir="rtl"' : ""}>${esc(c.term)}</div>
     <div class="translit">${/^[\x00-\u024F\s']+$/.test(c.term) ? "" : `${esc(c.translation)} · `}<em>${esc(c.englishMeaning)}</em></div>
     <div class="rule"></div>
@@ -81,11 +83,12 @@ h1{font:600 20px Inter;color:#333;text-align:center;margin-bottom:4px}
 .frame{height:100%;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:8px;display:flex;flex-direction:column;align-items:center;padding:16px 18px;text-align:center}
 .top,.bottom{font:500 8.5px Inter;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
 .top{width:100%;display:flex;justify-content:space-between}
-.mark{width:92px;height:92px;margin:22px 0 10px}
-.term{font:500 34px 'Noto Serif Hebrew','Noto Serif',serif;line-height:1.2}
+.mark{width:84px;height:84px;margin:20px 0 12px}
+.lang{font:500 7.5px Inter;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.term{font:500 24px 'Noto Serif Hebrew','Noto Serif',serif;line-height:1.2;opacity:.92}
 .translit{font:500 15px 'Cormorant Garamond',serif;margin-top:6px;opacity:.85}
 .rule{width:40px;height:1px;background:var(--gold);margin:18px 0}
-.front h2{font:700 25px/1.08 'Cormorant Garamond',serif;letter-spacing:.06em}
+.front h2{font:700 30px/1.05 'Cormorant Garamond',serif;letter-spacing:.06em}
 .sub{font:italic 500 15px 'Cormorant Garamond',serif;margin-top:6px;opacity:.8}
 .bottom{margin-top:auto}
 /* BACK */
