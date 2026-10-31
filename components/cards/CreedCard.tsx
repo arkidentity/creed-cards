@@ -60,6 +60,7 @@ export function CreedCard({
     <div className="card-perspective" style={{ height: "100%" }}>
       <motion.div
         className="card-3d"
+        data-flipped={isFlipped ? "true" : "false"}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         onClick={handleClick}

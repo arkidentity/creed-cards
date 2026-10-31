@@ -29,6 +29,13 @@
   transform: rotateY(180deg);
 }
 
+/* iOS Safari still hit-tests the hidden face, so the front swallowed touches meant
+   for the back and the back never scrolled. Only the face you can see takes touches. */
+.card-3d[data-flipped="true"] > .card-face:not(.card-face-back),
+.card-3d[data-flipped="false"] > .card-face-back {
+  pointer-events: none;
+}
+
 /* Ghost layers for deck effect */
 .card-ghost-1 {
   transform: scale(0.95) translateY(6px);
