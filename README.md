@@ -1,3 +1,19 @@
+# creed-cards (the card module)
+
+**This repo is the digital Creed Cards module and nothing else:** card data, decks, study, quiz, Go Deeper, progress. It plugs into other apps as a git submodule at `shared/creed-cards`:
+
+| App | Mounts it at |
+|---|---|
+| Daily DNA (`dna-app/daily-dna`) | `/creed-cards` |
+| ark-identity | `/creed-cards`, QR at `/cc/1-N` |
+| **creedcards.com** (`creedcards-site`) | `/cards`, QR at `/cc/1-N` |
+
+**Not here (moved to `creedcards-site` on 11/3):** the landing page and store, the campaign plan (`planning/CROWDFUNDING-PLAN.md`), the StoryBrand (`planning/STORYBRAND.md`), print mockups and the logo (`print/`). Never add store, checkout, email or admin code here: it would ride into every app on the next submodule bump.
+
+Deck and quiz planning docs (`DECK-*.md`, `QUIZ-*.md`, `PHASE-*.md`, `GO-DEEPER-REVIEW.md`, `TERM-AUDIT.md`) stay here because they describe the digital cards. Embedding rules: `DECK-UI-HANDOFF.md`.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

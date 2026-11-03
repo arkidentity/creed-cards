@@ -116,7 +116,7 @@ jsonb + `focus_deck_id`), `231` (`church_creed_pushes.deck_id` + RPC).
 
 ## Gotchas
 
-- **Embedder re-export debt.** BOTH `daily-dna` AND `ark-identity` mount the
+- **Embedder re-export debt.** `daily-dna`, `ark-identity` AND `creedcards-site` (creedcards.com, mounts at `/cards`, since 11/3) mount the
   creed-cards routes natively via hand-written re-export files under
   `app/creed-cards/*` (daily-dna: webpack alias in `next.config.ts`; ark-identity:
   tsconfig path `@creed-cards/*`). **Every new/moved/renamed route needs a
