@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  DECKS,
   globalCardOfTheDay,
   deckKindLabel,
   deckResumeCard,
@@ -17,11 +16,13 @@ import {
 } from "../lib/progress";
 import { CategoryIcon } from "../lib/categoryIcons";
 import { useBasePath } from "../lib/basePathContext";
+import { useVisibleDecks } from "../lib/deckFilterContext";
 
 const RING = 2 * Math.PI * 16;
 
 export default function HomePage() {
   const base = useBasePath();
+  const DECKS = useVisibleDecks();
   const [learnedByDeck, setLearnedByDeck] = useState<Record<number, number[]>>({});
   const [lastByDeck, setLastByDeck] = useState<Record<number, number | null>>({});
   const [totalLearned, setTotalLearned] = useState(0);
@@ -34,9 +35,9 @@ export default function HomePage() {
     const last: Record<number, number | null> = {};
     for (const d of DECKS) if (d.status === "live") last[d.id] = getLastStudiedCard(d.id);
     setLastByDeck(last);
-  }, []);
+  }, [DECKS]);
 
-  const today = globalCardOfTheDay();
+  const today = globalCardOfTheDay(DECKS);
   const decksInProgress = Object.values(learnedByDeck).filter((a) => a.length > 0).length;
 
   const focusDeck =

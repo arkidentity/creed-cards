@@ -226,8 +226,8 @@ export function deckCardOfTheDay(deckId: number): AnyCard | undefined {
  * Card of the day across all owned (live) decks — rotates deck-by-day, then
  * card-by-day within that deck. Returns which deck it came from for attribution.
  */
-export function globalCardOfTheDay(): { card: AnyCard; deck: Deck } | undefined {
-  const live = getLiveDecks();
+export function globalCardOfTheDay(among: Deck[] = DECKS): { card: AnyCard; deck: Deck } | undefined {
+  const live = among.filter((d) => d.status === "live");
   if (live.length === 0) return undefined;
   const start = new Date(new Date().getFullYear(), 0, 0);
   const day = Math.floor((Date.now() - start.getTime()) / 86_400_000);

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { DECKS, getDeck, deckCategoryCards, deckHasQuiz } from "../../lib/decks";
+import { getDeck, deckCategoryCards, deckHasQuiz } from "../../lib/decks";
+import { useVisibleDecks } from "../../lib/deckFilterContext";
 import {
   getAllLearned,
   getTotalLearnedCount,
@@ -23,6 +24,7 @@ const QUIZ_LEVELS = [
 
 export default function ProgressPage() {
   const base = useBasePath();
+  const DECKS = useVisibleDecks();
 
   const firstLive = DECKS.find((d) => d.status === "live") ?? DECKS[0];
   const [selectedDeckId, setSelectedDeckId] = useState(firstLive.id);

@@ -10,6 +10,7 @@
 import { useEffect } from "react";
 import type { CreedCard } from "../../lib/cardData";
 import { getCard, getDeck } from "../../lib/decks";
+import { useDeckAllowed } from "../../lib/deckFilterContext";
 import { getCreedGoDeeper } from "../../lib/goDeeper";
 import { useBasePath } from "../../lib/basePathContext";
 import { useCreedTracker } from "../../lib/trackingContext";
@@ -25,7 +26,9 @@ export function GoDeeperPage({ code }: { code: string }) {
   const basePath = useBasePath();
   const track = useCreedTracker();
   const parsed = parseCardCode(code);
-  const deck = parsed ? getDeck(parsed.deckId) : undefined;
+  const allowed = useDeckAllowed();
+  const found = parsed ? getDeck(parsed.deckId) : undefined;
+  const deck = allowed(found) ? found : undefined;
   const card = parsed ? (getCard(parsed.deckId, parsed.cardId) as CreedCard | undefined) : undefined;
   const entry = card ? getCreedGoDeeper({ id: card.id, deckId: parsed!.deckId }) : null;
 
