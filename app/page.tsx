@@ -17,6 +17,7 @@ import {
 import { CategoryIcon } from "../lib/categoryIcons";
 import { useBasePath } from "../lib/basePathContext";
 import { useVisibleDecks } from "../lib/deckFilterContext";
+import { PrintOfferLine } from "../components/home/PrintOfferLine";
 
 const RING = 2 * Math.PI * 16;
 
@@ -171,6 +172,8 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+
+        <PrintOfferLine spot="shelf" />
       </div>
     </div>
   );

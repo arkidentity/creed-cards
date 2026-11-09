@@ -17,6 +17,7 @@ import {
 import { getQuizResult, type QuizResult } from "../../../lib/quizProgress";
 import { CategoryIcon } from "../../../lib/categoryIcons";
 import { useBasePath } from "../../../lib/basePathContext";
+import { PrintOfferLine } from "../../../components/home/PrintOfferLine";
 
 const QUIZ_LEVELS = [
   { level: 1, name: "Level 1", sub: "Words & Meaning" },
@@ -290,6 +291,8 @@ export default function DeckHomePage({
             >
               {isFocus ? "★ Focused deck" : "☆ Make this my focus"}
             </button>
+
+            <PrintOfferLine spot="deck" />
           </>
         )}
       </div>
