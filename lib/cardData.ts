@@ -288,7 +288,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "church",
     termNote: "A church term, formed from the Bible's phrase \"in the flesh\" (1 John 4:2).",
     definition:
-      "The eternal Son of God took on human nature, becoming fully human while remaining fully divine. Jesus Christ is one Person with two natures—divine and human—united without mixture or separation. God became one of us to save us.",
+      "Jesus is God who became a human being. He was born as a baby, got tired, felt hungry, and cried, and the whole time He was still fully God. He didn't stop being God, and He wasn't pretending to be human. God became one of us so He could save us.",
     scripture:
       "The Word became flesh, and dwelt among us, and we saw His glory, glory as of the only Son from the Father, full of grace and truth.",
     reference: "John 1:14",
@@ -637,7 +637,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termHighlight: "grace",
     definition:
-      "Grace is God's unmerited favor toward sinners. We cannot earn or deserve it. God freely gives us what we don't deserve—forgiveness, adoption, eternal life—based on Christ's merit, not our own. Salvation is by grace alone, through faith alone.",
+      "Grace is God giving us what we could never earn. He forgives us, brings us into His family, and gives us life that lasts forever, all because of what Jesus did. We can't pay Him back. We can only receive it, and once we do, it changes how we live.",
     scripture:
       "For by grace you have been saved through faith; and that not of yourselves, it is the gift of God; not as a result of works, so that no one may boast.",
     reference: "Ephesians 2:8-9",
@@ -683,7 +683,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termNote: "Acts 3:19 uses the verb. The noun metanoia appears in Acts 20:21.",
     definition:
-      "Repentance is a change of mind and heart that turns from sin and turns to God. It's not just feeling sorry but a radical reorientation of life. True repentance is a gift from God that leads to life. It accompanies genuine faith and continues throughout the Christian life.",
+      "Repentance is changing the way you think. It's not just feeling sorry for sin. It's realizing that God's way is better and making the decision to go back to God. He gives us the desire to turn, and we keep turning back to Him our whole lives.",
     scripture:
       "Repent and return, so that your sins may be wiped away, in order that times of refreshing may come from the presence of the Lord.",
     reference: "Acts 3:19",
@@ -1035,7 +1035,7 @@ export const CARD_DATA: CreedCard[] = [
     termHighlight: "love",
     termNote: "Here \"love\" is a verb. The noun agapē follows in the rest of verse 35: \"if you have love for one another.\"",
     definition:
-      "Love is the defining mark of Christian discipleship. This is not mere sentiment but self-giving love modeled on Christ's sacrifice. We love God with our whole being and love our neighbors—even enemies—as ourselves. Love fulfills the law and bears witness to Christ.",
+      "Jesus said people would know we follow Him by the way we love each other. This love is more than a warm feeling. It means putting someone else first, the way Jesus gave Himself for us. We love God with everything we have, and we love the people around us, even the hard ones.",
     scripture:
       "A new commandment I give to you, that you love one another, even as I have loved you, that you also love one another. By this all men will know that you are My disciples.",
     reference: "John 13:34-35",
@@ -1104,7 +1104,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termNote: "Pathēma appears in Romans 8:18.",
     definition:
-      "Suffering is part of following Christ in a fallen world. Yet God uses our trials to refine faith, build character, and conform us to Christ's image. We are not promised escape from suffering but God's presence in it. Our momentary afflictions are producing eternal glory.",
+      "Following Jesus doesn't mean life won't hurt. Christians get sick, lose people they love, and go through hard seasons like everyone else. God is with us in it, and He uses even the painful parts to make us more like Jesus. The pain is real, and it won't last forever.",
     scripture:
       "Consider it all joy, my brethren, when you encounter various trials, knowing that the testing of your faith produces endurance.",
     reference: "James 1:2-3",
