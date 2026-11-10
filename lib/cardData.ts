@@ -520,7 +520,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termHighlight: "fruit of the Spirit",
     definition:
-      "The Holy Spirit produces Christlike character in believers. This fruit—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control—is evidence of the Spirit's presence and work. We don't manufacture this fruit; the Spirit grows it in us.",
+      "Fruit isn't something a tree tries hard to make. It grows because the tree is alive and connected to its roots. In the same way, the Holy Spirit grows the character of Jesus in us as we stay close to Him. Paul calls it one fruit, so all nine grow together, slowly, as a whole.",
     scripture:
       "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law.",
     reference: "Galatians 5:22-23",
@@ -1081,7 +1081,7 @@ export const CARD_DATA: CreedCard[] = [
     termType: "bible",
     termHighlight: "endurance",
     definition:
-      "True disciples persevere in faith through trials, suffering, and doubt. This endurance is not stoic resignation but confident hope in God's faithfulness. God holds on to His children, and they hold on to Him. The one who endures to the end will be saved.",
+      "Perseverance means you keep trusting God when life is hard, when you're hurting, or when you have doubts. You don't just grit your teeth and wait for it to pass. You keep going because God is faithful, and He is holding on to you even tighter than you're holding on to Him. Real faith may get weak, but it doesn't let go.",
     scripture:
       "For you have need of endurance, so that when you have done the will of God, you may receive what was promised.",
     reference: "Hebrews 10:36",
