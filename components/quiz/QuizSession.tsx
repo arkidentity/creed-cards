@@ -7,6 +7,12 @@ import { saveQuizResult, getScoreBadge } from "../../lib/quizProgress";
 import { type QuizQuestion } from "../../lib/quizData";
 import { useBasePath } from "../../lib/basePathContext";
 import { getDeck } from "../../lib/decks";
+import { indexCardTitle } from "../../lib/cardIndex";
+
+// Card titles are stored in caps ("ONE GOD IN THREE PERSONS"); read better as a sentence link.
+const SMALL = new Set(["a", "an", "and", "as", "at", "by", "for", "in", "of", "on", "or", "the", "to"]);
+const titleCase = (t: string) =>
+  t.toLowerCase().replace(/\S+/g, (w, i) => (i > 0 && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)));
 
 const deckSlug = (deckId: number) => getDeck(deckId)?.slug ?? "essentials";
 
@@ -15,8 +21,6 @@ const LEVEL_LABELS = {
   2: "Scripture & History",
   3: "Connections",
 };
-
-const AUTO_ADVANCE_MS = 1600;
 
 interface QuizSessionProps {
   deckId: number;
@@ -31,12 +35,14 @@ function ResultsScreen({
   deckId,
   level,
   onRetake,
+  missed,
 }: {
   score: number;
   total: number;
   deckId: number;
   level: 1 | 2 | 3;
   onRetake: () => void;
+  missed: QuizQuestion[];
 }) {
   const base = useBasePath();
   const pct = Math.round((score / total) * 100);
@@ -145,6 +151,35 @@ function ResultsScreen({
         </p>
       </div>
 
+      {/* What you missed: the right answer, why, and the card to study */}
+      {missed.length > 0 && (
+        <div style={{ width: "100%", maxWidth: 360, marginBottom: 24 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+            To review ({missed.length})
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {missed.map((q) => {
+              const title = indexCardTitle(deckId, q.cardId);
+              return (
+                <div key={q.id} style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "14px 16px" }}>
+                  <p style={{ fontSize: 14, fontWeight: 600, color: "var(--foreground)", margin: "0 0 6px", lineHeight: 1.45 }}>{q.question}</p>
+                  <p style={{ fontSize: 13, color: "var(--success)", margin: "0 0 6px", lineHeight: 1.45 }}>{q.options[q.correctIndex]}</p>
+                  <p style={{ fontSize: 13, color: "var(--muted)", margin: 0, lineHeight: 1.5 }}>{q.explanation}</p>
+                  {title && (
+                    <Link
+                      href={`${base}/deck/${deckSlug(deckId)}/study?mode=sequential&start=${q.cardId}`}
+                      style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "var(--accent)", textDecoration: "none" }}
+                    >
+                      Study {titleCase(title)} →
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* CTAs */}
       <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "100%", maxWidth: 360 }}>
         <button
@@ -211,12 +246,14 @@ export function QuizSession({ deckId, level }: QuizSessionProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [missed, setMissed] = useState<QuizQuestion[]>([]);
 
   const loadQuestions = useCallback(() => {
     setQuestions(generateQuestions(deckId, level));
     setCurrentIdx(0);
     setSelectedIdx(null);
     setScore(0);
+    setMissed([]);
     setIsComplete(false);
   }, [deckId, level]);
 
@@ -227,28 +264,28 @@ export function QuizSession({ deckId, level }: QuizSessionProps) {
   const current = questions[currentIdx];
   const total = questions.length;
 
+  // Answer, then read the explanation, then tap Next (no auto-advance: the explanation is the lesson).
   const handleSelect = useCallback(
     (optionIdx: number) => {
       if (selectedIdx !== null || !current) return;
       setSelectedIdx(optionIdx);
-      const correct = optionIdx === current.correctIndex;
-      if (correct) setScore((s) => s + 1);
-
-      // Auto-advance
-      setTimeout(() => {
-        const nextIdx = currentIdx + 1;
-        if (nextIdx >= total) {
-          // Save result and show complete screen
-          saveQuizResult(deckId, level, correct ? score + 1 : score, total);
-          setIsComplete(true);
-        } else {
-          setCurrentIdx(nextIdx);
-          setSelectedIdx(null);
-        }
-      }, AUTO_ADVANCE_MS);
+      if (optionIdx === current.correctIndex) setScore((s) => s + 1);
+      else setMissed((m) => [...m, current]);
     },
-    [selectedIdx, current, currentIdx, total, deckId, level, score]
+    [selectedIdx, current]
   );
+
+  const handleNext = useCallback(() => {
+    const nextIdx = currentIdx + 1;
+    if (nextIdx >= total) {
+      saveQuizResult(deckId, level, score, total);
+      setIsComplete(true);
+    } else {
+      setCurrentIdx(nextIdx);
+      setSelectedIdx(null);
+    }
+    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+  }, [currentIdx, total, deckId, level, score]);
 
   if (isComplete) {
     return (
@@ -258,6 +295,7 @@ export function QuizSession({ deckId, level }: QuizSessionProps) {
         deckId={deckId}
         level={level}
         onRetake={loadQuestions}
+        missed={missed}
       />
     );
   }
@@ -519,6 +557,26 @@ export function QuizSession({ deckId, level }: QuizSessionProps) {
               {current.explanation}
             </p>
           </div>
+        )}
+
+        {selectedIdx !== null && (
+          <button
+            onClick={handleNext}
+            autoFocus
+            style={{
+              alignSelf: "flex-end",
+              padding: "13px 22px",
+              background: "var(--accent)",
+              color: "#000",
+              border: "none",
+              borderRadius: "var(--radius-sm)",
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            {currentIdx + 1 >= total ? "See results" : "Next question →"}
+          </button>
         )}
       </div>
     </div>
